@@ -3,6 +3,7 @@ package com.desidoc.management.users.admin.service;
 import java.util.List;
 
 import com.desidoc.management.employee.dto.EmpMasterDTO;
+import com.desidoc.management.employee.model.EmpMaster;
 
 public interface EmpMasterService {
 	
@@ -16,7 +17,7 @@ public interface EmpMasterService {
 	
 	String deleteEmpMaster(Integer id) throws Exception;
 	
-	EmpMasterDTO getEmpMasterById(Integer id) throws Exception;
+	EmpMaster getEmpMasterById(Integer id) throws Exception;
 	
 	String createEmpMaster(EmpMasterDTO empMaster);
 

@@ -1,5 +1,6 @@
 package com.desidoc.management.users.admin.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,19 +20,25 @@ import com.desidoc.management.lab.model.LabMaster;
 public class EmpMasterServiceImpl implements EmpMasterService {
 
 	@Autowired
-	EmpMasterRepository empMasterRepository;
+	EmpMasterRepository repository;
+	@Autowired
+    EmpDesignationService empDesignationService;
+	@Autowired
+    EmpRoleService empRoleService;
+	@Autowired
+    LabMasterService labMasterService;
 
 	@Override
 	public List<EmpMasterDTO> findAllEmpMaster() {
 
-		return empMasterRepository.findAllByOrderByViewingOrderDesc().stream().map(this::convertToDTO)
+		return repository.findAllByOrderByViewingOrderDesc().stream().map(this::convertToDTO)
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<EmpMasterDTO> findAllEmpMasterByDeleted() {
 
-		return empMasterRepository.findAllByDeletedOrderByViewingOrderDesc("0").stream().map(this::convertToDTO)
+		return repository.findAllByDeletedOrderByViewingOrderDesc("0").stream().map(this::convertToDTO)
 				.collect(Collectors.toList());
 	}
 
@@ -39,54 +46,54 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 	public List<EmpMasterDTO> searchEmpMaster(String search) {
 		Specification<EmpMaster> sp = EmpMasterSpecification.searchEmpMaster(search);
 
-		return empMasterRepository.findAll(sp).stream().map(this::convertToDTO).collect(Collectors.toList());
+		return repository.findAll(sp).stream().map(this::convertToDTO).collect(Collectors.toList());
 
 	}
 
 	@Override
 	public String updateEmpMaster(EmpMasterDTO empMasterDTO, Integer id) throws Exception {
-		EmpMaster emp = empMasterRepository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
-		empMasterRepository.save(this.mapDtoToEntity(empMasterDTO, emp));
+		EmpMaster emp = repository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
+		repository.save(this.convertToEntity(empMasterDTO, emp));
 
 		return "Employee updated";
 	}
 
 	@Override
 	public String deleteEmpMaster(Integer id) throws Exception {
-		EmpMaster emp = empMasterRepository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
+		EmpMaster emp = repository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
 		emp.setDeleted("1");
-		empMasterRepository.save(emp);
+		repository.save(emp);
 
 		return "Employee deleted";
 	}
 
 	@Override
-	public EmpMasterDTO getEmpMasterById(Integer id) throws Exception {
-		EmpMaster emp = empMasterRepository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
+	public EmpMaster getEmpMasterById(Integer id) throws Exception {
+		EmpMaster emp = repository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
 
-		return convertToDTO(emp);
+		return emp;
 	}
 
 	@Override
 	public String createEmpMaster(EmpMasterDTO empMasterDTO) {
 
 		EmpMaster emp = new EmpMaster();
-		empMasterRepository.save(this.mapDtoToEntity(empMasterDTO, emp));
+		repository.save(this.convertToEntity(empMasterDTO, emp));
 
 		return "Employee created";
 	}
 	@Override
 	public String updateViewingOrder(Integer id, String order) throws Exception {
-		EmpMaster emp = empMasterRepository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
+		EmpMaster emp = repository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
         emp.setViewingOrder(order);
-        empMasterRepository.save(emp);
+        repository.save(emp);
         return "Employee updated";
 	}
 
 	// ---------- Helper Functions ----------
 
 	// Converting DTOs to Entities
-	private EmpMaster mapDtoToEntity(EmpMasterDTO dto, EmpMaster emp) {
+	private EmpMaster convertToEntity(EmpMasterDTO dto, EmpMaster emp){
 		if (dto.getEmpTitle() != null && !dto.getEmpTitle().equals(emp.getEmpTitle())) {
 			emp.setEmpTitle(dto.getEmpTitle());
 		}
@@ -99,23 +106,27 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 		if (dto.getEmpLastName() != null && !dto.getEmpLastName().equals(emp.getEmpLastName())) {
 			emp.setEmpLastName(dto.getEmpLastName());
 		}
-		if (dto.getEmpDesignId() != null && !dto.getEmpDesignId().equals(emp.getEmpDesignId().getId())) {
-			EmpDesignation empDesignation = new EmpDesignation();
-			empDesignation.setId(dto.getEmpDesignId());
-			emp.setEmpDesignId(empDesignation);
-		}
+		if (dto.getEmpDesignId() != null) {
+	        if (emp.getEmpDesignId() == null || !dto.getEmpDesignId().equals(emp.getEmpDesignId().getId())) {
+	            emp.setEmpDesignId(empDesignationService.findEmpDesignationById(dto.getEmpDesignId()));
+	        }
+	    }
+		if (dto.getLabId() != null) {
+	        if (emp.getLabId() == null || !dto.getLabId().equals(emp.getLabId().getId())) {
+	            emp.setLabId(labMasterService.findLabMasterById(dto.getLabId()));
+	        }
+	    }
+		if (dto.getEmpRoleId() != null) {
+	        if (emp.getEmpRoleId() == null || !dto.getEmpRoleId().equals(emp.getEmpRoleId().getId())) {
+	            emp.setEmpRoleId(empRoleService.findEmpRoleById(dto.getEmpRoleId()));
+	        }
+	    }
 		if (dto.getOfficeRoomNo() != null && !dto.getOfficeRoomNo().equals(emp.getOfficeRoomNo())) {
 			emp.setOfficeRoomNo(dto.getOfficeRoomNo());
 		}
-		if (dto.getLabId() != null && !dto.getLabId().equals(emp.getLabId().getId())) {
-			LabMaster labMaster = new LabMaster();
-			labMaster.setId(dto.getLabId());
-			emp.setLabId(labMaster);
-		}
-		if (dto.getEmpRoleId() != null && !dto.getEmpRoleId().equals(emp.getEmpRoleId().getId())) {
-			EmpRole empRole = new EmpRole();
-			empRole.setId(dto.getEmpRoleId());
-			emp.setEmpRoleId(empRole);
+		
+		if(dto.getLastUpdated() != null && !dto.getLastUpdated().equals(emp.getLastUpdated())) {
+			emp.setLastUpdated(LocalDateTime.now());
 		}
 		if (dto.getViewingOrder() != null && !dto.getViewingOrder().equals(emp.getViewingOrder())) {
 			emp.setViewingOrder(dto.getViewingOrder());
@@ -142,7 +153,7 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 		dto.setOfficeRoomNo(empMaster.getOfficeRoomNo());
 		dto.setLabId(empMaster.getLabId().getId());
 		dto.setEmpRoleId(empMaster.getEmpRoleId().getId());
-		dto.setLastUpdated(empMaster.getLastUpdated());
+		dto.setLastUpdated(LocalDateTime.now());
 		dto.setViewingOrder(empMaster.getViewingOrder());
 		dto.setAddlDesign(empMaster.getAddlDesign());
 		dto.setDeleted(empMaster.getDeleted());

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desidoc.management.employee.dto.EmpDesignationDTO;
+import com.desidoc.management.employee.model.EmpDesignation;
 import com.desidoc.management.users.admin.service.EmpDesignationService;
 
 @RestController
@@ -40,7 +41,7 @@ public class EmpDesignationController {
 
 	// finding all employees by id
 	@GetMapping("/{empId}")
-	ResponseEntity<EmpDesignationDTO> findEmpDesignationById(@PathVariable Integer empId) throws Exception {
+	ResponseEntity<EmpDesignation> findEmpDesignationById(@PathVariable Integer empId) throws Exception {
 		return ResponseEntity.ok(service.findEmpDesignationById(empId));
 	}
 
