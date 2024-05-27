@@ -17,10 +17,10 @@ public class EmpDesignation {
 	@Column(name = "id")
 	private Integer id;
 
-	@Column(name = "design_short_name")
+	@Column(name = "design_short_name", length = 45)
 	private String designShortName;
 
-	@Column(name = "design_full_name")
+	@Column(name = "design_full_name", length = 200)
 	private String designFullName;
 
 	
@@ -30,8 +30,8 @@ public class EmpDesignation {
 
 	
 	
-	@Column(name = "order_no") //need to change the ordering system
-	private Integer orderNo;
+	@Column(name = "order_no", nullable = false) //need to change the ordering system
+	private Integer orderNo = -1;
 	
 	//	Constructors
 	
