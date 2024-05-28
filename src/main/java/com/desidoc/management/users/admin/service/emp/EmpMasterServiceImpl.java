@@ -1,4 +1,4 @@
-package com.desidoc.management.users.admin.service;
+package com.desidoc.management.users.admin.service.emp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,18 +16,19 @@ import com.desidoc.management.employee.repository.EmpMasterRepository;
 import com.desidoc.management.employee.specifications.EmpMasterSpecification;
 import com.desidoc.management.exception.EntityNotFoundException;
 import com.desidoc.management.lab.model.LabMaster;
+import com.desidoc.management.users.admin.service.lab.LabMasterService;
 
 @Service
 public class EmpMasterServiceImpl implements EmpMasterService {
 
-	@Autowired
-	EmpMasterRepository repository;
 	@Autowired
 	EmpDesignationService empDesignationService;
 	@Autowired
 	EmpRoleService empRoleService;
 	@Autowired
 	LabMasterService labMasterService;
+	@Autowired
+	EmpMasterRepository repository;
 	
 	// ---------- Helper Functions ----------
 

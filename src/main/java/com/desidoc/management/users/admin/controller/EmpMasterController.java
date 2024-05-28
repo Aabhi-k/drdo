@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.desidoc.management.employee.dto.EmpMasterDTO;
 import com.desidoc.management.employee.model.EmpMaster;
-import com.desidoc.management.users.admin.service.EmpMasterService;
+import com.desidoc.management.users.admin.service.emp.EmpMasterService;
 
 @RestController
 @RequestMapping("/emp/em")

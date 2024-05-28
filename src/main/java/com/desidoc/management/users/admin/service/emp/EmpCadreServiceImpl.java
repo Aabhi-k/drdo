@@ -1,4 +1,4 @@
-package com.desidoc.management.users.admin.service;
+package com.desidoc.management.users.admin.service.emp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.desidoc.management.users.admin.service;
+package com.desidoc.management.users.admin.service.lab;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,8 +12,12 @@ import com.desidoc.management.lab.dto.LabMasterDTO;
 import com.desidoc.management.lab.model.LabCategory;
 import com.desidoc.management.lab.model.LabCluster;
 import com.desidoc.management.lab.model.LabMaster;
+import com.desidoc.management.lab.repository.LabCategoryRepository;
+import com.desidoc.management.lab.repository.LabClusterRepository;
 import com.desidoc.management.lab.repository.LabMasterRepository;
 import com.desidoc.management.others.city.CityMaster;
+import com.desidoc.management.others.city.CityMasterRepository;
+import com.desidoc.management.users.admin.service.others.city.CityMasterService;
 
 @Service
 public class LabMasterServiceImpl implements LabMasterService {
@@ -21,10 +25,17 @@ public class LabMasterServiceImpl implements LabMasterService {
 	@Autowired
 	LabMasterRepository repository;
 
+	@Autowired
+	LabCategoryService labCategoryService;
+	@Autowired
+	LabClusterService labClusterService;
+	@Autowired
+	CityMasterService cityMasterService;
+
 	// ---------- Helper Functions ----------
 
 	// Converting DTOs to Entities
-	private LabMaster convertToEntity(LabMasterDTO dto, LabMaster lab) {
+	private LabMaster convertToEntity(LabMasterDTO dto, LabMaster lab) throws Exception {
 		if (dto.getLabAuthName() != null && dto.getLabAuthName().equals(lab.getLabAuthName())) {
 			lab.setLabAuthName(dto.getLabAuthName());
 		}
@@ -34,20 +45,25 @@ public class LabMasterServiceImpl implements LabMasterService {
 		if (dto.getLabFullName() != null && dto.getLabFullName().equals(lab.getLabFullName())) {
 			lab.setLabFullName(dto.getLabFullName());
 		}
-		if (dto.getLabCatId() != null && dto.getLabCatId().equals(lab.getLabCatId())) {
-			LabCategory labCategory = new LabCategory();
-			labCategory.setId(dto.getLabCatId());
-			lab.setLabCatId(labCategory);
+		if (dto.getLabCatId() != null) {
+			if (lab.getLabCatId() == null || !dto.getLabCatId().equals(lab.getLabCatId().getId())) {
+				LabCategory labCategory = labCategoryService.findLabCategoryById(dto.getLabCatId());
+				lab.setLabCatId(labCategory);
+			}
 		}
-		if (dto.getLabCityId() != null && dto.getLabCityId().equals(lab.getLabCityId())) {
-			CityMaster city = new CityMaster();
-			city.setId(dto.getLabCityId());
-			lab.setLabCityId(city);
+		if (dto.getLabCityId() != null) {
+			if (lab.getLabCityId() == null || !dto.getLabCityId().equals(lab.getLabCityId().getId())) {
+
+				CityMaster city = cityMasterService.findCityById(dto.getLabCityId());
+				lab.setLabCityId(city);
+			}
 		}
-		if (dto.getLabClusterId() != null && dto.getLabClusterId().equals(lab.getLabClusterId())) {
-			LabCluster cluster = new LabCluster();
-			cluster.setId(dto.getLabClusterId());
-			lab.setLabClusterId(cluster);
+		if (dto.getLabClusterId() != null) {
+			if (lab.getLabClusterId() == null || !dto.getLabClusterId().equals(lab.getLabClusterId().getId())) {
+
+				LabCluster cluster = labClusterService.findLabClusterById(dto.getLabClusterId());
+				lab.setLabClusterId(cluster);
+			}
 		}
 
 		if (dto.getOtherGroup() != null && dto.getOtherGroup().equals(lab.getOtherGroup())) {
@@ -83,6 +99,12 @@ public class LabMasterServiceImpl implements LabMasterService {
 		return dto;
 	}
 
+	// finding by id
+	@Override
+	public LabMaster findLabMasterById(Integer id) throws Exception {
+		return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Lab not found"));
+	}
+
 	@Override
 	public List<LabMasterDTO> findAllLabMaster() {
 
@@ -112,11 +134,6 @@ public class LabMasterServiceImpl implements LabMasterService {
 	public String deleteLabMaster(Integer id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public LabMaster findLabMasterById(Integer id) throws Exception {
-		return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Lab not found"));
 	}
 
 	@Override
