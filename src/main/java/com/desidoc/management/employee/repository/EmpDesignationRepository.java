@@ -7,9 +7,16 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.desidoc.management.employee.model.EmpDesignation;
-@Repository
-public interface EmpDesignationRepository extends JpaRepository<EmpDesignation,Integer>, JpaSpecificationExecutor<EmpDesignation>{
-	
-	List<EmpDesignation> findAllByOrderByOrderNoDesc(); 
+import com.desidoc.management.employee.projections.empdesignation.EmpDesignationFullNameProjection;
+import com.desidoc.management.employee.projections.empdesignation.EmpDesignationShortNameProjection;
 
+@Repository
+public interface EmpDesignationRepository
+		extends JpaRepository<EmpDesignation, Integer>, JpaSpecificationExecutor<EmpDesignation> {
+
+	List<EmpDesignation> findAllByOrderByOrderNoDesc();
+
+	List<EmpDesignationShortNameProjection> findByDesignShortNameIsNotNull();
+
+	List<EmpDesignationFullNameProjection> findByDesignFullNameIsNotNull();
 }

@@ -21,10 +21,49 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 	@Autowired
 	EmpCadreService empCadreService;
 
+	// ---------- Helper Functions ----------
+
+	// Converting DTOs to Entities
+	private EmpDesignation convertToEntity(EmpDesignationDTO dto, EmpDesignation emp) {
+		if (dto.getCadreId() != null) {
+			if (emp.getCadreId() == null || !dto.getCadreId().equals(emp.getCadreId().getCadreId())) {
+				emp.setCadreId(empCadreService.findEmpCadreById(dto.getCadreId()));
+			}
+		}
+		if (dto.getDesignFullName() != null && !dto.getDesignFullName().equals(emp.getDesignFullName())) {
+			emp.setDesignFullName(dto.getDesignFullName());
+		}
+		if (dto.getDesignShortName() != null && !dto.getDesignShortName().equals(emp.getDesignShortName())) {
+			emp.setDesignShortName(dto.getDesignShortName());
+		}
+		if (dto.getOrderNo() != null && !dto.getOrderNo().equals(emp.getOrderNo())) {
+			emp.setOrderNo(dto.getOrderNo());
+		}
+
+		return emp;
+	}
+
+	// Converting Entities to DTOs
+	private EmpDesignationDTO convertToDTO(EmpDesignation designation) {
+		EmpDesignationDTO dto = new EmpDesignationDTO();
+		dto.setId(designation.getId());
+		dto.setDesignShortName(designation.getDesignShortName());
+		dto.setDesignFullName(designation.getDesignFullName());
+		dto.setCadreId(designation.getCadreId().getCadreId());
+		dto.setOrderNo(designation.getOrderNo());
+		return dto;
+	}
+
+	// Finding all by Id
+	@Override
+	public EmpDesignation findEmpDesignationById(Integer id) throws Exception {
+		return repository.findById(id)
+				.orElseThrow(() -> new Exception("Employee Designation not found"));
+	}
+
 	@Override
 	public List<EmpDesignationDTO> findAllEmpDesignationByOrderNo() {
-		return repository.findAllByOrderByOrderNoDesc().stream().map(this::convertToDTO)
-				.collect(Collectors.toList());
+		return repository.findAllByOrderByOrderNoDesc().stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
 	@Override
@@ -35,25 +74,17 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 
 	@Override
 	public String updateEmpDesignation(EmpDesignationDTO designationDTO, Integer id) throws Exception {
-		EmpDesignation emp = repository.findById(id)
-				.orElseThrow(() -> new Exception("EmpDesignation not found"));
+		EmpDesignation emp = this.findEmpDesignationById(id);
 		repository.save(this.convertToEntity(designationDTO, emp));
-		
+
 		return "Designation updated";
 	}
 
 	@Override
 	public String deleteEmpDesignation(Integer id) {
 		repository.deleteById(id);
-		
-		return "Designation deleted";
-	}
 
-	@Override
-	public EmpDesignation findEmpDesignationById(Integer id) throws Exception {
-		EmpDesignation emp = repository.findById(id)
-				.orElseThrow(() -> new Exception("EmpDesignation not found"));
-		return emp;
+		return "Designation deleted";
 	}
 
 	@Override
@@ -66,50 +97,33 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 	}
 
 	@Override
-	public String updateOrderNo(Integer id, Integer newOrderNo) {
-		EmpDesignation designation = repository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid designation ID"));
+	public String updateOrderNo(Integer id, Integer newOrderNo) throws Exception {
+		EmpDesignation designation = this.findEmpDesignationById(id);
 		designation.setOrderNo(newOrderNo);
 		repository.save(designation);
 		return "Designation updated";
 	}
 
-	
-	// ---------- Helper Functions ----------
+	// to be used in future if we need to
+	@Override
+	public List<EmpDesignationDTO> getAllEmpDesignationShortName() {
+		return repository.findByDesignShortNameIsNotNull().stream().map(projection -> {
+			EmpDesignationDTO dto = new EmpDesignationDTO();
+			dto.setDesignShortName(projection.getDesignShortName());
+			return dto;
+		}).collect(Collectors.toList());
 
-	// Converting DTOs to Entities
-	private EmpDesignation convertToEntity(EmpDesignationDTO dto, EmpDesignation emp) {
-		if (dto.getCadreId() != null) {
-			if (emp.getCadreId() == null || !dto.getCadreId().equals(emp.getCadreId().getCadreId())) {
-				
-				emp.setCadreId(empCadreService.findEmpCadreById(dto.getCadreId()));
-			}
-			
-		}
-		if (dto.getDesignFullName() != null
-				&& !dto.getDesignFullName().equals(emp.getDesignFullName())) {
-			emp.setDesignFullName(dto.getDesignFullName());
-		}
-		if (dto.getDesignShortName() != null
-				&& !dto.getDesignShortName().equals(emp.getDesignShortName())) {
-			emp.setDesignShortName(dto.getDesignShortName());
-		}
-		if (dto.getOrderNo() != null && !dto.getOrderNo().equals(emp.getOrderNo())) {
-			emp.setOrderNo(dto.getOrderNo());
-		}
-		
-		return emp;
 	}
-	
-	// Converting Entities to DTOs
-	private EmpDesignationDTO convertToDTO(EmpDesignation designation) {
-		EmpDesignationDTO dto = new EmpDesignationDTO();
-		dto.setId(designation.getId());
-		dto.setDesignShortName(designation.getDesignShortName());
-		dto.setDesignFullName(designation.getDesignFullName());
-		dto.setCadreId(designation.getCadreId().getCadreId());
-		dto.setOrderNo(designation.getOrderNo());
-		return dto;
+
+	// to be used in future if we need to
+	@Override
+	public List<EmpDesignationDTO> getAllEmpDesignationFullName() {
+		return repository.findByDesignFullNameIsNotNull().stream().map(projection -> {
+			EmpDesignationDTO dto = new EmpDesignationDTO();
+			dto.setDesignFullName(projection.getDesignFullName());
+			return dto;
+		}).collect(Collectors.toList());
+
 	}
 
 }

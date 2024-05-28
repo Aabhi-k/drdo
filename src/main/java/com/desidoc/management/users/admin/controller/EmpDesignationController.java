@@ -49,7 +49,7 @@ public class EmpDesignationController {
 
 	// updating the order number of the employee
 	@PutMapping("/{id}/order")
-	ResponseEntity<String> updateOrderNo(@PathVariable Integer id, @RequestParam Integer newOrderNo) {
+	ResponseEntity<String> updateOrderNo(@PathVariable Integer id, @RequestParam Integer newOrderNo) throws Exception {
 		service.updateOrderNo(id, newOrderNo);
 		return ResponseEntity.ok("Order number updated successfully");
 	}

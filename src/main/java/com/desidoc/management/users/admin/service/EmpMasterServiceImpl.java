@@ -14,6 +14,7 @@ import com.desidoc.management.employee.model.EmpMaster;
 import com.desidoc.management.employee.model.EmpRole;
 import com.desidoc.management.employee.repository.EmpMasterRepository;
 import com.desidoc.management.employee.specifications.EmpMasterSpecification;
+import com.desidoc.management.exception.EntityNotFoundException;
 import com.desidoc.management.lab.model.LabMaster;
 
 @Service
@@ -22,78 +23,16 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 	@Autowired
 	EmpMasterRepository repository;
 	@Autowired
-    EmpDesignationService empDesignationService;
+	EmpDesignationService empDesignationService;
 	@Autowired
-    EmpRoleService empRoleService;
+	EmpRoleService empRoleService;
 	@Autowired
-    LabMasterService labMasterService;
-
-	@Override
-	public List<EmpMasterDTO> findAllEmpMaster() {
-
-		return repository.findAllByOrderByViewingOrderDesc().stream().map(this::convertToDTO)
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<EmpMasterDTO> findAllEmpMasterByDeleted() {
-
-		return repository.findAllByDeletedOrderByViewingOrderDesc("0").stream().map(this::convertToDTO)
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<EmpMasterDTO> searchEmpMaster(String search) {
-		Specification<EmpMaster> sp = EmpMasterSpecification.searchEmpMaster(search);
-
-		return repository.findAll(sp).stream().map(this::convertToDTO).collect(Collectors.toList());
-
-	}
-
-	@Override
-	public String updateEmpMaster(EmpMasterDTO empMasterDTO, Integer id) throws Exception {
-		EmpMaster emp = repository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
-		repository.save(this.convertToEntity(empMasterDTO, emp));
-
-		return "Employee updated";
-	}
-
-	@Override
-	public String deleteEmpMaster(Integer id) throws Exception {
-		EmpMaster emp = repository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
-		emp.setDeleted("1");
-		repository.save(emp);
-
-		return "Employee deleted";
-	}
-
-	@Override
-	public EmpMaster getEmpMasterById(Integer id) throws Exception {
-		EmpMaster emp = repository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
-
-		return emp;
-	}
-
-	@Override
-	public String createEmpMaster(EmpMasterDTO empMasterDTO) {
-
-		EmpMaster emp = new EmpMaster();
-		repository.save(this.convertToEntity(empMasterDTO, emp));
-
-		return "Employee created";
-	}
-	@Override
-	public String updateViewingOrder(Integer id, String order) throws Exception {
-		EmpMaster emp = repository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
-        emp.setViewingOrder(order);
-        repository.save(emp);
-        return "Employee updated";
-	}
-
+	LabMasterService labMasterService;
+	
 	// ---------- Helper Functions ----------
 
 	// Converting DTOs to Entities
-	private EmpMaster convertToEntity(EmpMasterDTO dto, EmpMaster emp){
+	private EmpMaster convertToEntity(EmpMasterDTO dto, EmpMaster emp) throws Exception {
 		if (dto.getEmpTitle() != null && !dto.getEmpTitle().equals(emp.getEmpTitle())) {
 			emp.setEmpTitle(dto.getEmpTitle());
 		}
@@ -107,25 +46,26 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 			emp.setEmpLastName(dto.getEmpLastName());
 		}
 		if (dto.getEmpDesignId() != null) {
-	        if (emp.getEmpDesignId() == null || !dto.getEmpDesignId().equals(emp.getEmpDesignId().getId())) {
-	            emp.setEmpDesignId(empDesignationService.findEmpDesignationById(dto.getEmpDesignId()));
-	        }
-	    }
+			if (emp.getEmpDesignId() == null || !dto.getEmpDesignId().equals(emp.getEmpDesignId().getId())) {
+				emp.setEmpDesignId(empDesignationService.findEmpDesignationById(dto.getEmpDesignId()));
+			}
+
+		}
 		if (dto.getLabId() != null) {
-	        if (emp.getLabId() == null || !dto.getLabId().equals(emp.getLabId().getId())) {
-	            emp.setLabId(labMasterService.findLabMasterById(dto.getLabId()));
-	        }
-	    }
+			if (emp.getLabId() == null || !dto.getLabId().equals(emp.getLabId().getId())) {
+				emp.setLabId(labMasterService.findLabMasterById(dto.getLabId()));
+			}
+		}
 		if (dto.getEmpRoleId() != null) {
-	        if (emp.getEmpRoleId() == null || !dto.getEmpRoleId().equals(emp.getEmpRoleId().getId())) {
-	            emp.setEmpRoleId(empRoleService.findEmpRoleById(dto.getEmpRoleId()));
-	        }
-	    }
+			if (emp.getEmpRoleId() == null || !dto.getEmpRoleId().equals(emp.getEmpRoleId().getId())) {
+				emp.setEmpRoleId(empRoleService.findEmpRoleById(dto.getEmpRoleId()));
+			}
+		}
 		if (dto.getOfficeRoomNo() != null && !dto.getOfficeRoomNo().equals(emp.getOfficeRoomNo())) {
 			emp.setOfficeRoomNo(dto.getOfficeRoomNo());
 		}
-		
-		if(dto.getLastUpdated() != null && !dto.getLastUpdated().equals(emp.getLastUpdated())) {
+
+		if (dto.getLastUpdated() != null && !dto.getLastUpdated().equals(emp.getLastUpdated())) {
 			emp.setLastUpdated(LocalDateTime.now());
 		}
 		if (dto.getViewingOrder() != null && !dto.getViewingOrder().equals(emp.getViewingOrder())) {
@@ -159,6 +99,71 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 		dto.setDeleted(empMaster.getDeleted());
 
 		return dto;
+	}
+
+	// Finding by Id
+	@Override
+	public EmpMaster findEmpMasterById(Integer id) throws Exception {
+		EmpMaster emp = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("entry not founnd"));
+
+		return emp;
+	}
+
+	@Override
+	public List<EmpMasterDTO> findAllEmpMaster() {
+
+		return repository.findAllByOrderByViewingOrderDesc().stream().map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<EmpMasterDTO> findAllEmpMasterByDeleted() {
+
+		return repository.findAllByDeletedOrderByViewingOrderDesc("0").stream().map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<EmpMasterDTO> searchEmpMaster(String search) {
+		Specification<EmpMaster> sp = EmpMasterSpecification.searchEmpMaster(search);
+
+		return repository.findAll(sp).stream().map(this::convertToDTO).collect(Collectors.toList());
+
+	}
+
+	@Override
+	public String updateEmpMaster(EmpMasterDTO empMasterDTO, Integer id) throws Exception {
+		EmpMaster emp = this.findEmpMasterById(id);
+		repository.save(this.convertToEntity(empMasterDTO, emp));
+
+		return "Employee updated";
+	}
+
+	@Override
+	public String deleteEmpMaster(Integer id) throws Exception {
+		EmpMaster emp = this.findEmpMasterById(id);
+
+		emp.setDeleted("1");
+		repository.save(emp);
+
+		return "Employee deleted";
+	}
+
+	@Override
+	public String createEmpMaster(EmpMasterDTO empMasterDTO) throws Exception {
+
+		EmpMaster emp = new EmpMaster();
+		repository.save(this.convertToEntity(empMasterDTO, emp));
+
+		return "Employee created";
+	}
+
+	@Override
+	public String updateViewingOrder(Integer id, String order) throws Exception {
+		EmpMaster emp = repository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
+		emp.setViewingOrder(order);
+		repository.save(emp);
+		return "Employee updated";
 	}
 
 }

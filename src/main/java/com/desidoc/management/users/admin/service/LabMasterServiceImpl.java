@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.desidoc.management.exception.EntityNotFoundException;
 import com.desidoc.management.lab.dto.LabMasterDTO;
 import com.desidoc.management.lab.model.LabCategory;
 import com.desidoc.management.lab.model.LabCluster;
@@ -19,55 +20,6 @@ public class LabMasterServiceImpl implements LabMasterService {
 
 	@Autowired
 	LabMasterRepository repository;
-
-	@Override
-	public List<LabMasterDTO> findAllLabMaster() {
-
-		return repository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
-
-	}
-
-	@Override
-	public List<LabMasterDTO> searchLabMaster() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<LabMasterDTO> findAllLabMasterByDeleted() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String updateLabMaster(LabMasterDTO labMaster, Integer id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String deleteLabMaster(Integer id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public LabMaster findLabMasterById(Integer id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String createLabMaster(LabMasterDTO labMaster) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String updateViewingOrder(Integer id, String order) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	// ---------- Helper Functions ----------
 
@@ -130,4 +82,53 @@ public class LabMasterServiceImpl implements LabMasterService {
 
 		return dto;
 	}
+
+	@Override
+	public List<LabMasterDTO> findAllLabMaster() {
+
+		return repository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
+
+	}
+
+	@Override
+	public List<LabMasterDTO> searchLabMaster() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<LabMasterDTO> findAllLabMasterByDeleted() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String updateLabMaster(LabMasterDTO labMaster, Integer id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String deleteLabMaster(Integer id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LabMaster findLabMasterById(Integer id) throws Exception {
+		return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Lab not found"));
+	}
+
+	@Override
+	public String createLabMaster(LabMasterDTO labMaster) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String updateViewingOrder(Integer id, String order) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

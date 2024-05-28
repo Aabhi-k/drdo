@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desidoc.management.employee.dto.EmpMasterDTO;
+import com.desidoc.management.employee.model.EmpMaster;
 import com.desidoc.management.users.admin.service.EmpMasterService;
 
 @RestController
@@ -38,15 +40,15 @@ public class EmpMasterController {
 	
 	// finding all Employees by id
 	@GetMapping("/{id}")
-    ResponseEntity<EmpMasterDTO> findEmpMasterById(@PathVariable Integer id) throws Exception {
-        return ResponseEntity.ok(service.getEmpMasterById(id));
+    ResponseEntity<EmpMaster> findEmpMasterById(@PathVariable Integer id) throws Exception {
+        return ResponseEntity.ok(service.findEmpMasterById(id));
     }
 	
 	// -------- PUT MAPPINGS --------
 
 	// updating the employee
 	@PutMapping("/{empId}")
-	ResponseEntity<String> updateEmpMaster(EmpMasterDTO empMaster, @PathVariable Integer empId) throws Exception {
+	ResponseEntity<String> updateEmpMaster(@RequestBody EmpMasterDTO empMaster, @PathVariable Integer empId) throws Exception {
         return ResponseEntity.ok(service.updateEmpMaster(empMaster, empId));
     }
 	
@@ -61,7 +63,7 @@ public class EmpMasterController {
 
 	// creating the employee
 	@PostMapping
-	ResponseEntity<String> createEmpMaster(EmpMasterDTO empMaster){
+	ResponseEntity<String> createEmpMaster(@RequestBody EmpMasterDTO empMaster) throws Exception{
         return ResponseEntity.ok(service.createEmpMaster(empMaster));
     }
 	

@@ -7,8 +7,6 @@ import com.desidoc.management.employee.model.EmpDesignation;
 
 public interface EmpDesignationService {
 
-	List<EmpDesignationDTO> findAllEmpDesignationByOrderNo();
-
 	String updateEmpDesignation(EmpDesignationDTO designation, Integer id) throws Exception;
 
 	String deleteEmpDesignation(Integer id);
@@ -19,6 +17,18 @@ public interface EmpDesignationService {
 
 	String createEmpDesignation(EmpDesignationDTO designation);
 
-	String updateOrderNo(Integer id, Integer newOrderNo);
+	String updateOrderNo(Integer id, Integer newOrderNo) throws Exception;
+	
+	//Finding individual columns
+	
+	List<EmpDesignationDTO> getAllEmpDesignationShortName();
+	
+	List<EmpDesignationDTO> getAllEmpDesignationFullName();
+    
+    List<EmpDesignationDTO> findAllEmpDesignationByOrderNo();
+    
+    
+    
+    
 
 }
