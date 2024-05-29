@@ -1,5 +1,7 @@
 package com.desidoc.management.users.admin.service.lab;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,12 @@ public class LabCategoryServiceImpl implements LabCategoryService{
 	public LabCategory findLabCategoryById(Integer id) {
 
 		return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Lab Category not found"));
+	}
+
+	@Override
+	public List<LabCategory> findAllLabCategories() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

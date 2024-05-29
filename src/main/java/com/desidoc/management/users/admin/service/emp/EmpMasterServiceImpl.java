@@ -66,9 +66,9 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 			emp.setOfficeRoomNo(dto.getOfficeRoomNo());
 		}
 
-		if (dto.getLastUpdated() != null && !dto.getLastUpdated().equals(emp.getLastUpdated())) {
-			emp.setLastUpdated(LocalDateTime.now());
-		}
+		
+		emp.setLastUpdated(LocalDateTime.now());
+		
 		if (dto.getViewingOrder() != null && !dto.getViewingOrder().equals(emp.getViewingOrder())) {
 			emp.setViewingOrder(dto.getViewingOrder());
 		}
@@ -94,7 +94,7 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 		dto.setOfficeRoomNo(empMaster.getOfficeRoomNo());
 		dto.setLabId(empMaster.getLabId().getId());
 		dto.setEmpRoleId(empMaster.getEmpRoleId().getId());
-		dto.setLastUpdated(LocalDateTime.now());
+		dto.setLastUpdated(empMaster.getLastUpdated());
 		dto.setViewingOrder(empMaster.getViewingOrder());
 		dto.setAddlDesign(empMaster.getAddlDesign());
 		dto.setDeleted(empMaster.getDeleted());

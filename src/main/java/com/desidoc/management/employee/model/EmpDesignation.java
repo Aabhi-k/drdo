@@ -2,6 +2,7 @@ package com.desidoc.management.employee.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +25,7 @@ public class EmpDesignation {
 	private String designFullName;
 
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cadre_id", referencedColumnName = "cadre_id")
 	private EmpCadre cadreId; //foreign key to emp_cadre
 

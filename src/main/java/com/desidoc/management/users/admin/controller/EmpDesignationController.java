@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.desidoc.management.employee.dto.EmpDesignationDTO;
 import com.desidoc.management.employee.model.EmpDesignation;
+import com.desidoc.management.employee.projections.empdesignation.EmpDesignAndCadre;
+import com.desidoc.management.employee.projections.empdesignation.EmpDesignationFullNameProjection;
 import com.desidoc.management.users.admin.service.emp.EmpDesignationService;
 
 @RestController
@@ -29,8 +31,8 @@ public class EmpDesignationController {
 
 	// Getting all employees
 	@GetMapping
-	ResponseEntity<List<EmpDesignationDTO>> findAllEmpDesignationByOrderNo() {
-		return ResponseEntity.ok(service.findAllEmpDesignationByOrderNo());
+	ResponseEntity<List<EmpDesignAndCadre>> findAllEmpDesignationByOrderNo() {
+		return ResponseEntity.ok(service.getAllEmpDesignAndCadre());
 	}
 
 	// Searching in employees
@@ -44,6 +46,12 @@ public class EmpDesignationController {
 	ResponseEntity<EmpDesignation> findEmpDesignationById(@PathVariable Integer empId) throws Exception {
 		return ResponseEntity.ok(service.findEmpDesignationById(empId));
 	}
+	
+	@GetMapping("/fname")
+	ResponseEntity<List<EmpDesignationFullNameProjection>> getAllEmpDesignationFullName() {
+        return ResponseEntity.ok(service.getAllEmpDesignationFullName());
+    }
+	
 
 	// -------- PUT MAPPINGS --------
 

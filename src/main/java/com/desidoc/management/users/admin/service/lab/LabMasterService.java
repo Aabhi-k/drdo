@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.desidoc.management.lab.dto.LabMasterDTO;
 import com.desidoc.management.lab.model.LabMaster;
+import com.desidoc.management.lab.projections.labmaster.LabMasterProjection;
 
 public interface LabMasterService {
 
-	List<LabMasterDTO> findAllLabMaster();
+	List<LabMasterProjection> findAllLabMaster();
 
-	List<LabMasterDTO> searchLabMaster();
+	List<LabMasterDTO> searchLabMaster(String search);
 
 	List<LabMasterDTO> findAllLabMasterByDeleted();
 
@@ -19,8 +20,8 @@ public interface LabMasterService {
 
 	LabMaster findLabMasterById(Integer id) throws Exception;
 
-	String createLabMaster(LabMasterDTO labMaster);
+	String createLabMaster(LabMasterDTO labMaster) throws Exception;
 
-	String updateViewingOrder(Integer id, String order) throws Exception;
+	String updateViewingOrder(Integer id, Integer order) throws Exception;
 
 }

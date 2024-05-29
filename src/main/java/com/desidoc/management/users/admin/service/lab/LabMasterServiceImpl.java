@@ -5,18 +5,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.desidoc.management.exception.EntityNotFoundException;
 import com.desidoc.management.lab.dto.LabMasterDTO;
-import com.desidoc.management.lab.model.LabCategory;
 import com.desidoc.management.lab.model.LabCluster;
 import com.desidoc.management.lab.model.LabMaster;
-import com.desidoc.management.lab.repository.LabCategoryRepository;
-import com.desidoc.management.lab.repository.LabClusterRepository;
+import com.desidoc.management.lab.projections.labmaster.LabMasterProjection;
 import com.desidoc.management.lab.repository.LabMasterRepository;
+import com.desidoc.management.lab.specifications.LabMasterSpecification;
 import com.desidoc.management.others.city.CityMaster;
-import com.desidoc.management.others.city.CityMasterRepository;
 import com.desidoc.management.users.admin.service.others.city.CityMasterService;
 
 @Service
@@ -36,19 +35,18 @@ public class LabMasterServiceImpl implements LabMasterService {
 
 	// Converting DTOs to Entities
 	private LabMaster convertToEntity(LabMasterDTO dto, LabMaster lab) throws Exception {
-		if (dto.getLabAuthName() != null && dto.getLabAuthName().equals(lab.getLabAuthName())) {
+		if (dto.getLabAuthName() != null && !dto.getLabAuthName().equals(lab.getLabAuthName())) {
 			lab.setLabAuthName(dto.getLabAuthName());
 		}
-		if (dto.getLabShortName() != null && dto.getLabShortName().equals(lab.getLabShortName())) {
+		if (dto.getLabShortName() != null && !dto.getLabShortName().equals(lab.getLabShortName())) {
 			lab.setLabShortName(dto.getLabShortName());
 		}
-		if (dto.getLabFullName() != null && dto.getLabFullName().equals(lab.getLabFullName())) {
+		if (dto.getLabFullName() != null && !dto.getLabFullName().equals(lab.getLabFullName())) {
 			lab.setLabFullName(dto.getLabFullName());
 		}
 		if (dto.getLabCatId() != null) {
 			if (lab.getLabCatId() == null || !dto.getLabCatId().equals(lab.getLabCatId().getId())) {
-				LabCategory labCategory = labCategoryService.findLabCategoryById(dto.getLabCatId());
-				lab.setLabCatId(labCategory);
+				lab.setLabCatId(labCategoryService.findLabCategoryById(dto.getLabCatId()));
 			}
 		}
 		if (dto.getLabCityId() != null) {
@@ -66,17 +64,16 @@ public class LabMasterServiceImpl implements LabMasterService {
 			}
 		}
 
-		if (dto.getOtherGroup() != null && dto.getOtherGroup().equals(lab.getOtherGroup())) {
+		if (dto.getOtherGroup() != null && !dto.getOtherGroup().equals(lab.getOtherGroup())) {
 			lab.setOtherGroup(dto.getOtherGroup());
 		}
 
-		if (dto.getLastUpdated() != null && dto.getLastUpdated().equals(lab.getLastUpdated())) {
-			lab.setLastUpdated(LocalDateTime.now());
-		}
-		if (dto.getDeleted() != null && dto.getDeleted().equals(lab.getDeleted())) {
+		lab.setLastUpdated(LocalDateTime.now());
+		
+		if (dto.getDeleted() != null && !dto.getDeleted().equals(lab.getDeleted())) {
 			lab.setDeleted(dto.getDeleted());
 		}
-		if (dto.getViewingOrder() != null && dto.getViewingOrder().equals(lab.getViewingOrder())) {
+		if (dto.getViewingOrder() != null && !dto.getViewingOrder().equals(lab.getViewingOrder())) {
 			lab.setViewingOrder(dto.getViewingOrder());
 		}
 
@@ -87,6 +84,7 @@ public class LabMasterServiceImpl implements LabMasterService {
 	private LabMasterDTO convertToDTO(LabMaster lab) {
 		LabMasterDTO dto = new LabMasterDTO();
 
+		dto.setId(lab.getId());
 		dto.setLabAuthName(lab.getLabAuthName());
 		dto.setLabShortName(lab.getLabShortName());
 		dto.setLabFullName(lab.getLabFullName());
@@ -94,7 +92,8 @@ public class LabMasterServiceImpl implements LabMasterService {
 		dto.setLabCityId(lab.getLabCityId().getId());
 		dto.setLabClusterId(lab.getLabClusterId().getId());
 		dto.setOtherGroup(lab.getOtherGroup());
-		dto.setLastUpdated(LocalDateTime.now());
+		dto.setLastUpdated(lab.getLastUpdated());
+		
 
 		return dto;
 	}
@@ -106,46 +105,52 @@ public class LabMasterServiceImpl implements LabMasterService {
 	}
 
 	@Override
-	public List<LabMasterDTO> findAllLabMaster() {
+	public List<LabMasterProjection> findAllLabMaster() {
+		return repository.findAllLabMaster();
 
-		return repository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
 
 	}
 
 	@Override
-	public List<LabMasterDTO> searchLabMaster() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<LabMasterDTO> searchLabMaster(String search) {
+		Specification<LabMaster> sp = LabMasterSpecification.searchLabMaster(search);
+		
+		return repository.findAll(sp).stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<LabMasterDTO> findAllLabMasterByDeleted() {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findAllByDeleted("0").stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
 	@Override
 	public String updateLabMaster(LabMasterDTO labMaster, Integer id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		LabMaster lab = this.findLabMasterById(id);
+		repository.save(this.convertToEntity(labMaster, lab));
+		return "updated lab";
 	}
 
 	@Override
 	public String deleteLabMaster(Integer id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		LabMaster lab = this.findLabMasterById(id);
+		lab.setDeleted("1");
+		repository.save(lab);
+		return "deleted lab";
 	}
 
 	@Override
-	public String createLabMaster(LabMasterDTO labMaster) {
-		// TODO Auto-generated method stub
-		return null;
+	public String createLabMaster(LabMasterDTO labMaster) throws Exception {
+		LabMaster lab = new LabMaster();
+		repository.save(this.convertToEntity(labMaster, lab));
+		return "Lab created";
 	}
 
 	@Override
-	public String updateViewingOrder(Integer id, String order) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public String updateViewingOrder(Integer id, Integer order) throws Exception {
+		LabMaster lab = this.findLabMasterById(id);
+		lab.setViewingOrder(order);
+		repository.save(lab);
+		return "updated order";
 	}
 
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.desidoc.management.employee.dto.EmpDesignationDTO;
 import com.desidoc.management.employee.model.EmpDesignation;
+import com.desidoc.management.employee.projections.empdesignation.EmpDesignAndCadre;
+import com.desidoc.management.employee.projections.empdesignation.EmpDesignationFullNameProjection;
 
 public interface EmpDesignationService {
 
@@ -19,13 +21,15 @@ public interface EmpDesignationService {
 
 	String updateOrderNo(Integer id, Integer newOrderNo) throws Exception;
 	
+	List<EmpDesignationDTO> findAllEmpDesignationByOrderNo();
+	
 	//Finding individual columns
+	List<EmpDesignAndCadre> getAllEmpDesignAndCadre();
 	
 	List<EmpDesignationDTO> getAllEmpDesignationShortName();
 	
-	List<EmpDesignationDTO> getAllEmpDesignationFullName();
+	List<EmpDesignationFullNameProjection> getAllEmpDesignationFullName();
     
-    List<EmpDesignationDTO> findAllEmpDesignationByOrderNo();
     
     
     

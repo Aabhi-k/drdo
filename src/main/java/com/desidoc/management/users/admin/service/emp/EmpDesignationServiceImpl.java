@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.desidoc.management.employee.dto.EmpDesignationDTO;
 import com.desidoc.management.employee.model.EmpDesignation;
+import com.desidoc.management.employee.projections.empdesignation.EmpDesignAndCadre;
+import com.desidoc.management.employee.projections.empdesignation.EmpDesignationFullNameProjection;
 import com.desidoc.management.employee.repository.EmpDesignationRepository;
 import com.desidoc.management.employee.specifications.EmpDesignationSpecification;
 
@@ -57,8 +59,7 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 	// Finding all by Id
 	@Override
 	public EmpDesignation findEmpDesignationById(Integer id) throws Exception {
-		return repository.findById(id)
-				.orElseThrow(() -> new Exception("Employee Designation not found"));
+		return repository.findById(id).orElseThrow(() -> new Exception("Employee Designation not found"));
 	}
 
 	@Override
@@ -117,13 +118,16 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 
 	// to be used in future if we need to
 	@Override
-	public List<EmpDesignationDTO> getAllEmpDesignationFullName() {
-		return repository.findByDesignFullNameIsNotNull().stream().map(projection -> {
-			EmpDesignationDTO dto = new EmpDesignationDTO();
-			dto.setDesignFullName(projection.getDesignFullName());
-			return dto;
-		}).collect(Collectors.toList());
+	public List<EmpDesignationFullNameProjection> getAllEmpDesignationFullName() {
+		return repository.findByDesignFullNameIsNotNull();
 
+	}
+
+	@Override
+	public List<EmpDesignAndCadre> getAllEmpDesignAndCadre() {
+		List<EmpDesignAndCadre> results = repository.findAllProjectedBy();
+		
+		return results;
 	}
 
 }

@@ -70,7 +70,7 @@ public class EmpMasterController {
 	// -------- DELTE MAPPINGS --------
 	
     // deleting the employee
-	@PutMapping("/{empid}")
+	@PutMapping("/{empid}/del")
     ResponseEntity<String> deleteEmpMaster(@PathVariable Integer empid) throws Exception {
         return ResponseEntity.ok(service.deleteEmpMaster(empid));
     }

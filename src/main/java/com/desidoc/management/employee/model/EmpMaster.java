@@ -6,6 +6,7 @@ import com.desidoc.management.lab.model.LabMaster;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,7 +37,7 @@ public class EmpMaster {
     @Column(name = "emp_last_name")
     private String empLastName;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_design_id", referencedColumnName = "id")
     private EmpDesignation empDesignId; //foreign key to emp_designation
 
@@ -45,11 +46,11 @@ public class EmpMaster {
 
     
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lab_id", referencedColumnName = "id")
     private LabMaster labId; //foreign key to lab_master
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_role_id", referencedColumnName = "id") 
     private EmpRole empRoleId; //foreign key to emp_role
 
@@ -59,7 +60,7 @@ public class EmpMaster {
     
    
     @Column(name = "viewing_order")
-    private String viewingOrder;  //need to change the ordering system
+    private String viewingOrder = "-1";  //need to change the ordering system
 
     @Column(name = "addl_design")
     private String addlDesign;

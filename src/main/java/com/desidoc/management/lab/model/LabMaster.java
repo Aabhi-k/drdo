@@ -6,6 +6,7 @@ import com.desidoc.management.others.city.CityMaster;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,38 +22,38 @@ public class LabMaster {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "lab_auth_name", nullable = false, length = 200)
+	@Column(name = "lab_auth_name", length = 200)
 	private String labAuthName;
 
-	@Column(name = "lab_short_name", nullable = false, length = 45)
+	@Column(name = "lab_short_name",  length = 45)
 	private String labShortName;
 
-	@Column(name = "lab_full_name", nullable = false, length = 200)
+	@Column(name = "lab_full_name",  length = 200)
 	private String labFullName;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lab_cat_id", referencedColumnName = "id")
 	private LabCategory labCatId; // foreign key to LabCategory
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lab_city_id", referencedColumnName = "id")
 	private CityMaster labCityId; // foreign key to CityMaster
 
-	@ManyToOne
-	@JoinColumn(name = "lab_cluster_id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "lab_cluster_id", referencedColumnName = "id")
 	private LabCluster labClusterId; // foreign key to Lab Cluster
 
 	@Column(name = "other_group", length = 45)
 	private String otherGroup;
 
-	@Column(name = "last_updated", nullable = false)
+	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
 
 	@Column(name = "deleted", nullable = false, length = 1)
-	private String deleted;
+	private String deleted = "0";
 
 	@Column(name = "viewing_order", nullable = false)
-	private Integer viewingOrder;
+	private Integer viewingOrder = -1;
 
 	// Constructor
 	public LabMaster() {
