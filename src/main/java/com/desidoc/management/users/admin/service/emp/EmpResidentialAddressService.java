@@ -2,8 +2,6 @@ package com.desidoc.management.users.admin.service.emp;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
-
 import com.desidoc.management.employee.dto.EmpResidentialAddressDTO;
 import com.desidoc.management.employee.model.EmpResidentialAddress;
 import com.desidoc.management.employee.projections.empresidentialaddress.EmpResidentialAddressProjection;

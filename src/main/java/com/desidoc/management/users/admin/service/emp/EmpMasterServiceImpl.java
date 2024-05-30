@@ -1,7 +1,6 @@
 package com.desidoc.management.users.admin.service.emp;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,14 +9,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.desidoc.management.employee.dto.EmpMasterDTO;
-import com.desidoc.management.employee.model.EmpDesignation;
 import com.desidoc.management.employee.model.EmpMaster;
-import com.desidoc.management.employee.model.EmpRole;
 import com.desidoc.management.employee.projections.empmaster.EmpMasterProjection;
 import com.desidoc.management.employee.repository.EmpMasterRepository;
 import com.desidoc.management.employee.specifications.EmpMasterSpecification;
 import com.desidoc.management.exception.EntityNotFoundException;
-import com.desidoc.management.lab.model.LabMaster;
 import com.desidoc.management.users.admin.service.lab.LabMasterService;
 
 @Service

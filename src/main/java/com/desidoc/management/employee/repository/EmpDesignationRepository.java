@@ -27,6 +27,7 @@ public interface EmpDesignationRepository
 
 	List<EmpDesignationShortNameProjection> findByDesignShortNameIsNotNull();
 
+	
 	List<EmpDesignationFullNameProjection> findByDesignFullNameIsNotNull();
 
 }

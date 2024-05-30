@@ -5,7 +5,7 @@ public class EmpDesignationDTO {
 	private String designShortName;
     private String designFullName;
     private Integer cadreId; //foreign key for empCadre
-    private Integer orderNo = -1;
+    private Integer orderNo;
 
     // Getters and Setters
     public String getDesignShortName() {

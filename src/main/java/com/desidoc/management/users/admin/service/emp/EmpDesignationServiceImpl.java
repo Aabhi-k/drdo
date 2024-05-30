@@ -1,6 +1,7 @@
 package com.desidoc.management.users.admin.service.emp;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +83,13 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 	// Finding all by Id
 	@Override
 	public EmpDesignation findEmpDesignationById(Integer id) {
-		return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Employee Designation not found"));
+		Optional<EmpDesignation> optionalDesignation = repository.findById(id);
+		
+		EmpDesignation designation = optionalDesignation
+				.orElseThrow(() -> new EntityNotFoundException("Employee Designation not found"));
+		
+		System.out.println(designation.getId());
+		return designation; 
 	}
 
 	@Override
@@ -119,11 +126,21 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 				.collect(Collectors.toList());
 	}
 
+	
+	// --------------- Update Methods ---------------
 	@Override
 	public String updateEmpDesignation(EmpDesignationDTO designationDTO, Integer id) throws Exception {
 		EmpDesignation emp = this.findEmpDesignationById(id);
 		repository.save(this.convertToEntity(designationDTO, emp));
 
+		return "Designation updated";
+	}
+	
+	@Override
+	public String updateOrderNo(Integer id, Integer newOrderNo) throws Exception {
+		EmpDesignation designation = this.findEmpDesignationById(id);
+		designation.setOrderNo(newOrderNo);
+		repository.save(designation);
 		return "Designation updated";
 	}
 
@@ -143,12 +160,6 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 		return "Designation created";
 	}
 
-	@Override
-	public String updateOrderNo(Integer id, Integer newOrderNo) throws Exception {
-		EmpDesignation designation = this.findEmpDesignationById(id);
-		designation.setOrderNo(newOrderNo);
-		repository.save(designation);
-		return "Designation updated";
-	}
+	
 
 }

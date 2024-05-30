@@ -17,6 +17,9 @@ public class EmpMasterSpecification {
 			// Convert the search string to lowerCase and add wildCard characters for LIKE query
 			String searchPattern = "%" + search.toLowerCase() + "%";
 			
+			// Checking if the value is not deleted
+			Predicate notDeleted = builder.equal(root.get("deleted"), "0");
+			
 			// Creating a predicate for empTitle (case insensitive)
 			Predicate empTitlePredicate = builder.like(builder.lower(root.get("empTitle")), searchPattern);
 			
@@ -30,7 +33,7 @@ public class EmpMasterSpecification {
 			Predicate empLastNamePredicate = builder.like(builder.lower(root.get("empLastName")), searchPattern);
 			
 			// Combining the predicate using OR
-			return builder.or(empTitlePredicate, empFirstNamePredicate, empMiddleNamePredicate, empLastNamePredicate);
+			return builder.and( builder.or(empTitlePredicate, empFirstNamePredicate, empMiddleNamePredicate, empLastNamePredicate), notDeleted);
 			
 		};
 	}

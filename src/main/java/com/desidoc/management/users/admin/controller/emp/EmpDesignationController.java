@@ -43,7 +43,8 @@ public class EmpDesignationController {
 
 	// finding all employees by id
 	@GetMapping("/{empId}")
-	ResponseEntity<EmpDesignation> findEmpDesignationById(@PathVariable Integer empId) throws Exception {
+	ResponseEntity<EmpDesignation> findEmpDesignationById(@PathVariable Integer empId) {
+		System.out.println(empId);
 		return ResponseEntity.ok(service.findEmpDesignationById(empId));
 	}
 	
@@ -81,7 +82,7 @@ public class EmpDesignationController {
 	// -------- DELTE MAPPINGS --------
 
 	// deleting the employee
-	@DeleteMapping("{empid}")
+	@DeleteMapping("/{empid}")
 	ResponseEntity<String> deleteEmpDesignation(@PathVariable Integer empid) {
 		return ResponseEntity.ok(service.deleteEmpDesignation(empid));
 	}
