@@ -25,16 +25,16 @@ public class EmpMaster {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "emp_title")
+    @Column(name = "emp_title", length = 45)
     private String empTitle;
 
-    @Column(name = "emp_first_name")
+    @Column(name = "emp_first_name", length = 200)
     private String empFirstName;
 
-    @Column(name = "emp_middle_name")
+    @Column(name = "emp_middle_name", length = 200)
     private String empMiddleName;
 
-    @Column(name = "emp_last_name")
+    @Column(name = "emp_last_name", length = 200)
     private String empLastName;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -59,13 +59,13 @@ public class EmpMaster {
 
     
    
-    @Column(name = "viewing_order")
+    @Column(name = "viewing_order", length = 2)
     private String viewingOrder = "-1";  //need to change the ordering system
 
-    @Column(name = "addl_design")
+    @Column(name = "addl_design", length = 200)
     private String addlDesign;
 
-    @Column(name = "deleted", nullable = false)
+    @Column(name = "deleted", nullable = false, length = 1)
     private String deleted = "0";
     
     

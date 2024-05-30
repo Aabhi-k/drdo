@@ -21,46 +21,46 @@ import com.desidoc.management.users.admin.service.lab.LabMasterService;
 @RestController
 @RequestMapping("/lab")
 public class LabMasterController {
-	
+
 	@Autowired
-    LabMasterService service;
-	
+	LabMasterService service;
 
 	// GET Mapping
-	
+
 	@GetMapping
-	ResponseEntity<List<LabMasterProjection>> fingAllLabMaster(){
+	ResponseEntity<List<LabMasterProjection>> fingAllLabMaster() {
 		return ResponseEntity.ok(service.findAllLabMaster());
 	}
-	
+
 	@GetMapping("/search")
-	ResponseEntity<List<LabMasterDTO>> searchLabMaster(@RequestParam String query){
-        return ResponseEntity.ok(service.searchLabMaster(query));
-    }
-	
+	ResponseEntity<List<LabMasterProjection>> searchLabMaster(@RequestParam String query) {
+		return ResponseEntity.ok(service.searchLabMaster(query));
+	}
+
 	@GetMapping("/{id}")
-    ResponseEntity<LabMaster> findLabMasterById(@PathVariable Integer id) throws Exception{
-        return ResponseEntity.ok(service.findLabMasterById(id));
-    }
-	
+	ResponseEntity<LabMaster> findLabMasterById(@PathVariable Integer id) throws Exception {
+		return ResponseEntity.ok(service.findLabMasterById(id));
+	}
+
 	// POST Mapping
-	
+
 	@PostMapping
-	ResponseEntity<String> createLabMaster(@RequestBody LabMasterDTO labMasterDTO) throws Exception{
-        return ResponseEntity.ok(service.createLabMaster(labMasterDTO));
-    }
-	
+	ResponseEntity<String> createLabMaster(@RequestBody LabMasterDTO labMasterDTO) throws Exception {
+		return ResponseEntity.ok(service.createLabMaster(labMasterDTO));
+	}
+
 	// PUT Mapping
-	
+
 	@PutMapping("/{id}")
-	ResponseEntity<String> updateLabMaster(@PathVariable Integer id, @RequestBody LabMasterDTO labMasterDTO) throws Exception{
-        return ResponseEntity.ok(service.updateLabMaster(labMasterDTO, id));
-    }
-	
+	ResponseEntity<String> updateLabMaster(@PathVariable Integer id, @RequestBody LabMasterDTO labMasterDTO)
+			throws Exception {
+		return ResponseEntity.ok(service.updateLabMaster(labMasterDTO, id));
+	}
+
 	// DELETE Mapping
-	
+
 	@PutMapping("/{id}/del")
-	ResponseEntity<String> deleteLabMaster(@PathVariable Integer id) throws Exception{
-        return ResponseEntity.ok(service.deleteLabMaster(id));
-    }
+	ResponseEntity<String> deleteLabMaster(@PathVariable Integer id) throws Exception {
+		return ResponseEntity.ok(service.deleteLabMaster(id));
+	}
 }

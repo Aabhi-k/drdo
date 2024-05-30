@@ -7,6 +7,7 @@ import com.desidoc.management.others.city.ZipcodeMaster;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,26 +23,26 @@ public class LabAddressMaster {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lab_id", referencedColumnName = "id")
 	private LabMaster labId; //foreign key to LabMaster
-	
-	@Column(name = "address_line1")
-	private String addressLine1;
-	
-	@Column(name = "address_line2")
-	private String addressLine2;
-	
-	@Column(name = "address_line3")
-	private String addresssLine3;
-	
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "city_id", referencedColumnName = "id")
 	private CityMaster cityId; //foreign key to CityMaster
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "zipcode_id", referencedColumnName = "id")
 	private ZipcodeMaster zipcodeId; //foreign key to ZipcodeMaster
+	
+	@Column(name = "address_line1", length = 200)
+	private String addressLine1;
+	
+	@Column(name = "address_line2", length = 200)
+	private String addressLine2;
+	
+	@Column(name = "address_line3", length = 200)
+	private String addresssLine3;
 	
 	@Column(name = "last_updated")
 	private LocalDateTime lastUpdted;

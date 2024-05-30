@@ -8,20 +8,25 @@ import com.desidoc.management.lab.projections.labmaster.LabMasterProjection;
 
 public interface LabMasterService {
 
-	List<LabMasterProjection> findAllLabMaster();
+	// -------- Find Methods ---------------------------
+	LabMaster findLabMasterById(Integer id);
 
-	List<LabMasterDTO> searchLabMaster(String search);
+	List<LabMasterProjection> findAllLabMaster();
 
 	List<LabMasterDTO> findAllLabMasterByDeleted();
 
+	// -------- Search Methods ---------------------------
+	List<LabMasterProjection> searchLabMaster(String search);
+
+	// -------- Update Methods --------------------
 	String updateLabMaster(LabMasterDTO labMaster, Integer id) throws Exception;
 
-	String deleteLabMaster(Integer id) throws Exception;
+	String updateViewingOrder(Integer id, Integer order) throws Exception;
 
-	LabMaster findLabMasterById(Integer id) throws Exception;
-
+	// -------- Create Methods --------------------
 	String createLabMaster(LabMasterDTO labMaster) throws Exception;
 
-	String updateViewingOrder(Integer id, Integer order) throws Exception;
+	// -------- Delete Method ---------------------------
+	String deleteLabMaster(Integer id) throws Exception;
 
 }

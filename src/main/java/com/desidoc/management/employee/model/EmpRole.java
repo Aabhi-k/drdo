@@ -17,10 +17,10 @@ public class EmpRole {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "role_short_name")
+	@Column(name = "role_short_name", length = 45)
 	private String roleShortName;
 	
-	@Column(name = "role_full_name")
+	@Column(name = "role_full_name", length = 200)
 	private String roleFullName;
 	
 	@Column(name = "last_updated")

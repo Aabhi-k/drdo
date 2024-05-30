@@ -14,16 +14,16 @@ public class LabCluster {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "cluster_short_name")
+	@Column(name = "cluster_short_name", length = 45)
 	private String clusterShortName;
 	
-	@Column(name = "cluster_full_name")
+	@Column(name = "cluster_full_name", length = 200)
 	private String clusterFullName;
 	
-	@Column(name = "deleted")
+	@Column(name = "deleted", length = 1)
 	private String deleted;
 	
-	@Column(name = "cluster_category")
+	@Column(name = "cluster_category", length = 1)
 	private String clusterCategory;
 
 	

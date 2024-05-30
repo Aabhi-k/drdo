@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,13 +20,13 @@ public class UsefulTelNoDelhi {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "tel_no_entity")
+	@Column(name = "tel_no_entity", length = 200)
 	private String telNoEntity;
 	
-	@Column(name = "tel_no")
+	@Column(name = "tel_no", length = 200)
 	private String telNo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cat_id", referencedColumnName = "id")
 	private TelephoneCategory catId; // foreign key to TelephoneCategory
 	

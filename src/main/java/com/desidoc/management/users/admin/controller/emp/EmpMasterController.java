@@ -35,7 +35,7 @@ public class EmpMasterController {
 	
 	// Searching in Employees
 	@GetMapping("/search")
-    ResponseEntity<List<EmpMasterDTO>> searchEmpMaster(@RequestParam String search){
+    ResponseEntity<List<EmpMasterProjection>> searchEmpMaster(@RequestParam String search){
         return ResponseEntity.ok(service.searchEmpMaster(search));
     }
 	

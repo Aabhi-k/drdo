@@ -6,6 +6,7 @@ import com.desidoc.management.others.city.StdCodeMaster;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,18 +22,18 @@ public class LabFaxMaster {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "std_code_id", referencedColumnName = "id")
 	private StdCodeMaster stdCodeId; // foreign key to StdCodeMaster
 
 	@Column(name = "fax_no", length = 100)
 	private String faxNo;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lab_id", referencedColumnName = "id")
 	private LabMaster labId; // foreign key to LabMaster
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fax_cat_id", referencedColumnName = "id")
 	private LabFaxCategory faxCatId; // foreign key to LabFaxCategory
 

@@ -15,7 +15,7 @@ public class TelephoneCategory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "tele_cat_name")
+	@Column(name = "tele_cat_name", length = 200)
 	private String teleCatName;
 	
 	//Constructors

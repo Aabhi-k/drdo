@@ -17,7 +17,7 @@ public class ZipcodeMaster {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "zipcode")
+	@Column(name = "zipcode", length = 10)
 	private String zipcode;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

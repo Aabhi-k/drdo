@@ -20,7 +20,7 @@ public interface EmpMasterService {
 	List<EmpMasterProjection> findAllEmpMasterProjection();
 
 	// Search method
-	List<EmpMasterDTO> searchEmpMaster(String search);
+	List<EmpMasterProjection> searchEmpMaster(String search);
 
 	//Update methods
 	String updateEmpMaster(EmpMasterDTO empMaster, Integer id) throws Exception;

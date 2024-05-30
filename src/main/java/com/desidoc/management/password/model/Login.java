@@ -6,6 +6,7 @@ import com.desidoc.management.lab.model.LabMaster;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,17 +22,17 @@ public class Login {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "username")
+	@Column(name = "username", length = 45)
 	private String username;
 	
-	@Column(name = "password")
+	@Column(name = "password", length = 256)
 	private String password;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lab_id", referencedColumnName = "id")
 	private LabMaster labId; // foreign key to LabMaster
 	
-	@Column(name = "active")
+	@Column(name = "active", length = 1)
 	private String active;
 	
 	@Column(name = "date_of_entry")

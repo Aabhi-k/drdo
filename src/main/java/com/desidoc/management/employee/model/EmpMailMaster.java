@@ -6,6 +6,7 @@ import com.desidoc.management.others.mail.MailCategory;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,16 +22,16 @@ public class EmpMailMaster {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
 	
-	@Column(name = "email")
+	@Column(name = "email", length = 200)
 	private String email;
 	
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "mail_cat_id", referencedColumnName = "id")
 	private MailCategory mailCatId; //foreign key to mail_category
 	
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "emp_id", referencedColumnName = "id")
 	private EmpMaster empId; //foreign key to employee master
 	

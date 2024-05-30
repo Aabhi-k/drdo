@@ -16,16 +16,16 @@ public class EventLogs {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "username")
+	@Column(name = "username", length = 100)
 	private String username;
 	
-	@Column(name = "event")
+	@Column(name = "event", length = 255)
 	private String event;
 	
-	@Column(name = "remarks")
+	@Column(name = "remarks", length = 255)
 	private String remarks;
 	
-	@Column(name = "ip")
+	@Column(name = "ip", length = 45)
 	private String ip;
 	
 	@Column(name = "date_of_entry")

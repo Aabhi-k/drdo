@@ -7,6 +7,7 @@ import com.desidoc.management.others.city.ZipcodeMaster;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,35 +23,34 @@ public class EmpResidentialAddress {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "zipcode_id", referencedColumnName = "id")
-	private ZipcodeMaster zipcodeId; //foreign key to zipcodeMaster
+	private ZipcodeMaster zipcodeId; // foreign key to zipcodeMaster
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "city_id", referencedColumnName = "id")
+	private CityMaster cityId; // Foreign key to CityMaster
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "emp_id", referencedColumnName = "id")
-	private EmpMaster empId; //foreign key to empMaster
+	private EmpMaster empId; // foreign key to empMaster
 
-	@Column(name = "address_line1")
+	@Column(name = "address_line1" , length = 200)
 	private String addressLine1;
 
-	@Column(name = "address_line2")
+	@Column(name = "address_line2", length = 200)
 	private String addressLine2;
 
-	@Column(name = "address_line3")
+	@Column(name = "address_line3", length = 200)
 	private String addressLine3;
-	
-	@ManyToOne
-	@JoinColumn(name = "city_id", referencedColumnName = "id")
-	private CityMaster cityId; //Foreign key to CityMaster
-	
+
 	@Column(name = "last_updated")
-    private LocalDateTime lastUpdated;
-	
-	
-	//   Constructors 
-	public EmpResidentialAddress() {}
-	
-	
+	private LocalDateTime lastUpdated;
+
+	// Constructors
+	public EmpResidentialAddress() {
+	}
+
 	public EmpResidentialAddress(Integer id, ZipcodeMaster zipcodeId, EmpMaster empId, String addressLine1,
 			String addressLine2, String addressLine3, CityMaster cityId, LocalDateTime lastUpdated) {
 		super();
@@ -64,9 +64,7 @@ public class EmpResidentialAddress {
 		this.lastUpdated = lastUpdated;
 	}
 
-
-
-	//   getters and setters
+	// getters and setters
 
 	public Integer getId() {
 		return id;
@@ -131,10 +129,5 @@ public class EmpResidentialAddress {
 	public void setLastUpdated(LocalDateTime lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
-	
-	
-	
-	
-	
 
 }

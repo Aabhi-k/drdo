@@ -69,7 +69,7 @@ public class LabMasterServiceImpl implements LabMasterService {
 		}
 
 		lab.setLastUpdated(LocalDateTime.now());
-		
+
 		if (dto.getDeleted() != null && !dto.getDeleted().equals(lab.getDeleted())) {
 			lab.setDeleted(dto.getDeleted());
 		}
@@ -93,29 +93,62 @@ public class LabMasterServiceImpl implements LabMasterService {
 		dto.setLabClusterId(lab.getLabClusterId().getId());
 		dto.setOtherGroup(lab.getOtherGroup());
 		dto.setLastUpdated(lab.getLastUpdated());
-		
 
 		return dto;
 	}
 
+	// Convert DTO to Projection
+	private LabMasterProjection convertToProjection(LabMasterDTO dto) {
+		return new LabMasterProjection() {
+
+			@Override
+			public String getLabAuthName() {
+				return dto.getLabAuthName();
+			}
+
+			@Override
+			public String getLabShortName() {
+				return dto.getLabShortName();
+			}
+
+			@Override
+			public String getLabFullName() {
+				return dto.getLabFullName();
+			}
+
+			@Override
+			public String getCatFullName() {
+				return labCategoryService.findLabCategoryById(dto.getLabCatId()).getCatFullName();
+			}
+
+			@Override
+			public String getClusterFullName() {
+				return labClusterService.findLabClusterById(dto.getLabClusterId()).getClusterFullName();
+			}
+
+			@Override
+			public String getCityFullName() {
+				return cityMasterService.findCityById(dto.getLabCityId()).getCityFullName();
+			}
+
+			@Override
+			public String getOtherGroup() {
+				return dto.getOtherGroup();
+			}
+
+		};
+	}
+
+	// -------- Find Methods ---------------------------
 	// finding by id
 	@Override
-	public LabMaster findLabMasterById(Integer id) throws Exception {
+	public LabMaster findLabMasterById(Integer id) {
 		return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Lab not found"));
 	}
 
 	@Override
 	public List<LabMasterProjection> findAllLabMaster() {
 		return repository.findAllLabMaster();
-
-
-	}
-
-	@Override
-	public List<LabMasterDTO> searchLabMaster(String search) {
-		Specification<LabMaster> sp = LabMasterSpecification.searchLabMaster(search);
-		
-		return repository.findAll(sp).stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
 	@Override
@@ -123,6 +156,15 @@ public class LabMasterServiceImpl implements LabMasterService {
 		return repository.findAllByDeleted("0").stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
 
+	// -------- Search Methods ---------------------------
+	@Override
+	public List<LabMasterProjection> searchLabMaster(String search) {
+		Specification<LabMaster> sp = LabMasterSpecification.searchLabMaster(search);
+		return repository.findAll(sp).stream().map(this::convertToDTO).map(this::convertToProjection)
+				.collect(Collectors.toList());
+	}
+
+	// -------- Update Methods --------------------
 	@Override
 	public String updateLabMaster(LabMasterDTO labMaster, Integer id) throws Exception {
 		LabMaster lab = this.findLabMasterById(id);
@@ -131,13 +173,14 @@ public class LabMasterServiceImpl implements LabMasterService {
 	}
 
 	@Override
-	public String deleteLabMaster(Integer id) throws Exception {
+	public String updateViewingOrder(Integer id, Integer order) throws Exception {
 		LabMaster lab = this.findLabMasterById(id);
-		lab.setDeleted("1");
+		lab.setViewingOrder(order);
 		repository.save(lab);
-		return "deleted lab";
+		return "updated order";
 	}
 
+	// -------- Create Methods --------------------
 	@Override
 	public String createLabMaster(LabMasterDTO labMaster) throws Exception {
 		LabMaster lab = new LabMaster();
@@ -145,12 +188,14 @@ public class LabMasterServiceImpl implements LabMasterService {
 		return "Lab created";
 	}
 
+	// -------- Delete Method ---------------------------
+
 	@Override
-	public String updateViewingOrder(Integer id, Integer order) throws Exception {
+	public String deleteLabMaster(Integer id) throws Exception {
 		LabMaster lab = this.findLabMasterById(id);
-		lab.setViewingOrder(order);
+		lab.setDeleted("1");
 		repository.save(lab);
-		return "updated order";
+		return "deleted lab";
 	}
 
 }

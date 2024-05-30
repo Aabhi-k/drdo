@@ -6,6 +6,7 @@ import com.desidoc.management.others.telephone.TelephoneCategory;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,21 +22,21 @@ public class EmpTelephoneMaster {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "emp_id", referencedColumnName = "id" )
 	private EmpMaster empId; //foreign key to emp_master
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tele_cat_id")
 	private TelephoneCategory teleCatId; //foreign key to telephoneCategory
 	
-	@Column(name = "telephone_number")
+	@Column(name = "telephone_number", length = 45)
 	private String telephoneNumber;
 	
 	@Column(name = "last_updated")
 	private LocalDateTime lastUpdated;
 	
-	@Column(name = "epabx")
+	@Column(name = "epabx", length = 45)
 	private String epabx;
 	
 	// Constructors

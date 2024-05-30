@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,13 +20,13 @@ public class LabEpabxMaster {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 	
-	@Column(name = "epabx")
+	@Column(name = "epabx", length = 45)
     private String epabx;
 	
-	@Column(name = "did_no")
+	@Column(name = "did_no", length = 45)
     private String didNo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lab_id", referencedColumnName = "id") 
 	private LabMaster labId; // foreign key to labMaster
 	

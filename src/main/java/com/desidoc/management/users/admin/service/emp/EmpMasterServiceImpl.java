@@ -31,13 +31,13 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 	LabMasterService labMasterService;
 	@Autowired
 	EmpMasterRepository repository;
-	
+
 	// ---------- Helper Functions ----------
 
 	// Converting DTOs to Entities
 	private EmpMaster convertToEntity(EmpMasterDTO dto, EmpMaster emp) throws Exception {
 		System.out.println(dto.getOfficeRoomNo());
-		
+
 		if (dto.getEmpTitle() != null && !dto.getEmpTitle().equals(emp.getEmpTitle())) {
 			emp.setEmpTitle(dto.getEmpTitle());
 		}
@@ -70,9 +70,8 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 			emp.setOfficeRoomNo(dto.getOfficeRoomNo());
 		}
 
-		
 		emp.setLastUpdated(LocalDateTime.now());
-		
+
 		if (dto.getViewingOrder() != null && !dto.getViewingOrder().equals(emp.getViewingOrder())) {
 			emp.setViewingOrder(dto.getViewingOrder());
 		}
@@ -107,8 +106,49 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 		return dto;
 	}
 
+	// Convert DTO to Projection
+	private EmpMasterProjection convertToProjection(EmpMasterDTO dto) {
+		return new EmpMasterProjection() {
+
+			@Override
+			public String getEmpFirstName() {
+				return dto.getEmpFirstName();
+			}
+
+			@Override
+			public String getEmpLastName() {
+				return dto.getEmpLastName();
+			}
+
+			@Override
+			public String getEmpTitle() {
+				return dto.getEmpTitle();
+			}
+
+			@Override
+			public String getOfficeRoomNo() {
+				return dto.getOfficeRoomNo();
+			}
+
+			@Override
+			public String getAddlDesign() {
+				return dto.getAddlDesign();
+			}
+
+			@Override
+			public String getLabFullName() {
+				return labMasterService.findLabMasterById(dto.getLabId()).getLabFullName();
+			}
+
+			@Override
+			public String getDesignShortName() {
+				return empDesignationService.findEmpDesignationById(dto.getEmpDesignId()).getDesignShortName();
+			}
+
+		};
+	}
 	// ---------- Find Methods ----------
-	
+
 	// Finding by Id
 	@Override
 	public EmpMaster findEmpMasterById(Integer id) {
@@ -126,30 +166,30 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 		return repository.findAllByDeletedOrderByViewingOrderDesc("0").stream().map(this::convertToDTO)
 				.collect(Collectors.toList());
 	}
-	
+
 	@Override
 	public List<EmpMasterDTO> findAllEmpMasterByLabId(Integer labId) {
 		return repository.findAllByLabId_Id(labId).stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
-	
+
 	@Override
-	public List<EmpMasterProjection> findAllEmpMasterProjection(){
+	public List<EmpMasterProjection> findAllEmpMasterProjection() {
 		return repository.findAllEmpMasterProjection();
 	}
-	
+
 	// --------- Search Methods --------------------------------
 
 	@Override
-	public List<EmpMasterDTO> searchEmpMaster(String search) {
+	public List<EmpMasterProjection> searchEmpMaster(String search) {
 		Specification<EmpMaster> sp = EmpMasterSpecification.searchEmpMaster(search);
 
-		return repository.findAll(sp).stream().map(this::convertToDTO).collect(Collectors.toList());
+		return repository.findAll(sp).stream().map(this::convertToDTO).map(this::convertToProjection)
+				.collect(Collectors.toList());
 
 	}
 
-	
 	// -------- Update Methods --------------------------------
-	
+
 	@Override
 	public String updateEmpMaster(EmpMasterDTO empMasterDTO, Integer id) throws Exception {
 		EmpMaster emp = this.findEmpMasterById(id);
@@ -157,7 +197,7 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 
 		return "Employee updated";
 	}
-	
+
 	@Override
 	public String updateViewingOrder(Integer id, String order) throws Exception {
 		EmpMaster emp = repository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
@@ -165,7 +205,7 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 		repository.save(emp);
 		return "Employee updated";
 	}
-	
+
 	// --------- Create Method --------------------------------
 
 	@Override
@@ -176,7 +216,7 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 
 		return "Employee created";
 	}
-	
+
 	// --------- Delete Method --------------------------------
 	@Override
 	public String deleteEmpMaster(Integer id) throws Exception {
@@ -187,11 +227,5 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 
 		return "Employee deleted";
 	}
-
-	
-
-	
-
-	
 
 }

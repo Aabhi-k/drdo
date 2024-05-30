@@ -14,7 +14,7 @@ public class MailCategory {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "mail_cat_name")
+	@Column(name = "mail_cat_name", length = 200)
 	private String mailCatName;
 	
 	

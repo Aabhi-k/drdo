@@ -15,10 +15,10 @@ public class EmpCadre {
 	@Column(name = "cadre_id")
 	private Integer cadreId;
 
-	@Column(name = "cadre_short_name")
+	@Column(name = "cadre_short_name", length = 45 )
 	private String cadreShortName;
 
-	@Column(name = "cadre_full_name")
+	@Column(name = "cadre_full_name", length = 200)
 	private String cadreFullName;
 
 	//	Constructors

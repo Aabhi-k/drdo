@@ -15,10 +15,10 @@ public class LabCategory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "cat_short_name")
+	@Column(name = "cat_short_name", length = 45)
 	private String catShortName;
 	
-	@Column(name = "cat_full_name")
+	@Column(name = "cat_full_name", length = 200)
 	private String catFullName;
 
 	//Constructors

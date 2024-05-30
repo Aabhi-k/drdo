@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.desidoc.management.employee.dto.EmpDesignationDTO;
 import com.desidoc.management.employee.model.EmpDesignation;
-import com.desidoc.management.employee.projections.empdesignation.EmpDesignAndCadre;
+import com.desidoc.management.employee.projections.empdesignation.EmpDesignProjection;
 import com.desidoc.management.employee.projections.empdesignation.EmpDesignationFullNameProjection;
 import com.desidoc.management.employee.repository.EmpDesignationRepository;
 import com.desidoc.management.employee.specifications.EmpDesignationSpecification;
+import com.desidoc.management.exception.EntityNotFoundException;
 
 @Service
 public class EmpDesignationServiceImpl implements EmpDesignationService {
@@ -24,6 +25,38 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 	EmpCadreService empCadreService;
 
 	// ---------- Helper Functions ----------
+
+	// Converting Entities to DTOs
+	private EmpDesignationDTO convertToDTO(EmpDesignation designation) {
+		EmpDesignationDTO dto = new EmpDesignationDTO();
+		dto.setId(designation.getId());
+		dto.setDesignShortName(designation.getDesignShortName());
+		dto.setDesignFullName(designation.getDesignFullName());
+		dto.setCadreId(designation.getCadreId().getCadreId());
+		dto.setOrderNo(designation.getOrderNo());
+		return dto;
+	}
+
+	// Converting DTO to projection
+	private EmpDesignProjection convertToProjection(EmpDesignationDTO dto) {
+		return new EmpDesignProjection() {
+			@Override
+			public String getDesignShortName() {
+				return dto.getDesignShortName(); // Assuming this field exists in the DTO
+			}
+
+			@Override
+			public String getDesignFullName() {
+				return dto.getDesignFullName(); // Assuming this field exists in the DTO
+			}
+
+			@Override
+			public String getCadreShortName() {
+				return empCadreService.findEmpCadreById(dto.getCadreId()).getCadreShortName(); // Assuming this field
+																								// exists in the DTO
+			}
+		};
+	}
 
 	// Converting DTOs to Entities
 	private EmpDesignation convertToEntity(EmpDesignationDTO dto, EmpDesignation emp) {
@@ -41,25 +74,15 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 		if (dto.getOrderNo() != null && !dto.getOrderNo().equals(emp.getOrderNo())) {
 			emp.setOrderNo(dto.getOrderNo());
 		}
-
 		return emp;
 	}
 
-	// Converting Entities to DTOs
-	private EmpDesignationDTO convertToDTO(EmpDesignation designation) {
-		EmpDesignationDTO dto = new EmpDesignationDTO();
-		dto.setId(designation.getId());
-		dto.setDesignShortName(designation.getDesignShortName());
-		dto.setDesignFullName(designation.getDesignFullName());
-		dto.setCadreId(designation.getCadreId().getCadreId());
-		dto.setOrderNo(designation.getOrderNo());
-		return dto;
-	}
+	// ----------------- Find Methods ----------------
 
 	// Finding all by Id
 	@Override
-	public EmpDesignation findEmpDesignationById(Integer id) throws Exception {
-		return repository.findById(id).orElseThrow(() -> new Exception("Employee Designation not found"));
+	public EmpDesignation findEmpDesignationById(Integer id) {
+		return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Employee Designation not found"));
 	}
 
 	@Override
@@ -68,9 +91,32 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 	}
 
 	@Override
-	public List<EmpDesignationDTO> searchEmpDesignation(String search) {
+	public List<EmpDesignProjection> findAllEmpDesignProjection() {
+		return repository.findAllProjectedBy();
+	}
+
+	// to be used in future if we need to
+	@Override
+	public List<EmpDesignationFullNameProjection> findAllEmpDesignationFullName() {
+		return repository.findByDesignFullNameIsNotNull();
+	}
+
+	@Override
+	public List<EmpDesignationDTO> findAllEmpDesignationShortName() {
+		return repository.findByDesignShortNameIsNotNull().stream().map(projection -> {
+			EmpDesignationDTO dto = new EmpDesignationDTO();
+			dto.setDesignShortName(projection.getDesignShortName());
+			return dto;
+		}).collect(Collectors.toList());
+
+	}
+
+	// --------------- Search Methods ---------------
+	@Override
+	public List<EmpDesignProjection> searchEmpDesignation(String search) {
 		Specification<EmpDesignation> sp = EmpDesignationSpecification.searchEmpDesignation(search);
-		return repository.findAll(sp).stream().map(this::convertToDTO).collect(Collectors.toList());
+		return repository.findAll(sp).stream().map(this::convertToDTO).map(this::convertToProjection)
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -103,31 +149,6 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 		designation.setOrderNo(newOrderNo);
 		repository.save(designation);
 		return "Designation updated";
-	}
-
-	// to be used in future if we need to
-	@Override
-	public List<EmpDesignationDTO> getAllEmpDesignationShortName() {
-		return repository.findByDesignShortNameIsNotNull().stream().map(projection -> {
-			EmpDesignationDTO dto = new EmpDesignationDTO();
-			dto.setDesignShortName(projection.getDesignShortName());
-			return dto;
-		}).collect(Collectors.toList());
-
-	}
-
-	// to be used in future if we need to
-	@Override
-	public List<EmpDesignationFullNameProjection> getAllEmpDesignationFullName() {
-		return repository.findByDesignFullNameIsNotNull();
-
-	}
-
-	@Override
-	public List<EmpDesignAndCadre> getAllEmpDesignAndCadre() {
-		List<EmpDesignAndCadre> results = repository.findAllProjectedBy();
-		
-		return results;
 	}
 
 }

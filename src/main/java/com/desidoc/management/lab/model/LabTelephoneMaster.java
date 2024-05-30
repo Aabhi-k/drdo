@@ -7,6 +7,7 @@ import com.desidoc.management.others.telephone.TelephoneCategory;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,15 +22,15 @@ public class LabTelephoneMaster {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lab_id", referencedColumnName = "id")
-	private LabMaster labId; //foreign key to labmaster
+	private LabMaster labId; //foreign key to labMaster
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tele_cat_id", referencedColumnName = "id")
 	private TelephoneCategory teleCatId; //foreign key to telephoneCategory
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "std_code_id", referencedColumnName = "id")
 	private StdCodeMaster stdCodeId; //foreign key to stdCodeMaster
 	
