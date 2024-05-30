@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.desidoc.management.employee.dto.EmpMasterDTO;
 import com.desidoc.management.employee.model.EmpMaster;
+import com.desidoc.management.employee.projections.empmaster.EmpMasterProjection;
 import com.desidoc.management.users.admin.service.emp.EmpMasterService;
 
 @RestController
@@ -28,8 +29,8 @@ public class EmpMasterController {
 	
 	// Getting all Employees
 	@GetMapping
-    ResponseEntity<List<EmpMasterDTO>> findAllEmpMaster(){
-		return ResponseEntity.ok(service.findAllEmpMasterByDeleted());
+    ResponseEntity<List<EmpMasterProjection>> findAllEmpMaster(){
+		return ResponseEntity.ok(service.findAllEmpMasterProjection());
 	}
 	
 	// Searching in Employees

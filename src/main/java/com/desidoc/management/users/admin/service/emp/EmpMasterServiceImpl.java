@@ -1,6 +1,7 @@
 package com.desidoc.management.users.admin.service.emp;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import com.desidoc.management.employee.dto.EmpMasterDTO;
 import com.desidoc.management.employee.model.EmpDesignation;
 import com.desidoc.management.employee.model.EmpMaster;
 import com.desidoc.management.employee.model.EmpRole;
+import com.desidoc.management.employee.projections.empmaster.EmpMasterProjection;
 import com.desidoc.management.employee.repository.EmpMasterRepository;
 import com.desidoc.management.employee.specifications.EmpMasterSpecification;
 import com.desidoc.management.exception.EntityNotFoundException;
@@ -85,6 +87,7 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 
 	// converting Entity to DTO
 	private EmpMasterDTO convertToDTO(EmpMaster empMaster) {
+
 		EmpMasterDTO dto = new EmpMasterDTO();
 
 		dto.setId(empMaster.getId());
@@ -104,26 +107,37 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 		return dto;
 	}
 
+	// ---------- Find Methods ----------
+	
 	// Finding by Id
 	@Override
 	public EmpMaster findEmpMasterById(Integer id) {
 		return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("entry not founnd"));
-
 	}
 
 	@Override
 	public List<EmpMasterDTO> findAllEmpMaster() {
-
 		return repository.findAllByOrderByViewingOrderDesc().stream().map(this::convertToDTO)
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<EmpMasterDTO> findAllEmpMasterByDeleted() {
-
 		return repository.findAllByDeletedOrderByViewingOrderDesc("0").stream().map(this::convertToDTO)
 				.collect(Collectors.toList());
 	}
+	
+	@Override
+	public List<EmpMasterDTO> findAllEmpMasterByLabId(Integer labId) {
+		return repository.findAllByLabId_Id(labId).stream().map(this::convertToDTO).collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<EmpMasterProjection> findAllEmpMasterProjection(){
+		return repository.findAllEmpMasterProjection();
+	}
+	
+	// --------- Search Methods --------------------------------
 
 	@Override
 	public List<EmpMasterDTO> searchEmpMaster(String search) {
@@ -133,6 +147,9 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 
 	}
 
+	
+	// -------- Update Methods --------------------------------
+	
 	@Override
 	public String updateEmpMaster(EmpMasterDTO empMasterDTO, Integer id) throws Exception {
 		EmpMaster emp = this.findEmpMasterById(id);
@@ -140,7 +157,27 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 
 		return "Employee updated";
 	}
+	
+	@Override
+	public String updateViewingOrder(Integer id, String order) throws Exception {
+		EmpMaster emp = repository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
+		emp.setViewingOrder(order);
+		repository.save(emp);
+		return "Employee updated";
+	}
+	
+	// --------- Create Method --------------------------------
 
+	@Override
+	public String createEmpMaster(EmpMasterDTO empMasterDTO) throws Exception {
+
+		EmpMaster emp = new EmpMaster();
+		repository.save(this.convertToEntity(empMasterDTO, emp));
+
+		return "Employee created";
+	}
+	
+	// --------- Delete Method --------------------------------
 	@Override
 	public String deleteEmpMaster(Integer id) throws Exception {
 		EmpMaster emp = this.findEmpMasterById(id);
@@ -151,21 +188,10 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 		return "Employee deleted";
 	}
 
-	@Override
-	public String createEmpMaster(EmpMasterDTO empMasterDTO) throws Exception {
+	
 
-		EmpMaster emp = new EmpMaster();
-		repository.save(this.convertToEntity(empMasterDTO, emp));
+	
 
-		return "Employee created";
-	}
-
-	@Override
-	public String updateViewingOrder(Integer id, String order) throws Exception {
-		EmpMaster emp = repository.findById(id).orElseThrow(() -> new Exception("Employee not found"));
-		emp.setViewingOrder(order);
-		repository.save(emp);
-		return "Employee updated";
-	}
+	
 
 }
