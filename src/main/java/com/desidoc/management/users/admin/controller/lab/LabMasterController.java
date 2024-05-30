@@ -1,4 +1,4 @@
-package com.desidoc.management.users.admin.controller;
+package com.desidoc.management.users.admin.controller.lab;
 
 import java.util.List;
 

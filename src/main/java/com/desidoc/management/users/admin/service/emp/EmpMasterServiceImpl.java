@@ -34,6 +34,8 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 
 	// Converting DTOs to Entities
 	private EmpMaster convertToEntity(EmpMasterDTO dto, EmpMaster emp) throws Exception {
+		System.out.println(dto.getOfficeRoomNo());
+		
 		if (dto.getEmpTitle() != null && !dto.getEmpTitle().equals(emp.getEmpTitle())) {
 			emp.setEmpTitle(dto.getEmpTitle());
 		}
@@ -104,10 +106,9 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 
 	// Finding by Id
 	@Override
-	public EmpMaster findEmpMasterById(Integer id) throws Exception {
-		EmpMaster emp = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("entry not founnd"));
+	public EmpMaster findEmpMasterById(Integer id) {
+		return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("entry not founnd"));
 
-		return emp;
 	}
 
 	@Override

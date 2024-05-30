@@ -17,7 +17,7 @@ public interface EmpMasterService {
 	
 	String deleteEmpMaster(Integer id) throws Exception;
 	
-	EmpMaster findEmpMasterById(Integer id) throws Exception;
+	EmpMaster findEmpMasterById(Integer id);
 	
 	String createEmpMaster(EmpMasterDTO empMaster) throws Exception;
 

@@ -2,6 +2,7 @@ package com.desidoc.management.others.city;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,7 +20,7 @@ public class ZipcodeMaster {
 	@Column(name = "zipcode")
 	private String zipcode;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "city_id", referencedColumnName = "id")
 	private CityMaster cityId; // foreign key to CityMaster
 

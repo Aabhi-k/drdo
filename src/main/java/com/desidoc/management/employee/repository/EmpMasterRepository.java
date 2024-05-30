@@ -15,4 +15,5 @@ public interface EmpMasterRepository extends JpaRepository<EmpMaster, Integer>, 
 	
 	// Finding all employees using the deleted column
 	List<EmpMaster> findAllByDeletedOrderByViewingOrderDesc(String deleted);
+	
 }
