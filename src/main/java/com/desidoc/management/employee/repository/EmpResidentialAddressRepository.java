@@ -1,7 +1,7 @@
 package com.desidoc.management.employee.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,6 +23,6 @@ public interface EmpResidentialAddressRepository extends JpaRepository<EmpReside
 	           "JOIN address.empId emp " +
 	           "JOIN address.zipcodeId zip " +
 	           "JOIN address.cityId city")
-	List<EmpResidentialAddressProjection> findAllEmpAddressProjections();
+	Page<EmpResidentialAddressProjection> findAllEmpAddressProjections(Pageable page);
 	
 }

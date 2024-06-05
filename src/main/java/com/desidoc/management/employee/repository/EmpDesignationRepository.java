@@ -2,6 +2,8 @@ package com.desidoc.management.employee.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -21,7 +23,7 @@ public interface EmpDesignationRepository
 			+ "FROM EmpDesignation ed "
 			+ "JOIN ed.cadreId ec "
 			+ "ORDER BY ed.orderNo DESC")
-	List<EmpDesignProjection> findAllProjectedBy();
+	Page<EmpDesignProjection> findAllProjectedBy(Pageable page);
 
 	List<EmpDesignation> findAllByOrderByOrderNoDesc();
 

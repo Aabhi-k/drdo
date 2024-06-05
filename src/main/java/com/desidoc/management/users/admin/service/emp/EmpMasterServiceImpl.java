@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -169,18 +171,17 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 	}
 
 	@Override
-	public List<EmpMasterProjection> findAllEmpMasterProjection() {
-		return repository.findAllEmpMasterProjection();
+	public Page<EmpMasterProjection> findAllEmpMasterProjection(Pageable page) {
+		return repository.findAllEmpMasterProjection(page);
 	}
 
 	// --------- Search Methods --------------------------------
 
 	@Override
-	public List<EmpMasterProjection> searchEmpMaster(String search) {
+	public Page<EmpMasterProjection> searchEmpMaster(String search, Pageable page) {
 		Specification<EmpMaster> sp = EmpMasterSpecification.searchEmpMaster(search);
 
-		return repository.findAll(sp).stream().map(this::convertToDTO).map(this::convertToProjection)
-				.collect(Collectors.toList());
+		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
 
 	}
 

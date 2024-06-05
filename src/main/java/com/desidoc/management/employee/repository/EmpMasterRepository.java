@@ -2,6 +2,8 @@ package com.desidoc.management.employee.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -34,6 +36,6 @@ public interface EmpMasterRepository extends JpaRepository<EmpMaster, Integer>, 
 			+ "JOIN e.empDesignId d " 
 			+ "WHERE e.deleted = '0' " 
 			+ "ORDER BY e.viewingOrder DESC ")
-	List<EmpMasterProjection> findAllEmpMasterProjection();
+	Page<EmpMasterProjection> findAllEmpMasterProjection(Pageable page);
 
 }

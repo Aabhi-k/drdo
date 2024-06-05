@@ -3,6 +3,9 @@ package com.desidoc.management.users.admin.controller.emp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +26,9 @@ import com.desidoc.management.users.admin.service.emp.EmpDesignationService;
 @RestController
 @RequestMapping("/emp/ed")
 public class EmpDesignationController {
+	
+	// Default size of each page
+	private static final String PAGE_SIZE = "10";
 
 	@Autowired
 	EmpDesignationService service;
@@ -31,14 +37,22 @@ public class EmpDesignationController {
 
 	// Getting all employees
 	@GetMapping
-	ResponseEntity<List<EmpDesignProjection>> findAllEmpDesignationByOrderNo() {
-		return ResponseEntity.ok(service.findAllEmpDesignProjection());
+	ResponseEntity<Page<EmpDesignProjection>> findAllEmpDesignationByOrderNo(
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = PAGE_SIZE) int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		return ResponseEntity.ok(service.findAllEmpDesignProjection(pageable));
 	}
 
 	// Searching in employees
 	@GetMapping("/search")
-	ResponseEntity<List<EmpDesignProjection>> searchEmpDesignation(@RequestParam String query) {
-		return ResponseEntity.ok(service.searchEmpDesignation(query));
+	ResponseEntity<Page<EmpDesignProjection>> searchEmpDesignation(
+			@RequestParam String query,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = PAGE_SIZE) int size) {
+		
+		Pageable pageable = PageRequest.of(page, size);
+		return ResponseEntity.ok(service.searchEmpDesignation(query, pageable));
 	}
 
 	// finding all employees by id
@@ -47,12 +61,11 @@ public class EmpDesignationController {
 		System.out.println(empId);
 		return ResponseEntity.ok(service.findEmpDesignationById(empId));
 	}
-	
+
 	@GetMapping("/fname")
 	ResponseEntity<List<EmpDesignationFullNameProjection>> getAllEmpDesignationFullName() {
-        return ResponseEntity.ok(service.findAllEmpDesignationFullName());
-    }
-	
+		return ResponseEntity.ok(service.findAllEmpDesignationFullName());
+	}
 
 	// -------- PUT MAPPINGS --------
 

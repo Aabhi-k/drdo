@@ -2,6 +2,9 @@ package com.desidoc.management.users.admin.service.emp;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.desidoc.management.employee.dto.EmpMasterDTO;
 import com.desidoc.management.employee.model.EmpMaster;
 import com.desidoc.management.employee.projections.empmaster.EmpMasterProjection;
@@ -17,10 +20,10 @@ public interface EmpMasterService {
 
 	List<EmpMasterDTO> findAllEmpMasterByDeleted();
 	
-	List<EmpMasterProjection> findAllEmpMasterProjection();
+	Page<EmpMasterProjection> findAllEmpMasterProjection(Pageable page);
 
 	// Search method
-	List<EmpMasterProjection> searchEmpMaster(String search);
+	Page<EmpMasterProjection> searchEmpMaster(String search, Pageable page);
 
 	//Update methods
 	String updateEmpMaster(EmpMasterDTO empMaster, Integer id) throws Exception;

@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.desidoc.management.employee.dto.EmpResidentialAddressDTO;
@@ -83,14 +85,10 @@ public class EmpResidentialAddressServiceImpl implements EmpResidentialAddressSe
 		return null;
 	}
 
-	@Override
-	public List<EmpResidentialAddressDTO> findAllEmpAddress() {
-		return null;
-	}
 
 	@Override
-	public List<EmpResidentialAddressProjection> findAllEmpAddressProjections() {
-		return repository.findAllEmpAddressProjections();
+	public Page<EmpResidentialAddressProjection> findAllEmpAddressProjections(Pageable page) {
+		return repository.findAllEmpAddressProjections(page);
 	}
 
 }

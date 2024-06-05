@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -98,8 +100,8 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 	}
 
 	@Override
-	public List<EmpDesignProjection> findAllEmpDesignProjection() {
-		return repository.findAllProjectedBy();
+	public Page<EmpDesignProjection> findAllEmpDesignProjection(Pageable page) {
+		return repository.findAllProjectedBy(page);
 	}
 
 	// to be used in future if we need to
@@ -120,10 +122,9 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 
 	// --------------- Search Methods ---------------
 	@Override
-	public List<EmpDesignProjection> searchEmpDesignation(String search) {
+	public Page<EmpDesignProjection> searchEmpDesignation(String search, Pageable page) {
 		Specification<EmpDesignation> sp = EmpDesignationSpecification.searchEmpDesignation(search);
-		return repository.findAll(sp).stream().map(this::convertToDTO).map(this::convertToProjection)
-				.collect(Collectors.toList());
+		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
 	}
 
 	

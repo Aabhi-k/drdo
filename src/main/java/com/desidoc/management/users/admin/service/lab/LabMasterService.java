@@ -2,6 +2,9 @@ package com.desidoc.management.users.admin.service.lab;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.desidoc.management.lab.dto.LabMasterDTO;
 import com.desidoc.management.lab.model.LabMaster;
 import com.desidoc.management.lab.projections.labmaster.LabMasterProjection;
@@ -11,12 +14,12 @@ public interface LabMasterService {
 	// -------- Find Methods ---------------------------
 	LabMaster findLabMasterById(Integer id);
 
-	List<LabMasterProjection> findAllLabMaster();
+	Page<LabMasterProjection> findAllLabMaster(Pageable pageable);
 
 	List<LabMasterDTO> findAllLabMasterByDeleted();
 
 	// -------- Search Methods ---------------------------
-	List<LabMasterProjection> searchLabMaster(String search);
+	Page<LabMasterProjection> searchLabMaster(String search, Pageable pageable);
 
 	// -------- Update Methods --------------------
 	String updateLabMaster(LabMasterDTO labMaster, Integer id) throws Exception;

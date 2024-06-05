@@ -1,8 +1,9 @@
 package com.desidoc.management.users.admin.controller.lab;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,9 @@ import com.desidoc.management.users.admin.service.lab.LabMasterService;
 @RestController
 @RequestMapping("/lab")
 public class LabMasterController {
+	
+	//Default page size of a page
+	private static final String PAGE_SIZE = "10";
 
 	@Autowired
 	LabMasterService service;
@@ -28,13 +32,20 @@ public class LabMasterController {
 	// GET Mapping
 
 	@GetMapping
-	ResponseEntity<List<LabMasterProjection>> fingAllLabMaster() {
-		return ResponseEntity.ok(service.findAllLabMaster());
+	ResponseEntity<Page<LabMasterProjection>> fingAllLabMaster(
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = PAGE_SIZE) int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		return ResponseEntity.ok(service.findAllLabMaster(pageable));
 	}
 
 	@GetMapping("/search")
-	ResponseEntity<List<LabMasterProjection>> searchLabMaster(@RequestParam String query) {
-		return ResponseEntity.ok(service.searchLabMaster(query));
+	ResponseEntity<Page<LabMasterProjection>> searchLabMaster(
+			@RequestParam String query,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = PAGE_SIZE) int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		return ResponseEntity.ok(service.searchLabMaster(query, pageable));
 	}
 
 	@GetMapping("/{id}")

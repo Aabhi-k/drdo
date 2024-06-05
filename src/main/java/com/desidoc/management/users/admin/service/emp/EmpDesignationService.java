@@ -2,6 +2,9 @@ package com.desidoc.management.users.admin.service.emp;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.desidoc.management.employee.dto.EmpDesignationDTO;
 import com.desidoc.management.employee.model.EmpDesignation;
 import com.desidoc.management.employee.projections.empdesignation.EmpDesignProjection;
@@ -14,7 +17,7 @@ public interface EmpDesignationService {
 
 	List<EmpDesignationDTO> findAllEmpDesignationByOrderNo();
 
-	List<EmpDesignProjection> findAllEmpDesignProjection();
+	Page<EmpDesignProjection> findAllEmpDesignProjection(Pageable page);
 
 	// Finding individual columns
 
@@ -23,7 +26,7 @@ public interface EmpDesignationService {
 	List<EmpDesignationFullNameProjection> findAllEmpDesignationFullName();
 
 	// Search
-	List<EmpDesignProjection> searchEmpDesignation(String search);
+	Page<EmpDesignProjection> searchEmpDesignation(String search, Pageable page);
 
 	// Update Method
 	String updateEmpDesignation(EmpDesignationDTO designation, Integer id) throws Exception;

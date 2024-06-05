@@ -2,6 +2,9 @@ package com.desidoc.management.users.admin.service.emp;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.desidoc.management.employee.dto.EmpResidentialAddressDTO;
 import com.desidoc.management.employee.model.EmpResidentialAddress;
 import com.desidoc.management.employee.projections.empresidentialaddress.EmpResidentialAddressProjection;
@@ -9,7 +12,5 @@ import com.desidoc.management.employee.projections.empresidentialaddress.EmpResi
 public interface EmpResidentialAddressService {
 
 	EmpResidentialAddress getEmpResidentialAddressById(Integer id);
-	
-	List<EmpResidentialAddressDTO> findAllEmpAddress();
-	List<EmpResidentialAddressProjection> findAllEmpAddressProjections();
+	Page<EmpResidentialAddressProjection> findAllEmpAddressProjections(Pageable page);
 }

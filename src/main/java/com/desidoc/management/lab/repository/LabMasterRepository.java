@@ -2,6 +2,8 @@ package com.desidoc.management.lab.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -28,5 +30,5 @@ public interface LabMasterRepository extends JpaRepository<LabMaster, Integer> ,
 	           "JOIN lm.labCityId cm " +
 	           "JOIN lm.labClusterId lcl " +
 	           "WHERE lm.deleted = '0'")
-	List<LabMasterProjection> findAllLabMaster();
+	Page<LabMasterProjection> findAllLabMaster(Pageable pageable);
 }
