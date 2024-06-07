@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import com.desidoc.management.employee.model.EmpDesignation;
 import com.desidoc.management.employee.projections.empdesignation.EmpDesignProjection;
-import com.desidoc.management.employee.projections.empdesignation.EmpDesignationDropDownProjection;
 import com.desidoc.management.employee.projections.empdesignation.EmpDesignationShortNameProjection;
+import com.desidoc.management.others.projection.DropDownProjection;
 
 @Repository
 public interface EmpDesignationRepository
@@ -30,9 +30,9 @@ public interface EmpDesignationRepository
 	List<EmpDesignationShortNameProjection> findByDesignShortNameIsNotNull();
 
 	@Query("SELECT ed.id as id, "
-			+ "ed.designFullName as designFullName "
+			+ "ed.designFullName as name "
 			+ "FROM EmpDesignation ed "
 			+ "ORDER BY ed.orderNo DESC")
-	List<EmpDesignationDropDownProjection> findAllProjectionDropDown();
+	List<DropDownProjection> findAllProjectionDropDown();
 
 }

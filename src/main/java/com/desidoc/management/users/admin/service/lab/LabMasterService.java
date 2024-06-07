@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import com.desidoc.management.lab.dto.LabMasterDTO;
 import com.desidoc.management.lab.model.LabMaster;
 import com.desidoc.management.lab.projections.labmaster.LabMasterProjection;
+import com.desidoc.management.others.projection.DropDownProjection;
 
 public interface LabMasterService {
 
@@ -31,5 +32,7 @@ public interface LabMasterService {
 
 	// -------- Delete Method ---------------------------
 	String deleteLabMaster(Integer id) throws Exception;
+
+	List<DropDownProjection> searchLabMasterDropDown(String query);
 
 }

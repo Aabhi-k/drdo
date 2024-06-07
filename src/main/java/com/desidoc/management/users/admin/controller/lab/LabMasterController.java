@@ -1,5 +1,7 @@
 package com.desidoc.management.users.admin.controller.lab;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.desidoc.management.lab.dto.LabMasterDTO;
 import com.desidoc.management.lab.model.LabMaster;
 import com.desidoc.management.lab.projections.labmaster.LabMasterProjection;
+import com.desidoc.management.others.projection.DropDownProjection;
 import com.desidoc.management.users.admin.service.lab.LabMasterService;
 
 @RestController
@@ -51,6 +54,12 @@ public class LabMasterController {
 	@GetMapping("/{id}")
 	ResponseEntity<LabMaster> findLabMasterById(@PathVariable Integer id) throws Exception {
 		return ResponseEntity.ok(service.findLabMasterById(id));
+	}
+	
+	@GetMapping("/dropdown/search")
+	ResponseEntity<List<DropDownProjection>> searchLabMasterDropDown(@RequestParam String query) {
+		return ResponseEntity.ok(service.searchLabMasterDropDown(query));
+		
 	}
 
 	// POST Mapping

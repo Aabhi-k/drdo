@@ -4,15 +4,12 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.desidoc.management.employee.model.EmpMaster;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 
 public class EmpMasterSpecification {
 	
 	public static Specification<EmpMaster> searchEmpMaster(String search){
-		return (Root<EmpMaster> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
+		return (root, query, builder) -> {
 			
 			// Convert the search string to lowerCase and add wildCard characters for LIKE query
 			String searchPattern = "%" + search.toLowerCase() + "%";

@@ -18,6 +18,7 @@ import com.desidoc.management.lab.projections.labmaster.LabMasterProjection;
 import com.desidoc.management.lab.repository.LabMasterRepository;
 import com.desidoc.management.lab.specifications.LabMasterSpecification;
 import com.desidoc.management.others.city.CityMaster;
+import com.desidoc.management.others.projection.DropDownProjection;
 import com.desidoc.management.users.admin.service.others.city.CityMasterService;
 
 @Service
@@ -141,6 +142,23 @@ public class LabMasterServiceImpl implements LabMasterService {
 		};
 	}
 
+	private DropDownProjection convertToDropDown(LabMasterDTO dto) {
+		return new DropDownProjection() {
+
+			@Override
+			public Integer getId() {
+				
+				return dto.getId();
+			}
+
+			@Override
+			public String getName() {
+				return dto.getLabFullName();
+			}
+			
+		};
+		
+	}
 	// -------- Find Methods ---------------------------
 	// finding by id
 	@Override
@@ -163,6 +181,11 @@ public class LabMasterServiceImpl implements LabMasterService {
 	public Page<LabMasterProjection> searchLabMaster(String search, Pageable page) {
 		Specification<LabMaster> sp = LabMasterSpecification.searchLabMaster(search);
 		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
+	}
+	@Override
+	public List<DropDownProjection> searchLabMasterDropDown(String query) {
+		Specification<LabMaster> sp = LabMasterSpecification.searchLabMaster(query);
+		return repository.findAll(sp).stream().map(this::convertToDTO).map(this::convertToDropDown).toList();
 	}
 
 	// -------- Update Methods --------------------
@@ -198,5 +221,8 @@ public class LabMasterServiceImpl implements LabMasterService {
 		repository.save(lab);
 		return "deleted lab";
 	}
+
+	
+	
 
 }

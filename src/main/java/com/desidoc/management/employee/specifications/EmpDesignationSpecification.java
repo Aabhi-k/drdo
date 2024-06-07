@@ -4,15 +4,12 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.desidoc.management.employee.model.EmpDesignation;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 
 public class EmpDesignationSpecification {
 	
 	public static Specification<EmpDesignation> searchEmpDesignation(String search){
-		return (Root<EmpDesignation> root, CriteriaQuery<?> query, CriteriaBuilder builder) ->{
+		return (root, query, builder) ->{
 			
 			// Convert the search string to lowerCase and add wildCard characters for LIKE query
 			String searchPattern = "%" + search.toLowerCase() + "%";
