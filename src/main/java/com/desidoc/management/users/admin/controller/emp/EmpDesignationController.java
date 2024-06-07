@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.desidoc.management.employee.dto.EmpDesignationDTO;
 import com.desidoc.management.employee.model.EmpDesignation;
 import com.desidoc.management.employee.projections.empdesignation.EmpDesignProjection;
-import com.desidoc.management.employee.projections.empdesignation.EmpDesignationFullNameProjection;
+import com.desidoc.management.employee.projections.empdesignation.EmpDesignationDropDownProjection;
 import com.desidoc.management.users.admin.service.emp.EmpDesignationService;
 
 @RestController
 @RequestMapping("/emp/ed")
 public class EmpDesignationController {
-	
+
 	// Default size of each page
 	private static final String PAGE_SIZE = "10";
 
@@ -37,22 +37,10 @@ public class EmpDesignationController {
 
 	// Getting all employees
 	@GetMapping
-	ResponseEntity<Page<EmpDesignProjection>> findAllEmpDesignationByOrderNo(
-			@RequestParam(defaultValue = "0") int page,
+	ResponseEntity<Page<EmpDesignProjection>> findAllEmpDesignationByOrderNo(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = PAGE_SIZE) int size) {
 		Pageable pageable = PageRequest.of(page, size);
 		return ResponseEntity.ok(service.findAllEmpDesignProjection(pageable));
-	}
-
-	// Searching in employees
-	@GetMapping("/search")
-	ResponseEntity<Page<EmpDesignProjection>> searchEmpDesignation(
-			@RequestParam String query,
-			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = PAGE_SIZE) int size) {
-		
-		Pageable pageable = PageRequest.of(page, size);
-		return ResponseEntity.ok(service.searchEmpDesignation(query, pageable));
 	}
 
 	// finding all employees by id
@@ -62,11 +50,25 @@ public class EmpDesignationController {
 		return ResponseEntity.ok(service.findEmpDesignationById(empId));
 	}
 
-	@GetMapping("/fname")
-	ResponseEntity<List<EmpDesignationFullNameProjection>> getAllEmpDesignationFullName() {
-		return ResponseEntity.ok(service.findAllEmpDesignationFullName());
+	@GetMapping("/dropdown")
+	ResponseEntity<List<EmpDesignationDropDownProjection>> getAllEmpDesignationFullName() {
+		return ResponseEntity.ok(service.findAllForDropDown());
 	}
 
+	// Searching in employees
+	@GetMapping("/search")
+	ResponseEntity<Page<EmpDesignProjection>> searchEmpDesignation(@RequestParam String query,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+
+		Pageable pageable = PageRequest.of(page, size);
+		return ResponseEntity.ok(service.searchEmpDesignation(query, pageable));
+	}
+	@GetMapping("/dropdown/search")
+	ResponseEntity<List<EmpDesignationDropDownProjection>> searchAllEmpDesignationDropDown(@RequestParam String query){
+		
+		return ResponseEntity.ok(service.searchEmpDesignationDropDown(query));
+	}
+	
 	// -------- PUT MAPPINGS --------
 
 	// updating the order number of the employee

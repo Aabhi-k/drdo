@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import com.desidoc.management.employee.dto.EmpDesignationDTO;
 import com.desidoc.management.employee.model.EmpDesignation;
 import com.desidoc.management.employee.projections.empdesignation.EmpDesignProjection;
-import com.desidoc.management.employee.projections.empdesignation.EmpDesignationFullNameProjection;
+import com.desidoc.management.employee.projections.empdesignation.EmpDesignationDropDownProjection;
 
 public interface EmpDesignationService {
 
@@ -23,10 +23,12 @@ public interface EmpDesignationService {
 
 	List<EmpDesignationDTO> findAllEmpDesignationShortName();
 
-	List<EmpDesignationFullNameProjection> findAllEmpDesignationFullName();
+	List<EmpDesignationDropDownProjection> findAllForDropDown();
 
 	// Search
 	Page<EmpDesignProjection> searchEmpDesignation(String search, Pageable page);
+
+	List<EmpDesignationDropDownProjection> searchEmpDesignationDropDown(String query);
 
 	// Update Method
 	String updateEmpDesignation(EmpDesignationDTO designation, Integer id) throws Exception;
@@ -38,5 +40,6 @@ public interface EmpDesignationService {
 
 	// Delete Method
 	String deleteEmpDesignation(Integer id);
+
 
 }

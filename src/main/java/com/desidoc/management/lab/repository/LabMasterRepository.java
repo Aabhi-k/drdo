@@ -30,5 +30,7 @@ public interface LabMasterRepository extends JpaRepository<LabMaster, Integer> ,
 	           "JOIN lm.labCityId cm " +
 	           "JOIN lm.labClusterId lcl " +
 	           "WHERE lm.deleted = '0'")
-	Page<LabMasterProjection> findAllLabMaster(Pageable pageable);
+	Page<LabMasterProjection> findAllLabMaster(Pageable page);
+
+
 }

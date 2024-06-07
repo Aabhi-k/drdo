@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.desidoc.management.employee.dto.EmpDesignationDTO;
 import com.desidoc.management.employee.model.EmpDesignation;
 import com.desidoc.management.employee.projections.empdesignation.EmpDesignProjection;
-import com.desidoc.management.employee.projections.empdesignation.EmpDesignationFullNameProjection;
+import com.desidoc.management.employee.projections.empdesignation.EmpDesignationDropDownProjection;
 import com.desidoc.management.employee.repository.EmpDesignationRepository;
 import com.desidoc.management.employee.specifications.EmpDesignationSpecification;
 import com.desidoc.management.exception.EntityNotFoundException;
@@ -79,6 +79,22 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 		}
 		return emp;
 	}
+	
+	// Converting DTO to DropDown menu item
+	private EmpDesignationDropDownProjection convertToDropDownProjection(EmpDesignationDTO dto) {
+		return new EmpDesignationDropDownProjection() {
+
+            @Override
+            public Integer getId() {
+            	return dto.getId();
+            }
+
+            @Override
+            public String getDesignFullName() {
+                return dto.getDesignFullName();
+            }
+        };
+	}
 
 	// ----------------- Find Methods ----------------
 
@@ -106,8 +122,8 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 
 	// to be used in future if we need to
 	@Override
-	public List<EmpDesignationFullNameProjection> findAllEmpDesignationFullName() {
-		return repository.findByDesignFullNameIsNotNull();
+	public List<EmpDesignationDropDownProjection> findAllForDropDown() {
+		return repository.findAllProjectionDropDown();
 	}
 
 	@Override
@@ -125,6 +141,11 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 	public Page<EmpDesignProjection> searchEmpDesignation(String search, Pageable page) {
 		Specification<EmpDesignation> sp = EmpDesignationSpecification.searchEmpDesignation(search);
 		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
+	}
+	@Override
+	public List<EmpDesignationDropDownProjection> searchEmpDesignationDropDown(String query) {
+		Specification<EmpDesignation> sp = EmpDesignationSpecification.searchEmpDesignation(query);
+		return repository.findAll(sp).stream().map(this::convertToDTO).map(this::convertToDropDownProjection).toList();
 	}
 
 	
@@ -160,6 +181,10 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 
 		return "Designation created";
 	}
+
+	
+
+	
 
 	
 
