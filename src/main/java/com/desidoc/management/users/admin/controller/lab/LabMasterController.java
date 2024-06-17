@@ -56,6 +56,9 @@ public class LabMasterController {
 		return ResponseEntity.ok(service.findLabMasterById(id));
 	}
 	
+        
+    
+	
 	@GetMapping("/dropdown/search")
 	ResponseEntity<List<DropDownProjection>> searchLabMasterDropDown(@RequestParam String query) {
 		return ResponseEntity.ok(service.searchLabMasterDropDown(query));

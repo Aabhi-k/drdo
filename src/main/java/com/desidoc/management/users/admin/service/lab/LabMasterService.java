@@ -22,6 +22,8 @@ public interface LabMasterService {
 	// -------- Search Methods ---------------------------
 	Page<LabMasterProjection> searchLabMaster(String search, Pageable pageable);
 
+	List<DropDownProjection> searchLabMasterDropDown(String query);
+
 	// -------- Update Methods --------------------
 	String updateLabMaster(LabMasterDTO labMaster, Integer id) throws Exception;
 
@@ -32,7 +34,5 @@ public interface LabMasterService {
 
 	// -------- Delete Method ---------------------------
 	String deleteLabMaster(Integer id) throws Exception;
-
-	List<DropDownProjection> searchLabMasterDropDown(String query);
 
 }

@@ -175,6 +175,8 @@ public class LabMasterServiceImpl implements LabMasterService {
 	public List<LabMasterDTO> findAllLabMasterByDeleted() {
 		return repository.findAllByDeleted("0").stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
+	
+	
 
 	// -------- Search Methods ---------------------------
 	@Override
