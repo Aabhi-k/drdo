@@ -63,12 +63,15 @@ public class EmpDesignationController {
 		Pageable pageable = PageRequest.of(page, size);
 		return ResponseEntity.ok(service.searchEmpDesignation(query, pageable));
 	}
+
 	@GetMapping("/dropdown/search")
-	ResponseEntity<List<DropDownProjection>> searchAllEmpDesignationDropDown(@RequestParam String query){
-		
-		return ResponseEntity.ok(service.searchEmpDesignationDropDown(query));
+	ResponseEntity<Page<DropDownProjection>> searchAllEmpDesignationDropDown(@RequestParam String query
+			,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+		Pageable pageable = PageRequest.of(page, size);
+
+		return ResponseEntity.ok(service.searchEmpDesignationDropDown(query, pageable));
 	}
-	
+
 	// -------- PUT MAPPINGS --------
 
 	// updating the order number of the employee

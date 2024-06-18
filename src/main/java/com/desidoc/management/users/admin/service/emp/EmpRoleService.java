@@ -1,6 +1,7 @@
 package com.desidoc.management.users.admin.service.emp;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.desidoc.management.employee.model.EmpRole;
 import com.desidoc.management.others.projection.DropDownProjection;
@@ -10,6 +11,6 @@ public interface EmpRoleService {
 	
 	// searching
 	
-	List<DropDownProjection> searchDropDownMenu(String query);
+	Page<DropDownProjection> searchDropDownMenu(String query, Pageable pageable);
 
 }

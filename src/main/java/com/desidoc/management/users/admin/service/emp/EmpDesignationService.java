@@ -28,7 +28,7 @@ public interface EmpDesignationService {
 	// Search
 	Page<EmpDesignProjection> searchEmpDesignation(String search, Pageable page);
 
-	List<DropDownProjection> searchEmpDesignationDropDown(String query);
+	Page<DropDownProjection> searchEmpDesignationDropDown(String query, Pageable page);
 
 	// Update Method
 	String updateEmpDesignation(EmpDesignationDTO designation, Integer id) throws Exception;

@@ -185,9 +185,9 @@ public class LabMasterServiceImpl implements LabMasterService {
 		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
 	}
 	@Override
-	public List<DropDownProjection> searchLabMasterDropDown(String query) {
+	public Page<DropDownProjection> searchLabMasterDropDown(String query, Pageable page) {
 		Specification<LabMaster> sp = LabMasterSpecification.searchLabMaster(query);
-		return repository.findAll(sp).stream().map(this::convertToDTO).map(this::convertToDropDown).toList();
+		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToDropDown);
 	}
 
 	// -------- Update Methods --------------------

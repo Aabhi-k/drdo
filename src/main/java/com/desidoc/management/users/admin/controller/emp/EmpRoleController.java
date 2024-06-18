@@ -1,8 +1,11 @@
 package com.desidoc.management.users.admin.controller.emp;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +23,11 @@ public class EmpRoleController {
 	
 	
 	@GetMapping("/dropdown/search")
-	ResponseEntity<List<DropDownProjection>> searchDropDownProjection(@RequestParam String query){
-		return ResponseEntity.ok(service.searchDropDownMenu(query));
+	ResponseEntity<Page<DropDownProjection>> searchDropDownProjection(@RequestParam String query,
+			@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page,size);
+		return ResponseEntity.ok(service.searchDropDownMenu(query, pageable));
 	}
 
 }

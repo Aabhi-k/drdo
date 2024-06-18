@@ -1,9 +1,8 @@
 package com.desidoc.management.users.admin.service.emp;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -43,9 +42,9 @@ public class EmpRoleServiceImpl implements EmpRoleService{
 	}
 
 	@Override
-	public List<DropDownProjection> searchDropDownMenu(String query) {
+	public Page<DropDownProjection> searchDropDownMenu(String query, Pageable page) {
 		Specification<EmpRole> sp = EmpRoleSpecification.searchEmpRole(query);
-		return repository.findAll(sp).stream().map(this::convertToDropDown).toList();
+		return repository.findAll(sp, page).map(this::convertToDropDown);
 		
 	}
 

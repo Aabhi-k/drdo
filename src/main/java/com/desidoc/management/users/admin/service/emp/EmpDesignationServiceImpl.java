@@ -143,9 +143,9 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
 	}
 	@Override
-	public List<DropDownProjection> searchEmpDesignationDropDown(String query) {
+	public Page<DropDownProjection> searchEmpDesignationDropDown(String query, Pageable page) {
 		Specification<EmpDesignation> sp = EmpDesignationSpecification.searchEmpDesignation(query);
-		return repository.findAll(sp).stream().map(this::convertToDTO).map(this::convertToDropDownProjection).toList();
+		return repository.findAll(sp,page).map(this::convertToDTO).map(this::convertToDropDownProjection);
 	}
 
 	
