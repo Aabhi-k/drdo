@@ -1,5 +1,7 @@
 package com.desidoc.management.users.admin.controller.lab;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +23,7 @@ import com.desidoc.management.others.projection.DropDownProjection;
 import com.desidoc.management.users.admin.service.lab.LabMasterService;
 
 @RestController
-@RequestMapping("/lab")
+@RequestMapping("/api/lab")
 public class LabMasterController {
 	
 	//Default page size of a page
@@ -34,10 +36,11 @@ public class LabMasterController {
 
 	@GetMapping
 	ResponseEntity<Page<LabMasterProjection>> fingAllLabMaster(
+			@RequestParam(required = false) Map<String, String> filters,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = PAGE_SIZE) int size) {
 		Pageable pageable = PageRequest.of(page, size);
-		return ResponseEntity.ok(service.findAllLabMaster(pageable));
+		return ResponseEntity.ok(service.findAllLabMaster(filters,pageable));
 	}
 
 	@GetMapping("/{id}")
@@ -49,10 +52,11 @@ public class LabMasterController {
 	@GetMapping("/search")
 	ResponseEntity<Page<LabMasterProjection>> searchLabMaster(
 			@RequestParam String query,
+			@RequestParam(required = false) Map<String,String> filters,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = PAGE_SIZE) int size) {
 		Pageable pageable = PageRequest.of(page, size);
-		return ResponseEntity.ok(service.searchLabMaster(query, pageable));
+		return ResponseEntity.ok(service.searchLabMaster(query, filters , pageable));
 	}
 
 	
@@ -63,7 +67,7 @@ public class LabMasterController {
 	ResponseEntity<Page<DropDownProjection>> searchLabMasterDropDown(
 			@RequestParam String query,
 			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size) {
+			@RequestParam(defaultValue = PAGE_SIZE) int size) {
 		Pageable pageable = PageRequest.of(page,size);
 		return ResponseEntity.ok(service.searchLabMasterDropDown(query, pageable));
 		

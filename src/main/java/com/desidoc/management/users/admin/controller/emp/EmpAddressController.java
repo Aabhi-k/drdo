@@ -14,7 +14,7 @@ import com.desidoc.management.employee.projections.empresidentialaddress.EmpResi
 import com.desidoc.management.users.admin.service.emp.EmpResidentialAddressService;
 
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/api/address")
 public class EmpAddressController {
 	
 	// Default size of the page

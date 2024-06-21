@@ -1,6 +1,7 @@
 package com.desidoc.management.users.admin.service.emp;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,10 +21,10 @@ public interface EmpMasterService {
 
 	List<EmpMasterDTO> findAllEmpMasterByDeleted();
 	
-	Page<EmpMasterProjection> findAllEmpMasterProjection(Pageable page);
+	Page<EmpMasterProjection> findAllEmpMasterProjection(Map<String, String> filters, Pageable page);
 
 	// Search method
-	Page<EmpMasterProjection> searchEmpMaster(String search, Pageable page);
+	Page<EmpMasterProjection> searchEmpMaster(String search, Map<String, String> filters, Pageable page);
 
 	//Update methods
 	String updateEmpMaster(EmpMasterDTO empMaster, Integer id) throws Exception;

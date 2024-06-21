@@ -2,6 +2,7 @@ package com.desidoc.management.users.admin.service.lab;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,8 +168,9 @@ public class LabMasterServiceImpl implements LabMasterService {
 	}
 
 	@Override
-	public Page<LabMasterProjection> findAllLabMaster(Pageable page) {
-		return repository.findAllLabMaster(page);
+	public Page<LabMasterProjection> findAllLabMaster(Map<String, String> filters,Pageable page) {
+		Specification<LabMaster> sp = LabMasterSpecification.getAllLabMaster(filters);
+		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
 	}
 
 	@Override
@@ -180,12 +182,13 @@ public class LabMasterServiceImpl implements LabMasterService {
 
 	// -------- Search Methods ---------------------------
 	@Override
-	public Page<LabMasterProjection> searchLabMaster(String search, Pageable page) {
-		Specification<LabMaster> sp = LabMasterSpecification.searchLabMaster(search);
+	public Page<LabMasterProjection> searchLabMaster(String search, Map<String, String> filters, Pageable page) {
+		Specification<LabMaster> sp = LabMasterSpecification.searchLabMaster(search, filters);
 		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
 	}
 	@Override
 	public Page<DropDownProjection> searchLabMasterDropDown(String query, Pageable page) {
+		
 		Specification<LabMaster> sp = LabMasterSpecification.searchLabMaster(query);
 		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToDropDown);
 	}

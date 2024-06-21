@@ -1,18 +1,22 @@
 package com.desidoc.management.employee.specifications;
 
+import java.util.Map;
+
 import org.springframework.data.jpa.domain.Specification;
 
 import com.desidoc.management.employee.model.EmpDesignation;
 import com.desidoc.management.employee.model.EmpMaster;
 import com.desidoc.management.lab.model.LabMaster;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 public class EmpMasterSpecification {
 
-	public static Specification<EmpMaster> searchEmpMaster(String search) {
+	public static Specification<EmpMaster> searchEmpMaster(String search, Map<String, String> filters) {
 		return (root, query, builder) -> {
 
 			Join<EmpMaster, LabMaster> labJoin = root.join("labId", JoinType.LEFT);
@@ -44,12 +48,48 @@ public class EmpMasterSpecification {
 			Predicate empDesignationPredicate = builder.like(builder.lower(designationJoin.get("designFullName")),
 					searchPattern);
 
-			// Combining the predicate using OR
+			// Combining the searchPredicate
+			Predicate searchPredicate = builder.or(empTitlePredicate, empFirstNamePredicate, empMiddleNamePredicate,
+					empLastNamePredicate, labNamePredicate, empDesignationPredicate);
+			Predicate finalPredicate = builder.and(searchPredicate, notDeleted);
 
-			return builder.and(builder.or(empTitlePredicate, empFirstNamePredicate, empMiddleNamePredicate,
-					empLastNamePredicate, labNamePredicate, empDesignationPredicate), notDeleted);
+			finalPredicate = filterData(filters, finalPredicate, builder, root);
+
+			return finalPredicate;
 
 		};
+	}
+
+	public static Specification<EmpMaster> getAllEmpMaster(Map<String, String> filters) {
+		return (root, query, builder) -> {
+			Predicate notDeleted = builder.equal(root.get("deleted"), "0");
+
+			Predicate finalPredicate = builder.and(notDeleted);
+
+			finalPredicate = filterData(filters, finalPredicate, builder, root);
+
+			return finalPredicate;
+		};
+	}
+
+	private static Predicate filterData(Map<String, String> filters, Predicate finalPredicate, CriteriaBuilder builder,
+			Root<EmpMaster> root) {
+
+		for (Map.Entry<String, String> filter : filters.entrySet()) {
+			String key = filter.getKey();
+			String value = filter.getValue();
+
+			if (key.equals("Lab")) {
+				Predicate labPredicate = builder.equal(root.get("labId").get("Id"), Integer.parseInt(value));
+				finalPredicate = builder.and(finalPredicate, labPredicate);
+			} else if (key.equals("Designation")) {
+				Predicate designationPredicate = builder.equal(root.get("empDesignId").get("Id"),
+						Integer.parseInt(value));
+				finalPredicate = builder.and(finalPredicate, designationPredicate);
+			}
+		}
+
+		return finalPredicate;
 	}
 
 }

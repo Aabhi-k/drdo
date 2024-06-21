@@ -24,7 +24,7 @@ import com.desidoc.management.others.projection.DropDownProjection;
 import com.desidoc.management.users.admin.service.emp.EmpDesignationService;
 
 @RestController
-@RequestMapping("/emp/ed")
+@RequestMapping("/api/emp/ed")
 public class EmpDesignationController {
 
 	// Default size of each page

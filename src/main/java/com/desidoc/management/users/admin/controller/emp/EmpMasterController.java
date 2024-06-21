@@ -1,5 +1,7 @@
 package com.desidoc.management.users.admin.controller.emp;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +22,7 @@ import com.desidoc.management.employee.projections.empmaster.EmpMasterProjection
 import com.desidoc.management.users.admin.service.emp.EmpMasterService;
 
 @RestController
-@RequestMapping("/emp/em")
+@RequestMapping("/api/emp/em")
 public class EmpMasterController {
 	
 	// Default size of page
@@ -34,20 +36,22 @@ public class EmpMasterController {
 	// Getting all Employees
 	@GetMapping
     ResponseEntity<Page<EmpMasterProjection>> findAllEmpMaster(
+    		@RequestParam(required = false) Map<String, String> filters,
     		@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = PAGE_SIZE) int size){
 		Pageable pageable = PageRequest.of(page, size);
-		return ResponseEntity.ok(service.findAllEmpMasterProjection(pageable));
+		return ResponseEntity.ok(service.findAllEmpMasterProjection(filters,pageable));
 	}
 	
 	// Searching in Employees
 	@GetMapping("/search")
     ResponseEntity<Page<EmpMasterProjection>> searchEmpMaster(
     		@RequestParam String query,
+    		@RequestParam(required = false) Map<String, String> filters,
     		@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = PAGE_SIZE) int size){
 		Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchEmpMaster(query, pageable));
+        return ResponseEntity.ok(service.searchEmpMaster(query, filters, pageable));
     }
 	
 	// finding all Employees by id
@@ -55,6 +59,8 @@ public class EmpMasterController {
     ResponseEntity<EmpMaster> findEmpMasterById(@PathVariable Integer id) throws Exception {
         return ResponseEntity.ok(service.findEmpMasterById(id));
     }
+	
+	
 	
 	// -------- PUT MAPPINGS --------
 

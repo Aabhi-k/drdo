@@ -2,6 +2,7 @@ package com.desidoc.management.users.admin.service.emp;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -171,15 +172,18 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 	}
 
 	@Override
-	public Page<EmpMasterProjection> findAllEmpMasterProjection(Pageable page) {
-		return repository.findAllEmpMasterProjection(page);
+	public Page<EmpMasterProjection> findAllEmpMasterProjection(Map<String, String> filters, Pageable page) {
+		Specification<EmpMaster> sp = EmpMasterSpecification.getAllEmpMaster(filters);
+		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
+
 	}
+	
 
 	// --------- Search Methods --------------------------------
 
 	@Override
-	public Page<EmpMasterProjection> searchEmpMaster(String search, Pageable page) {
-		Specification<EmpMaster> sp = EmpMasterSpecification.searchEmpMaster(search);
+	public Page<EmpMasterProjection> searchEmpMaster(String search,Map<String, String> filters , Pageable page) {
+		Specification<EmpMaster> sp = EmpMasterSpecification.searchEmpMaster(search, filters);
 
 		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
 
@@ -224,5 +228,7 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 
 		return "Employee deleted";
 	}
+
+	
 
 }
