@@ -69,7 +69,7 @@ public class JwtGenerator {
                 .setSubject(subject)
                 .setIssuedAt(currentDate)
                 .setExpiration(expirationDate)
-                .signWith(SignatureAlgorithm.HS512, secretKey)
+                .signWith(secretKey)
                 .compact();
     }
 
