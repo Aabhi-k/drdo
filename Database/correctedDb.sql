@@ -499,21 +499,6 @@ SET character_set_client = @saved_cs_client;
 
 
 
---
--- Table structure for table `user_assigned_role`
---
-
-DROP TABLE IF EXISTS `user_assigned_role`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_assigned_role` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL DEFAULT '0',
-  `lab_id` int DEFAULT NULL,
-  `role_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `user_role`
@@ -653,6 +638,25 @@ CREATE TABLE `login` (
   KEY `fk_lab_id_login_idx` (`lab_id`),
   CONSTRAINT `fk_lab_id_login_idx` FOREIGN KEY (`lab_id`) REFERENCES `lab_master` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_assigned_role`
+--
+
+DROP TABLE IF EXISTS `user_assigned_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_assigned_role` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL DEFAULT '0',
+  `role_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_id` (`user_id`),
+  KEY `fk_role_id` (`role_id`),
+  CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `login` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `user_role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

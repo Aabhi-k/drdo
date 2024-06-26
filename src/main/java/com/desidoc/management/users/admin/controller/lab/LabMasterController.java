@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desidoc.management.lab.dto.LabMasterDTO;
-import com.desidoc.management.lab.model.LabMaster;
 import com.desidoc.management.lab.projections.labmaster.LabMasterProjection;
-import com.desidoc.management.others.projection.DropDownProjection;
 import com.desidoc.management.users.admin.service.lab.LabMasterService;
 
 @RestController
@@ -41,13 +39,7 @@ public class LabMasterController {
 			@RequestParam(defaultValue = PAGE_SIZE) int size) {
 		Pageable pageable = PageRequest.of(page, size);
 		return ResponseEntity.ok(service.findAllLabMaster(filters,pageable));
-	}
-
-	@GetMapping("/{id}")
-	ResponseEntity<LabMaster> findLabMasterById(@PathVariable Integer id) throws Exception {
-		return ResponseEntity.ok(service.findLabMasterById(id));
-	}
-	
+	}	
 	// Searching
 	@GetMapping("/search")
 	ResponseEntity<Page<LabMasterProjection>> searchLabMaster(
@@ -61,18 +53,6 @@ public class LabMasterController {
 
 	
         
-    
-	
-	@GetMapping("/dropdown/search")
-	ResponseEntity<Page<DropDownProjection>> searchLabMasterDropDown(
-			@RequestParam String query,
-			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = PAGE_SIZE) int size) {
-		Pageable pageable = PageRequest.of(page,size);
-		return ResponseEntity.ok(service.searchLabMasterDropDown(query, pageable));
-		
-	}
-
 	// POST Mapping
 
 	@PostMapping
@@ -82,13 +62,13 @@ public class LabMasterController {
 
 	// PUT Mapping
 
-	@PutMapping("/{id}")
+	@PutMapping("/edit/{id}")
 	ResponseEntity<String> updateLabMaster(@PathVariable Integer id, @RequestBody LabMasterDTO labMasterDTO)
 			throws Exception {
 		return ResponseEntity.ok(service.updateLabMaster(labMasterDTO, id));
 	}
 
-	// DELETE Mapping
+	// DELETE Mapping FOR {ADMIN}
 
 	@PutMapping("/{id}/del")
 	ResponseEntity<String> deleteLabMaster(@PathVariable Integer id) throws Exception {

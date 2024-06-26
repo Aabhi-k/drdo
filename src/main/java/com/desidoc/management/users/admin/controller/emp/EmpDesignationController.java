@@ -1,7 +1,5 @@
 package com.desidoc.management.users.admin.controller.emp;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,13 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desidoc.management.employee.dto.EmpDesignationDTO;
-import com.desidoc.management.employee.model.EmpDesignation;
 import com.desidoc.management.employee.projections.empdesignation.EmpDesignProjection;
-import com.desidoc.management.others.projection.DropDownProjection;
 import com.desidoc.management.users.admin.service.emp.EmpDesignationService;
 
 @RestController
-@RequestMapping("/api/emp/ed")
+@RequestMapping("/api/emp/designation")
 public class EmpDesignationController {
 
 	// Default size of each page
@@ -43,18 +39,6 @@ public class EmpDesignationController {
 		return ResponseEntity.ok(service.findAllEmpDesignProjection(pageable));
 	}
 
-	// finding all employees by id
-	@GetMapping("/{empId}")
-	ResponseEntity<EmpDesignation> findEmpDesignationById(@PathVariable Integer empId) {
-		System.out.println(empId);
-		return ResponseEntity.ok(service.findEmpDesignationById(empId));
-	}
-
-	@GetMapping("/dropdown")
-	ResponseEntity<List<DropDownProjection>> getAllEmpDesignationFullName() {
-		return ResponseEntity.ok(service.findAllForDropDown());
-	}
-
 	// Searching in employees
 	@GetMapping("/search")
 	ResponseEntity<Page<EmpDesignProjection>> searchEmpDesignation(@RequestParam String query,
@@ -63,15 +47,6 @@ public class EmpDesignationController {
 		Pageable pageable = PageRequest.of(page, size);
 		return ResponseEntity.ok(service.searchEmpDesignation(query, pageable));
 	}
-
-	@GetMapping("/dropdown/search")
-	ResponseEntity<Page<DropDownProjection>> searchAllEmpDesignationDropDown(@RequestParam String query
-			,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
-		Pageable pageable = PageRequest.of(page, size);
-
-		return ResponseEntity.ok(service.searchEmpDesignationDropDown(query, pageable));
-	}
-
 	// -------- PUT MAPPINGS --------
 
 	// updating the order number of the employee
@@ -81,7 +56,7 @@ public class EmpDesignationController {
 		return ResponseEntity.ok("Order number updated successfully");
 	}
 
-	// updating the employee
+	// updating the employee Designation
 	@PutMapping("/{empId}")
 	ResponseEntity<String> updateEmpDesignation(@RequestBody EmpDesignationDTO empDesignation,
 			@PathVariable Integer empId) throws Exception {
@@ -97,7 +72,7 @@ public class EmpDesignationController {
 		return ResponseEntity.ok(service.createEmpDesignation(empDesignation));
 	}
 
-	// -------- DELTE MAPPINGS --------
+	// -------- DELTE MAPPINGS -------- FOR {SUPER ADMIN}
 
 	// deleting the employee
 	@DeleteMapping("/{empid}")

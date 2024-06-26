@@ -17,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desidoc.management.employee.dto.EmpMasterDTO;
-import com.desidoc.management.employee.model.EmpMaster;
 import com.desidoc.management.employee.projections.empmaster.EmpMasterProjection;
 import com.desidoc.management.users.admin.service.emp.EmpMasterService;
 
 @RestController
-@RequestMapping("/api/emp/em")
+@RequestMapping("/api/emp/list")
 public class EmpMasterController {
 	
 	// Default size of page
@@ -54,24 +53,16 @@ public class EmpMasterController {
         return ResponseEntity.ok(service.searchEmpMaster(query, filters, pageable));
     }
 	
-	// finding all Employees by id
-	@GetMapping("/{id}")
-    ResponseEntity<EmpMaster> findEmpMasterById(@PathVariable Integer id) throws Exception {
-        return ResponseEntity.ok(service.findEmpMasterById(id));
-    }
-	
-	
-	
 	// -------- PUT MAPPINGS --------
 
 	// updating the employee
-	@PutMapping("/{empId}")
+	@PutMapping("/edit/{empId}")
 	ResponseEntity<String> updateEmpMaster(@RequestBody EmpMasterDTO empMaster, @PathVariable Integer empId) throws Exception {
         return ResponseEntity.ok(service.updateEmpMaster(empMaster, empId));
     }
 	
 	// updating the employee order number
-	@PutMapping("/{empId}/order")
+	@PutMapping("/order/{empId}")
 	ResponseEntity<String> updateOrderNo(@PathVariable Integer empId, @RequestParam String order) throws Exception{
 		
         return ResponseEntity.ok(service.updateViewingOrder(empId, order));
@@ -85,7 +76,7 @@ public class EmpMasterController {
         return ResponseEntity.ok(service.createEmpMaster(empMaster));
     }
 	
-	// -------- DELTE MAPPINGS --------
+	// -------- DELTE MAPPINGS -------- FOR {ADMIN}
 	
     // deleting the employee
 	@PutMapping("/{empid}/del")

@@ -19,7 +19,6 @@ import com.desidoc.management.lab.projections.labmaster.LabMasterProjection;
 import com.desidoc.management.lab.repository.LabMasterRepository;
 import com.desidoc.management.lab.specifications.LabMasterSpecification;
 import com.desidoc.management.others.city.CityMaster;
-import com.desidoc.management.others.projection.DropDownProjection;
 import com.desidoc.management.users.admin.service.others.city.CityMasterService;
 
 @Service
@@ -143,23 +142,6 @@ public class LabMasterServiceImpl implements LabMasterService {
 		};
 	}
 
-	private DropDownProjection convertToDropDown(LabMasterDTO dto) {
-		return new DropDownProjection() {
-
-			@Override
-			public Integer getId() {
-				
-				return dto.getId();
-			}
-
-			@Override
-			public String getName() {
-				return dto.getLabFullName();
-			}
-			
-		};
-		
-	}
 	// -------- Find Methods ---------------------------
 	// finding by id
 	@Override
@@ -168,7 +150,7 @@ public class LabMasterServiceImpl implements LabMasterService {
 	}
 
 	@Override
-	public Page<LabMasterProjection> findAllLabMaster(Map<String, String> filters,Pageable page) {
+	public Page<LabMasterProjection> findAllLabMaster(Map<String, String> filters, Pageable page) {
 		Specification<LabMaster> sp = LabMasterSpecification.getAllLabMaster(filters);
 		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
 	}
@@ -177,20 +159,12 @@ public class LabMasterServiceImpl implements LabMasterService {
 	public List<LabMasterDTO> findAllLabMasterByDeleted() {
 		return repository.findAllByDeleted("0").stream().map(this::convertToDTO).collect(Collectors.toList());
 	}
-	
-	
 
 	// -------- Search Methods ---------------------------
 	@Override
 	public Page<LabMasterProjection> searchLabMaster(String search, Map<String, String> filters, Pageable page) {
 		Specification<LabMaster> sp = LabMasterSpecification.searchLabMaster(search, filters);
 		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
-	}
-	@Override
-	public Page<DropDownProjection> searchLabMasterDropDown(String query, Pageable page) {
-		
-		Specification<LabMaster> sp = LabMasterSpecification.searchLabMaster(query);
-		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToDropDown);
 	}
 
 	// -------- Update Methods --------------------
@@ -226,8 +200,5 @@ public class LabMasterServiceImpl implements LabMasterService {
 		repository.save(lab);
 		return "deleted lab";
 	}
-
-	
-	
 
 }

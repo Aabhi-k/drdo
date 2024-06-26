@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import com.desidoc.management.lab.dto.LabMasterDTO;
 import com.desidoc.management.lab.model.LabMaster;
 import com.desidoc.management.lab.projections.labmaster.LabMasterProjection;
-import com.desidoc.management.others.projection.DropDownProjection;
 
 public interface LabMasterService {
 
@@ -22,8 +21,6 @@ public interface LabMasterService {
 
 	// -------- Search Methods ---------------------------
 	Page<LabMasterProjection> searchLabMaster(String search, Map<String, String> filters, Pageable page);
-
-	Page<DropDownProjection> searchLabMasterDropDown(String query, Pageable pageable);
 
 	// -------- Update Methods --------------------
 	String updateLabMaster(LabMasterDTO labMaster, Integer id) throws Exception;

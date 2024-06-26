@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.desidoc.management.others.projection.DropDownProjection;
+import com.desidoc.management.others.projection.DropdownProjection;
 import com.desidoc.management.users.admin.service.lab.LabCategoryService;
 
 @RestController
@@ -19,15 +19,6 @@ public class LabCategoryController {
 	@Autowired
     private LabCategoryService service;
 	
-	@GetMapping("/dropdown/search")
-	ResponseEntity<Page<DropDownProjection>> searchLabCategoryDropDown(
-			@RequestParam String query,
-			@RequestParam(defaultValue = "0")int page,
-			@RequestParam(defaultValue = "10") int size){
-		Pageable pageable = PageRequest.of(page, size);	
-		return ResponseEntity.ok(service.searchLabCategoryDropDown(query, pageable));
-		
-		
-	}
+	// FOR EDITING CATEGORY
 
 }

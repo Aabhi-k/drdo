@@ -1,4 +1,4 @@
-package com.desidoc.management.password.model;
+package com.desidoc.management.login.model;
 
 import java.time.LocalDateTime;
 
@@ -50,7 +50,7 @@ public class Login {
 		this.id = id;
 		this.username = username;
 		this.password = password;
-		this.labId = labId;
+		this.labId = labId;	
 		this.active = active;
 		this.dateOfEntry = dateOfEntry;
 		this.lastUpdated = lastUpdated;

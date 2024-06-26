@@ -2,6 +2,8 @@ package com.desidoc.management.password.model;
 
 import java.time.LocalDateTime;
 
+import com.desidoc.management.login.model.Login;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

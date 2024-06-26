@@ -16,7 +16,6 @@ import com.desidoc.management.employee.projections.empdesignation.EmpDesignProje
 import com.desidoc.management.employee.repository.EmpDesignationRepository;
 import com.desidoc.management.employee.specifications.EmpDesignationSpecification;
 import com.desidoc.management.exception.EntityNotFoundException;
-import com.desidoc.management.others.projection.DropDownProjection;
 
 @Service
 public class EmpDesignationServiceImpl implements EmpDesignationService {
@@ -79,22 +78,6 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 		}
 		return emp;
 	}
-	
-	// Converting DTO to DropDown menu item
-	private DropDownProjection convertToDropDownProjection(EmpDesignationDTO dto) {
-		return new DropDownProjection() {
-
-            @Override
-            public Integer getId() {
-            	return dto.getId();
-            }
-
-            @Override
-            public String getName() {
-                return dto.getDesignFullName();
-            }
-        };
-	}
 
 	// ----------------- Find Methods ----------------
 
@@ -120,11 +103,6 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 		return repository.findAllProjectedBy(page);
 	}
 
-	// to be used in future if we need to
-	@Override
-	public List<DropDownProjection> findAllForDropDown() {
-		return repository.findAllProjectionDropDown();
-	}
 
 	@Override
 	public List<EmpDesignationDTO> findAllEmpDesignationShortName() {
@@ -142,11 +120,7 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
 		Specification<EmpDesignation> sp = EmpDesignationSpecification.searchEmpDesignation(search);
 		return repository.findAll(sp, page).map(this::convertToDTO).map(this::convertToProjection);
 	}
-	@Override
-	public Page<DropDownProjection> searchEmpDesignationDropDown(String query, Pageable page) {
-		Specification<EmpDesignation> sp = EmpDesignationSpecification.searchEmpDesignation(query);
-		return repository.findAll(sp,page).map(this::convertToDTO).map(this::convertToDropDownProjection);
-	}
+	
 
 	
 	// --------------- Update Methods ---------------

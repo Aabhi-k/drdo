@@ -1,4 +1,4 @@
-package com.desidoc.management.employee.model;
+package com.desidoc.management.login.model;
 
 import java.time.LocalDateTime;
 

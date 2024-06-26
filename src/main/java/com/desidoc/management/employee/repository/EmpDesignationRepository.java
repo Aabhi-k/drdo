@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.desidoc.management.employee.model.EmpDesignation;
 import com.desidoc.management.employee.projections.empdesignation.EmpDesignProjection;
 import com.desidoc.management.employee.projections.empdesignation.EmpDesignationShortNameProjection;
-import com.desidoc.management.others.projection.DropDownProjection;
+import com.desidoc.management.others.projection.DropdownProjection;
 
 @Repository
 public interface EmpDesignationRepository
@@ -33,6 +33,6 @@ public interface EmpDesignationRepository
 			+ "ed.designFullName as name "
 			+ "FROM EmpDesignation ed "
 			+ "ORDER BY ed.orderNo DESC")
-	List<DropDownProjection> findAllProjectionDropDown();
+	List<DropdownProjection> findAllProjectionDropDown();
 
 }
