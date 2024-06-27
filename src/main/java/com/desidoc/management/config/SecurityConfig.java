@@ -35,7 +35,6 @@ public class SecurityConfig {
 						.requestMatchers("/api/lab/**").hasRole("SUPER ADMIN")
 						.anyRequest().authenticated());
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
 		return http.build();
 	}
 
