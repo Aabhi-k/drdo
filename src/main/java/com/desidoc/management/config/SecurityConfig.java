@@ -21,18 +21,18 @@ public class SecurityConfig {
 
 	@Autowired
 	private JwtEntryPoint authEntryPoint;
-	
-	@Autowired
-	JwtAuthenticationFilter jwtAuthFilter;
 
 	@Autowired
-	private CustomUserDetailsService userDetailsService;
+	JwtAuthenticationFilter jwtAuthFilter;
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable).exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint))
 				.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests((authRequest) -> authRequest.requestMatchers("/api/auth/**").permitAll()
+				.authorizeHttpRequests((authRequest) -> authRequest
+						.requestMatchers("/api/auth/**").permitAll()
+						.requestMatchers("/api/emp/**").hasRole("ADMIN")
+						.requestMatchers("/api/lab/**").hasRole("SUPER ADMIN")
 						.anyRequest().authenticated());
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -68,18 +68,16 @@ public class LoginServiceImpl implements LoginService {
 		if (repository.existsByLabId_Id(loginDto.getLabId())) {
 			return "User Already Exist";
 		}
-		System.out.println(loginDto.getLabId());
-		System.out.println(loginDto.getPassword());
 		Login user = new Login();
 		user.setLabId(labService.findLabMasterById(loginDto.getLabId()));
 		user.setPassword(passwordEncoder.encode(loginDto.getPassword()));
 		user.setActive("0");
-		UserRole role = roleRepository.findByRoleName("ADMIN").get();
+		UserRole role = roleRepository.findByRoleName("ADMIN").get(); //giving admin role
 
 		UserAssignedRole assignedRole = new UserAssignedRole();
 
 		repository.save(user);
-		System.out.println("User: " + user.getLabId().getId());
+		
 		assignedRole.setUserId(user);
 		assignedRole.setRoleId(role);
 
