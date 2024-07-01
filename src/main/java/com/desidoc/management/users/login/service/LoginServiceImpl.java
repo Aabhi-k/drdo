@@ -51,17 +51,19 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public AuthResponseDTO loginUser(LoginDTO loginDto) {
-
 		Authentication auth = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getLabId(), loginDto.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(auth);
 
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(loginDto.getLabId().toString());
 		final String token = jwtGenerator.generateToken(userDetails);
-		
-		return new AuthResponseDTO(token);
 
-	}	
+		Login user = repository.findByLabId_Id(loginDto.getLabId()).get();
+	    String username = user.getUsername();
+
+
+		return new AuthResponseDTO(token, username);
+	}
 
 	@Override
 	public String registerUser(LoginDTO loginDto) {
@@ -72,7 +74,7 @@ public class LoginServiceImpl implements LoginService {
 		user.setLabId(labService.findLabMasterById(loginDto.getLabId()));
 		user.setPassword(passwordEncoder.encode(loginDto.getPassword()));
 		user.setActive("0");
-		UserRole role = roleRepository.findByRoleName("ADMIN").get(); //giving admin role
+		UserRole role = roleRepository.findByRoleName("ADMIN").get(); 
 
 		UserAssignedRole assignedRole = new UserAssignedRole();
 

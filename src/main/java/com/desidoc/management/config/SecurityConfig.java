@@ -25,14 +25,15 @@ public class SecurityConfig {
 	@Autowired
 	JwtAuthenticationFilter jwtAuthFilter;
 
+
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable).exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint))
 				.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests((authRequest) -> authRequest
+						.requestMatchers("/api/dropdown/lab/list/search").permitAll()
 						.requestMatchers("/api/auth/**").permitAll()
-						.requestMatchers("/api/emp/**").hasRole("ADMIN")
-						.requestMatchers("/api/lab/**").hasRole("SUPER ADMIN")
+						.requestMatchers("/api/**").hasRole("ADMIN")
 						.anyRequest().authenticated());
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
