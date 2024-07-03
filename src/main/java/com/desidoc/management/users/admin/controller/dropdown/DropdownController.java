@@ -17,7 +17,7 @@ import com.desidoc.management.users.admin.service.dropdown.DropdownService;
 @RequestMapping("/api/dropdown")
 public class DropdownController {
 
-	private static final String PAGE_SIZE = "10";
+	private static final String PAGE_SIZE = "5";
 
 	@Autowired
 	DropdownService service;
@@ -68,5 +68,13 @@ public class DropdownController {
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
 		Pageable pageable = PageRequest.of(page, size);
 		return ResponseEntity.ok(service.searchEmpRole(query, pageable));
+	}
+	
+	// ------------- ZIPCODE ----------
+	@GetMapping("/zipcode/search")
+	ResponseEntity<Page<DropdownProjection>> searchZipcode(@RequestParam String query,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		return ResponseEntity.ok(service.searchZipcode(query, pageable));
 	}
 }

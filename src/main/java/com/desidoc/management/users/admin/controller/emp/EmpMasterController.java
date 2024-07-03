@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desidoc.management.employee.dto.EmpMasterDTO;
+import com.desidoc.management.employee.projections.empDetails.EmployeeDetailsProjection;
 import com.desidoc.management.employee.projections.empmaster.EmpMasterProjection;
 import com.desidoc.management.users.admin.service.emp.EmpMasterService;
 
@@ -32,6 +33,12 @@ public class EmpMasterController {
 	
 	// -------- GET MAPPINGS --------
 	
+	// Getting Employee from id
+	@GetMapping("/details/{empId}")
+	ResponseEntity<EmployeeDetailsProjection> findEmpById(@PathVariable Integer empId){
+		return ResponseEntity.ok(service.findEmpProjectionById(empId));
+	}
+	
 	// Getting all Employees
 	@GetMapping
     ResponseEntity<Page<EmpMasterProjection>> findAllEmpMaster(
@@ -41,6 +48,9 @@ public class EmpMasterController {
 		Pageable pageable = PageRequest.of(page, size);
 		return ResponseEntity.ok(service.findAllEmpMasterProjection(filters,pageable));
 	}
+	
+	
+	
 	
 	// Searching in Employees
 	@GetMapping("/search")
@@ -52,6 +62,8 @@ public class EmpMasterController {
 		Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(service.searchEmpMaster(query, filters, pageable));
     }
+	
+	
 	
 	// -------- PUT MAPPINGS --------
 
@@ -72,8 +84,9 @@ public class EmpMasterController {
 
 	// creating the employee
 	@PostMapping
-	ResponseEntity<String> createEmpMaster(@RequestBody EmpMasterDTO empMaster) throws Exception{
-        return ResponseEntity.ok(service.createEmpMaster(empMaster));
+	ResponseEntity<Integer> createEmpMaster(@RequestBody EmpMasterDTO empMaster) throws Exception{
+        
+		return ResponseEntity.ok(service.createEmpMaster(empMaster));
     }
 	
 	// -------- DELTE MAPPINGS -------- FOR {ADMIN}

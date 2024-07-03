@@ -13,4 +13,5 @@ public interface DropdownService {
 	Page<DropdownProjection> searchCity(String query, Pageable pageable);
 	Page<DropdownProjection> searchEmpDesignation(String query, Pageable page);
 	Page<DropdownProjection> searchEmpRole(String query, Pageable page);
+	Page<DropdownProjection> searchZipcode(String query, Pageable pageable);
 }

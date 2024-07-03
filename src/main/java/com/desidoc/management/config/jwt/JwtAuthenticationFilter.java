@@ -63,10 +63,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				// Checking Roles;
 				List<String> claimRoles = claims.get("roles", List.class);
 
-				for (String s : claimRoles) {
-					System.out.println(s);
-				}
-
 				List<SimpleGrantedAuthority> authorities = claimRoles.stream()
 						.map(role -> new SimpleGrantedAuthority("ROLE_" + role))
 						.collect(Collectors.toList());

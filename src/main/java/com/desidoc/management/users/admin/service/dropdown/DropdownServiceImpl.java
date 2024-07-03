@@ -16,8 +16,10 @@ import com.desidoc.management.lab.specifications.LabCategorySpecification;
 import com.desidoc.management.lab.specifications.LabClusterSpecification;
 import com.desidoc.management.lab.specifications.LabMasterSpecification;
 import com.desidoc.management.others.city.CityMasterRepository;
+import com.desidoc.management.others.city.ZipcodeMasterRepository;
 import com.desidoc.management.others.projection.DropdownProjection;
 import com.desidoc.management.others.specification.CityMasterSpecification;
+import com.desidoc.management.others.specification.ZipcodeMasterSpecification;
 
 @Service
 public class DropdownServiceImpl implements DropdownService {
@@ -28,11 +30,12 @@ public class DropdownServiceImpl implements DropdownService {
 	private CityMasterRepository cityMasterRepository;
 	private EmpDesignationRepository empDesignationRepository;
 	private EmpRoleRepository empRoleRepository;
+	private ZipcodeMasterRepository zipcodeRepository;
 
 	@Autowired
 	public DropdownServiceImpl(LabMasterRepository labMasterRepository, LabCategoryRepository labCategoryRepository,
 			LabClusterRepository labClusterRepository, CityMasterRepository cityMasterRepository,
-			EmpDesignationRepository empDesignationRepository, EmpRoleRepository empRoleRepository) {
+			EmpDesignationRepository empDesignationRepository, EmpRoleRepository empRoleRepository, ZipcodeMasterRepository zipcodeRepository) {
 		super();
 		this.labMasterRepository = labMasterRepository;
 		this.labCategoryRepository = labCategoryRepository;
@@ -40,6 +43,7 @@ public class DropdownServiceImpl implements DropdownService {
 		this.cityMasterRepository = cityMasterRepository;
 		this.empDesignationRepository = empDesignationRepository;
 		this.empRoleRepository = empRoleRepository;
+		this.zipcodeRepository = zipcodeRepository;
 	}
 
 	@Override
@@ -144,6 +148,24 @@ public class DropdownServiceImpl implements DropdownService {
 					@Override
 					public String getName() {
 						return role.getRoleFullName();
+					}
+					
+				});
+	}
+
+	@Override
+	public Page<DropdownProjection> searchZipcode(String query, Pageable pageable) {
+		return zipcodeRepository.findAll(ZipcodeMasterSpecification.searchZipcodeMaster(query),pageable)
+				.map(zipcode -> new DropdownProjection() {
+
+					@Override
+					public Integer getId() {
+						return zipcode.getId();
+					}
+
+					@Override
+					public String getName() {
+						return zipcode.getZipcode();
 					}
 					
 				});

@@ -8,12 +8,15 @@ import org.springframework.data.domain.Pageable;
 
 import com.desidoc.management.employee.dto.EmpMasterDTO;
 import com.desidoc.management.employee.model.EmpMaster;
+import com.desidoc.management.employee.projections.empDetails.EmployeeDetailsProjection;
 import com.desidoc.management.employee.projections.empmaster.EmpMasterProjection;
 
 public interface EmpMasterService {
 
 	// Find methods
 	EmpMaster findEmpMasterById(Integer id);
+	
+	EmployeeDetailsProjection findEmpProjectionById(Integer id);
 
 	List<EmpMasterDTO> findAllEmpMasterByLabId(Integer labId);
 
@@ -32,7 +35,7 @@ public interface EmpMasterService {
 	String updateViewingOrder(Integer id, String order) throws Exception;
 
 	//Create Method
-	String createEmpMaster(EmpMasterDTO empMaster) throws Exception;
+	Integer createEmpMaster(EmpMasterDTO empMaster) throws Exception;
 
 	//Delete Method
 	String deleteEmpMaster(Integer id) throws Exception;

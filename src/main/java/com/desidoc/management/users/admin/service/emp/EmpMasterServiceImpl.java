@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import com.desidoc.management.employee.dto.EmpMasterDTO;
 import com.desidoc.management.employee.model.EmpMaster;
+import com.desidoc.management.employee.projections.empDetails.EmployeeDetailsProjection;
 import com.desidoc.management.employee.projections.empmaster.EmpMasterProjection;
 import com.desidoc.management.employee.repository.EmpMasterRepository;
+import com.desidoc.management.employee.specifications.EmpDetailsSpecification;
 import com.desidoc.management.employee.specifications.EmpMasterSpecification;
 import com.desidoc.management.exception.EntityNotFoundException;
 import com.desidoc.management.users.admin.service.lab.LabMasterService;
@@ -108,7 +110,11 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 	// Convert DTO to Projection
 	private EmpMasterProjection convertToProjection(EmpMasterDTO dto) {
 		return new EmpMasterProjection() {
-
+			
+			@Override
+			public Integer getId() {
+				return dto.getId();
+			}
 			@Override
 			public String getEmpFirstName() {
 				return dto.getEmpFirstName();
@@ -144,6 +150,8 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 				return empDesignationService.findEmpDesignationById(dto.getEmpDesignId()).getDesignShortName();
 			}
 
+			
+
 		};
 	}
 	// ---------- Find Methods ----------
@@ -152,6 +160,12 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 	@Override
 	public EmpMaster findEmpMasterById(Integer id) {
 		return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("entry not founnd"));
+	}
+	@Override
+	public EmployeeDetailsProjection findEmpProjectionById(Integer id) {	
+		EmployeeDetailsProjection res = (EmployeeDetailsProjection) repository.findAll(EmpDetailsSpecification.getEmpDetails(id));
+		return res;
+		
 	}
 
 	@Override
@@ -210,12 +224,12 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 	// --------- Create Method --------------------------------
 
 	@Override
-	public String createEmpMaster(EmpMasterDTO empMasterDTO) throws Exception {
+	public Integer createEmpMaster(EmpMasterDTO empMasterDTO) throws Exception {
 
 		EmpMaster emp = new EmpMaster();
 		repository.save(this.convertToEntity(empMasterDTO, emp));
 
-		return "Employee created";
+		return emp.getId();
 	}
 
 	// --------- Delete Method --------------------------------
@@ -228,6 +242,8 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 
 		return "Employee deleted";
 	}
+
+	
 
 	
 

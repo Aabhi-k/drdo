@@ -25,6 +25,8 @@ public class EmpMaster {
     @Column(name = "id")
     private Integer id;
 
+
+
     @Column(name = "emp_title", length = 45)
     private String empTitle;
 
