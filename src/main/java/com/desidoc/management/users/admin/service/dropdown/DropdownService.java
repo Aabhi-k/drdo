@@ -19,4 +19,20 @@ public interface DropdownService {
     Page<DropdownProjection> searchEmpRole(String query, Pageable page);
 
     Page<DropdownProjection> searchZipcode(String query, Pageable pageable);
+
+    Page<DropdownProjection> searchTelephoneCategory(String query, Pageable pageable);
+
+
+    // Displaying Values
+    DropdownProjection getEmpDesignationById(Integer id);
+
+    DropdownProjection getLabMasterById(Integer id);
+
+    DropdownProjection getEmpRoleById(Integer id);
+
+    DropdownProjection getTelephoneCategoryById(Integer id);
+
+    DropdownProjection getCityById(Integer id);
+
+    DropdownProjection getZipcodeById(Integer id);
 }

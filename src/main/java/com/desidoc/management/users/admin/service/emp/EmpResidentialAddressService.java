@@ -13,4 +13,7 @@ public interface EmpResidentialAddressService {
     EmpResidentialAddressProjection findEmpAddressById(Integer empId);
 
 
+    EmpResidentialAddressDTO findEmpAddressDTOById(Integer empId);
+
+    EmpResidentialAddressDTO getEmpResidentialAddressDTOById(Integer id);
 }

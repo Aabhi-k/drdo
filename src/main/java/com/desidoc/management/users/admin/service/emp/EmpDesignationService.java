@@ -35,4 +35,5 @@ public interface EmpDesignationService {
     // Delete Method
     String deleteEmpDesignation(Integer id);
 
+    EmpDesignationDTO getEmpDesignationDTOById(Integer id);
 }

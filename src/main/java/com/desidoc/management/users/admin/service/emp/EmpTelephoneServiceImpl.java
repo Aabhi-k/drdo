@@ -44,6 +44,15 @@ public class EmpTelephoneServiceImpl implements EmpTelephoneService{
 
         return entity;
     }
+    private EmpTelephoneMasterDTO convertToDTO(EmpTelephoneMaster entity) {
+        EmpTelephoneMasterDTO dto = new EmpTelephoneMasterDTO();
+        dto.setTelephoneNumber(entity.getTelephoneNumber());
+        dto.setEpabx(entity.getEpabx());
+        dto.setEmpId(entity.getEmpId().getId());
+        dto.setTeleCatId(entity.getTeleCatId().getId());
+        dto.setLastUpdated(entity.getLastUpdated());
+        return dto;
+    }
 
 
     @Override
@@ -51,5 +60,10 @@ public class EmpTelephoneServiceImpl implements EmpTelephoneService{
         EmpTelephoneMaster empTelephoneMaster = new EmpTelephoneMaster();
         repository.save(convertToEntity(empTelephoneMasterDTO, empTelephoneMaster));
         return "Created Successfully!";
+    }
+
+    @Override
+    public EmpTelephoneMasterDTO findEmpTelephoneDTOById(Integer empId) {
+        return convertToDTO(repository.findByEmpId_Id(empId));
     }
 }

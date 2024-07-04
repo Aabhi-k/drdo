@@ -21,6 +21,25 @@ public class DropdownController {
     @Autowired
     DropdownService service;
 
+
+    // -------------------------------------------------------------------------------
+    // ------------ EMP DESIGNATION ------------
+    @GetMapping("/emp/designation/search")
+    ResponseEntity<Page<DropdownProjection>> searchEmpDesignation(@RequestParam String query,
+                                                                  @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.searchEmpDesignation(query, pageable));
+    }
+
+    // ----------- EMP ROLE ----------------
+    @GetMapping("/emp/role/search")
+    ResponseEntity<Page<DropdownProjection>> searchEmpRole(@RequestParam String query,
+                                                           @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.searchEmpRole(query, pageable));
+    }
+
+
     // ------------ LAB MASTER ---------------
     @GetMapping("/lab/list/search")
     ResponseEntity<Page<DropdownProjection>> searchLabMaster(@RequestParam String query,
@@ -53,27 +72,19 @@ public class DropdownController {
         return ResponseEntity.ok(service.searchCity(query, pageable));
     }
 
-    // ------------ EMP DESIGNATION ------------
-    @GetMapping("/emp/designation/search")
-    ResponseEntity<Page<DropdownProjection>> searchEmpDesignation(@RequestParam String query,
-                                                                  @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchEmpDesignation(query, pageable));
-    }
-
-    // ----------- EMP ROLE ----------------
-    @GetMapping("/emp/role/search")
-    ResponseEntity<Page<DropdownProjection>> searchEmpRole(@RequestParam String query,
-                                                           @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchEmpRole(query, pageable));
-    }
-
     // ------------- ZIPCODE ----------
     @GetMapping("/zipcode/search")
     ResponseEntity<Page<DropdownProjection>> searchZipcode(@RequestParam String query,
                                                            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(service.searchZipcode(query, pageable));
+    }
+
+    // ------------ TELEPHONE CATEGORY ------------
+    @GetMapping("/telephone/category/search")
+    ResponseEntity<Page<DropdownProjection>> searchTelephoneCategory(@RequestParam String query,
+                                                                    @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.searchTelephoneCategory(query, pageable));
     }
 }

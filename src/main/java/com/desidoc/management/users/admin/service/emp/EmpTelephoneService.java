@@ -6,4 +6,5 @@ public interface EmpTelephoneService {
 
     String createEmpTelephone(EmpTelephoneMasterDTO empTelephoneMasterDTO);
 
+    EmpTelephoneMasterDTO findEmpTelephoneDTOById(Integer empId);
 }

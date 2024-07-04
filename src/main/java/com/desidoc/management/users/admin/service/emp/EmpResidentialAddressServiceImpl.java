@@ -122,5 +122,15 @@ public class EmpResidentialAddressServiceImpl implements EmpResidentialAddressSe
         return convertToProjection(convertToDTO(repository.findByEmpId_Id(empId)));
     }
 
+    @Override
+    public EmpResidentialAddressDTO findEmpAddressDTOById(Integer empId) {
+        return convertToDTO(repository.findByEmpId_Id(empId));
+    }
+
+    @Override
+    public EmpResidentialAddressDTO getEmpResidentialAddressDTOById(Integer id) {
+        return convertToDTO(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Employee address not found")));
+    }
+
 
 }

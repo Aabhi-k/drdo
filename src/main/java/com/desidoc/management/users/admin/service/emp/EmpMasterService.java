@@ -15,6 +15,8 @@ public interface EmpMasterService {
     // Find methods
     EmpMaster findEmpMasterById(Integer id);
 
+    EmpMasterDTO findEmpMasterDTOById(Integer id);
+
     EmployeeDetailsProjection findEmpProjectionById(Integer id);
 
     List<EmpMasterDTO> findAllEmpMasterByLabId(Integer labId);

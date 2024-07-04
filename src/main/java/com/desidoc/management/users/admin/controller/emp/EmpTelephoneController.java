@@ -13,9 +13,12 @@ public class EmpTelephoneController {
     @Autowired
     EmpTelephoneService service;
 
-    @GetMapping
-    ResponseEntity<?> getEmpTelephone() {
-        return null;
+    // GET Mapping
+
+    // Getting Employee Telephone number from id
+    @GetMapping("/{empId}")
+    ResponseEntity<EmpTelephoneMasterDTO> getEmpTelephone(@PathVariable Integer empId) {
+        return ResponseEntity.ok(service.findEmpTelephoneDTOById(empId));
     }
 
 
@@ -24,4 +27,6 @@ public class EmpTelephoneController {
     ResponseEntity<String> addEmpTelephone(@RequestBody EmpTelephoneMasterDTO empTelephoneMasterDTO) {
         return ResponseEntity.ok(service.createEmpTelephone(empTelephoneMasterDTO));
     }
+    // Put Mapping
+    
 }

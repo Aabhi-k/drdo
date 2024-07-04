@@ -5,5 +5,4 @@ import com.desidoc.management.employee.model.EmpRole;
 public interface EmpRoleService {
     EmpRole findEmpRoleById(Integer id);
 
-
 }

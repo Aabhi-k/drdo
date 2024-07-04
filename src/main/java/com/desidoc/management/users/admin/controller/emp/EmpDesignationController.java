@@ -22,6 +22,7 @@ public class EmpDesignationController {
 
     // -------- GET MAPPINGS --------
 
+
     // Getting all employees
     @GetMapping
     ResponseEntity<Page<EmpDesignProjection>> findAllEmpDesignationByOrderNo(@RequestParam(defaultValue = "0") int page,

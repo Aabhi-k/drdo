@@ -161,6 +161,11 @@ public class EmpMasterServiceImpl implements EmpMasterService {
     }
 
     @Override
+    public EmpMasterDTO findEmpMasterDTOById(Integer id) {
+        return convertToDTO(findEmpMasterById(id));
+    }
+
+    @Override
     public EmployeeDetailsProjection findEmpProjectionById(Integer id) {
         return repository.findEmployeeDetailsByEmpId(id);
     }

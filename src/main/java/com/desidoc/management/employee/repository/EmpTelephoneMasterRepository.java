@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmpTelephoneMasterRepository extends JpaRepository<EmpTelephoneMaster, Integer> {
-
+    EmpTelephoneMaster findByEmpId_Id(Integer empId);
 }

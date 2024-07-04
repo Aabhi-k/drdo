@@ -146,6 +146,11 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
     }
 
     @Override
+    public EmpDesignationDTO getEmpDesignationDTOById(Integer id) {
+        return convertToDTO(findEmpDesignationById(id));
+    }
+
+    @Override
     public String createEmpDesignation(EmpDesignationDTO designationDTO) {
         EmpDesignation emp = new EmpDesignation();
         emp = convertToEntity(designationDTO, emp);

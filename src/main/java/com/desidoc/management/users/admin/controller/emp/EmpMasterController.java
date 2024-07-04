@@ -24,8 +24,13 @@ public class EmpMasterController {
     EmpMasterService service;
 
     // -------- GET MAPPINGS --------
+    // Getting Employee Master from id
+    @GetMapping("/{empId}")
+    ResponseEntity<EmpMasterDTO> findEmpMaster(@PathVariable Integer empId) {
+        return ResponseEntity.ok(service.findEmpMasterDTOById(empId));
+    }
 
-    // Getting Employee from id
+    // Getting Employee Details from id
     @GetMapping("/details/{empId}")
     ResponseEntity<EmployeeDetailsProjection> findEmpById(@PathVariable Integer empId) {
         return ResponseEntity.ok(service.findEmpProjectionById(empId));
