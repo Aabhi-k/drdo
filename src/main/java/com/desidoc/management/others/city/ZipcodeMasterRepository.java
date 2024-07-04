@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ZipcodeMasterRepository extends JpaRepository<ZipcodeMaster, Integer>, JpaSpecificationExecutor<ZipcodeMaster>{
+public interface ZipcodeMasterRepository extends JpaRepository<ZipcodeMaster, Integer>, JpaSpecificationExecutor<ZipcodeMaster> {
 
 }

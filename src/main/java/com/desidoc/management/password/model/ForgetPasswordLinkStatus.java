@@ -1,18 +1,9 @@
 package com.desidoc.management.password.model;
 
-import java.time.LocalDateTime;
-
 import com.desidoc.management.lab.model.LabMaster;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "forget_password_link_status")
@@ -38,74 +29,71 @@ public class ForgetPasswordLinkStatus {
 
     @Column(name = "date_of_entry")
     private LocalDateTime dateOfEntry;
-    
+
     // Constructors
-    public ForgetPasswordLinkStatus() {}
+    public ForgetPasswordLinkStatus() {
+    }
 
-	public ForgetPasswordLinkStatus(Integer id, String mailId, String token, LabMaster labId, String linkStatus,
-			LocalDateTime dateOfEntry) {
-		super();
-		this.id = id;
-		this.mailId = mailId;
-		this.token = token;
-		this.labId = labId;
-		this.linkStatus = linkStatus;
-		this.dateOfEntry = dateOfEntry;
-	}
-	
-	// Getters and Setters
+    public ForgetPasswordLinkStatus(Integer id, String mailId, String token, LabMaster labId, String linkStatus,
+                                    LocalDateTime dateOfEntry) {
+        super();
+        this.id = id;
+        this.mailId = mailId;
+        this.token = token;
+        this.labId = labId;
+        this.linkStatus = linkStatus;
+        this.dateOfEntry = dateOfEntry;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    // Getters and Setters
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getMailId() {
-		return mailId;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setMailId(String mailId) {
-		this.mailId = mailId;
-	}
+    public String getMailId() {
+        return mailId;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    public void setMailId(String mailId) {
+        this.mailId = mailId;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public String getToken() {
+        return token;
+    }
 
-	public LabMaster getLabId() {
-		return labId;
-	}
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-	public void setLabId(LabMaster labId) {
-		this.labId = labId;
-	}
+    public LabMaster getLabId() {
+        return labId;
+    }
 
-	public String getLinkStatus() {
-		return linkStatus;
-	}
+    public void setLabId(LabMaster labId) {
+        this.labId = labId;
+    }
 
-	public void setLinkStatus(String linkStatus) {
-		this.linkStatus = linkStatus;
-	}
+    public String getLinkStatus() {
+        return linkStatus;
+    }
 
-	public LocalDateTime getDateOfEntry() {
-		return dateOfEntry;
-	}
+    public void setLinkStatus(String linkStatus) {
+        this.linkStatus = linkStatus;
+    }
 
-	public void setDateOfEntry(LocalDateTime dateOfEntry) {
-		this.dateOfEntry = dateOfEntry;
-	}
-    
-	
-	
-	
-	
+    public LocalDateTime getDateOfEntry() {
+        return dateOfEntry;
+    }
+
+    public void setDateOfEntry(LocalDateTime dateOfEntry) {
+        this.dateOfEntry = dateOfEntry;
+    }
+
 
 }

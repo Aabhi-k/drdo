@@ -1,44 +1,43 @@
 package com.desidoc.management.users.admin.service.emp;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.desidoc.management.employee.dto.EmpMasterDTO;
 import com.desidoc.management.employee.model.EmpMaster;
 import com.desidoc.management.employee.projections.empDetails.EmployeeDetailsProjection;
 import com.desidoc.management.employee.projections.empmaster.EmpMasterProjection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+import java.util.Map;
 
 public interface EmpMasterService {
 
-	// Find methods
-	EmpMaster findEmpMasterById(Integer id);
-	
-	EmployeeDetailsProjection findEmpProjectionById(Integer id);
+    // Find methods
+    EmpMaster findEmpMasterById(Integer id);
 
-	List<EmpMasterDTO> findAllEmpMasterByLabId(Integer labId);
+    EmployeeDetailsProjection findEmpProjectionById(Integer id);
 
-	List<EmpMasterDTO> findAllEmpMaster();
+    List<EmpMasterDTO> findAllEmpMasterByLabId(Integer labId);
 
-	List<EmpMasterDTO> findAllEmpMasterByDeleted();
-	
-	Page<EmpMasterProjection> findAllEmpMasterProjection(Map<String, String> filters, Pageable page);
+    List<EmpMasterDTO> findAllEmpMaster();
 
-	// Search method
-	Page<EmpMasterProjection> searchEmpMaster(String search, Map<String, String> filters, Pageable page);
+    List<EmpMasterDTO> findAllEmpMasterByDeleted();
 
-	//Update methods
-	String updateEmpMaster(EmpMasterDTO empMaster, Integer id) throws Exception;
+    Page<EmpMasterProjection> findAllEmpMasterProjection(Map<String, String> filters, Pageable page);
 
-	String updateViewingOrder(Integer id, String order) throws Exception;
+    // Search method
+    Page<EmpMasterProjection> searchEmpMaster(String search, Map<String, String> filters, Pageable page);
 
-	//Create Method
-	Integer createEmpMaster(EmpMasterDTO empMaster) throws Exception;
+    //Update methods
+    String updateEmpMaster(EmpMasterDTO empMaster, Integer id) throws Exception;
 
-	//Delete Method
-	String deleteEmpMaster(Integer id) throws Exception;
+    String updateViewingOrder(Integer id, String order) throws Exception;
+
+    //Create Method
+    Integer createEmpMaster(EmpMasterDTO empMaster) throws Exception;
+
+    //Delete Method
+    String deleteEmpMaster(Integer id) throws Exception;
 
 
 }

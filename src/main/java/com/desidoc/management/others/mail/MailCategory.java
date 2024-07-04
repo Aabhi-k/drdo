@@ -1,52 +1,47 @@
 package com.desidoc.management.others.mail;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "mail_category")
 public class MailCategory {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column(name = "mail_cat_name", length = 200)
-	private String mailCatName;
-	
-	
-	// Constructors
-	public MailCategory() {}
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	public MailCategory(Integer id, String mailCatName) {
-		super();
-		this.id = id;
-		this.mailCatName = mailCatName;
-	}
+    @Column(name = "mail_cat_name", length = 200)
+    private String mailCatName;
 
 
-	//Getters and Setters
-	
-	public Integer getId() {
-		return id;
-	}
+    // Constructors
+    public MailCategory() {
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
-	public String getMailCatName() {
-		return mailCatName;
-	}
+    public MailCategory(Integer id, String mailCatName) {
+        super();
+        this.id = id;
+        this.mailCatName = mailCatName;
+    }
 
-	public void setMailCatName(String mailCatName) {
-		this.mailCatName = mailCatName;
-	}
-	
-	
+
+    //Getters and Setters
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getMailCatName() {
+        return mailCatName;
+    }
+
+    public void setMailCatName(String mailCatName) {
+        this.mailCatName = mailCatName;
+    }
+
 
 }

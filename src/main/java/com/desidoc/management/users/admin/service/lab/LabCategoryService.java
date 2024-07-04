@@ -4,6 +4,6 @@ import com.desidoc.management.lab.model.LabCategory;
 
 public interface LabCategoryService {
 
-	LabCategory findLabCategoryById(Integer id);
-	
+    LabCategory findLabCategoryById(Integer id);
+
 }

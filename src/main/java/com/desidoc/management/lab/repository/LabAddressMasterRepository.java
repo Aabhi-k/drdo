@@ -1,10 +1,10 @@
 package com.desidoc.management.lab.repository;
 
+import com.desidoc.management.lab.model.LabAddressMaster;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.desidoc.management.lab.model.LabAddressMaster;
 @Repository
-public interface LabAddressMasterRepository extends JpaRepository<LabAddressMaster, Integer>{
+public interface LabAddressMasterRepository extends JpaRepository<LabAddressMaster, Integer> {
 
 }

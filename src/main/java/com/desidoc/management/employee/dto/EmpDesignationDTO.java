@@ -1,8 +1,8 @@
 package com.desidoc.management.employee.dto;
 
 public class EmpDesignationDTO {
-	private Integer id;
-	private String designShortName;
+    private Integer id;
+    private String designShortName;
     private String designFullName;
     private Integer cadreId; //foreign key for empCadre
     private Integer orderNo;
@@ -39,11 +39,11 @@ public class EmpDesignationDTO {
     public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
     }
-    
+
     public Integer getId() {
         return id;
     }
-    
+
     public void setId(Integer id) {
         this.id = id;
     }

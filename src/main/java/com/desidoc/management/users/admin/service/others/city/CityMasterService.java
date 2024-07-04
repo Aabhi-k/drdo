@@ -4,5 +4,5 @@ import com.desidoc.management.others.city.CityMaster;
 
 public interface CityMasterService {
 
-	CityMaster findCityById(Integer id);
+    CityMaster findCityById(Integer id);
 }

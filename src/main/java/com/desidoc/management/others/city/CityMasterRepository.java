@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CityMasterRepository extends JpaRepository<CityMaster,Integer>, JpaSpecificationExecutor<CityMaster>{
+public interface CityMasterRepository extends JpaRepository<CityMaster, Integer>, JpaSpecificationExecutor<CityMaster> {
 
 }

@@ -1,59 +1,55 @@
 package com.desidoc.management.lab.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "lab_region")
 public class LabRegion {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	@Column(name = "region_short_name", length = 45)
-	private String regionShortName;
+    @Column(name = "region_short_name", length = 45)
+    private String regionShortName;
 
-	@Column(name = "region_full_name", length = 200)
-	private String regionFullName;
+    @Column(name = "region_full_name", length = 200)
+    private String regionFullName;
 
-	//constructors
-	public LabRegion() {
-	}
+    //constructors
+    public LabRegion() {
+    }
 
-	public LabRegion(Integer id, String regionShortName, String regionFullName) {
-		super();
-		this.id = id;
-		this.regionShortName = regionShortName;
-		this.regionFullName = regionFullName;
-	}
-	//getters and setters
-	public Integer getId() {
-		return id;
-	}
+    public LabRegion(Integer id, String regionShortName, String regionFullName) {
+        super();
+        this.id = id;
+        this.regionShortName = regionShortName;
+        this.regionFullName = regionFullName;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    //getters and setters
+    public Integer getId() {
+        return id;
+    }
 
-	public String getRegionShortName() {
-		return regionShortName;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setRegionShortName(String regionShortName) {
-		this.regionShortName = regionShortName;
-	}
+    public String getRegionShortName() {
+        return regionShortName;
+    }
 
-	public String getRegionFullName() {
-		return regionFullName;
-	}
+    public void setRegionShortName(String regionShortName) {
+        this.regionShortName = regionShortName;
+    }
 
-	public void setRegionFullName(String regionFullName) {
-		this.regionFullName = regionFullName;
-	}
+    public String getRegionFullName() {
+        return regionFullName;
+    }
+
+    public void setRegionFullName(String regionFullName) {
+        this.regionFullName = regionFullName;
+    }
 
 }

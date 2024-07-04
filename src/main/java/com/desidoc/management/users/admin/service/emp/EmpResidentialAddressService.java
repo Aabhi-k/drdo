@@ -6,9 +6,11 @@ import com.desidoc.management.employee.projections.empresidentialaddress.EmpResi
 
 public interface EmpResidentialAddressService {
 
-	EmpResidentialAddress getEmpResidentialAddressById(Integer id);
-	String createEmpAddress(EmpResidentialAddressDTO empResDTO);
-	EmpResidentialAddressProjection findEmpAddressById(Integer empId);
-	
-	
+    EmpResidentialAddress getEmpResidentialAddressById(Integer id);
+
+    String createEmpAddress(EmpResidentialAddressDTO empResDTO);
+
+    EmpResidentialAddressProjection findEmpAddressById(Integer empId);
+
+
 }

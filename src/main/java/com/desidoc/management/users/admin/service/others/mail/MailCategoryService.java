@@ -4,5 +4,5 @@ import com.desidoc.management.others.mail.MailCategory;
 
 public interface MailCategoryService {
 
-	MailCategory getMailById(Integer id);
+    MailCategory getMailById(Integer id);
 }

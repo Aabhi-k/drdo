@@ -1,18 +1,9 @@
 package com.desidoc.management.password.model;
 
-import java.time.LocalDateTime;
-
 import com.desidoc.management.lab.model.LabMaster;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "forget_password_mail_master")
@@ -33,56 +24,52 @@ public class ForgetPasswordMailMaster {
 
     @Column(name = "date_of_entry")
     private LocalDateTime dateOfEntry;
-    
+
     // Constructors
-    
-    public ForgetPasswordMailMaster() {}
 
-	public ForgetPasswordMailMaster(Integer id, String mailId, LabMaster labId, LocalDateTime dateOfEntry) {
-		super();
-		this.id = id;
-		this.mailId = mailId;
-		this.labId = labId;
-		this.dateOfEntry = dateOfEntry;
-	}
-	// Getters and Setters
-	public Integer getId() {
-		return id;
-	}
+    public ForgetPasswordMailMaster() {
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public ForgetPasswordMailMaster(Integer id, String mailId, LabMaster labId, LocalDateTime dateOfEntry) {
+        super();
+        this.id = id;
+        this.mailId = mailId;
+        this.labId = labId;
+        this.dateOfEntry = dateOfEntry;
+    }
 
-	public String getMailId() {
-		return mailId;
-	}
+    // Getters and Setters
+    public Integer getId() {
+        return id;
+    }
 
-	public void setMailId(String mailId) {
-		this.mailId = mailId;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public LabMaster getLabId() {
-		return labId;
-	}
+    public String getMailId() {
+        return mailId;
+    }
 
-	public void setLabId(LabMaster labId) {
-		this.labId = labId;
-	}
+    public void setMailId(String mailId) {
+        this.mailId = mailId;
+    }
 
-	public LocalDateTime getDateOfEntry() {
-		return dateOfEntry;
-	}
+    public LabMaster getLabId() {
+        return labId;
+    }
 
-	public void setDateOfEntry(LocalDateTime dateOfEntry) {
-		this.dateOfEntry = dateOfEntry;
-	}
-    
-    
-	
-	
-	
-    
-    
+    public void setLabId(LabMaster labId) {
+        this.labId = labId;
+    }
+
+    public LocalDateTime getDateOfEntry() {
+        return dateOfEntry;
+    }
+
+    public void setDateOfEntry(LocalDateTime dateOfEntry) {
+        this.dateOfEntry = dateOfEntry;
+    }
+
 
 }

@@ -3,7 +3,7 @@ package com.desidoc.management.employee.dto;
 import java.time.LocalDateTime;
 
 public class EmpMasterDTO {
-	private Integer id;
+    private Integer id;
     private String empTitle;
     private String empFirstName;
     private String empMiddleName;
@@ -16,115 +16,111 @@ public class EmpMasterDTO {
     private String viewingOrder;
     private String addlDesign;
     private String deleted;
-    
-	
-	public Integer getId() {
-		return id;
-	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
-	public String getEmpTitle() {
-		return empTitle;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setEmpTitle(String empTitle) {
-		this.empTitle = empTitle;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getEmpFirstName() {
-		return empFirstName;
-	}
+    public String getEmpTitle() {
+        return empTitle;
+    }
 
-	public void setEmpFirstName(String empFirstName) {
-		this.empFirstName = empFirstName;
-	}
+    public void setEmpTitle(String empTitle) {
+        this.empTitle = empTitle;
+    }
 
-	public String getEmpMiddleName() {
-		return empMiddleName;
-	}
+    public String getEmpFirstName() {
+        return empFirstName;
+    }
 
-	public void setEmpMiddleName(String empMiddleName) {
-		this.empMiddleName = empMiddleName;
-	}
+    public void setEmpFirstName(String empFirstName) {
+        this.empFirstName = empFirstName;
+    }
 
-	public String getEmpLastName() {
-		return empLastName;
-	}
+    public String getEmpMiddleName() {
+        return empMiddleName;
+    }
 
-	public void setEmpLastName(String empLastName) {
-		this.empLastName = empLastName;
-	}
+    public void setEmpMiddleName(String empMiddleName) {
+        this.empMiddleName = empMiddleName;
+    }
 
-	public Integer getEmpDesignId() {
-		return empDesignId;
-	}
+    public String getEmpLastName() {
+        return empLastName;
+    }
 
-	public void setEmpDesignId(Integer empDesignId) {
-		this.empDesignId = empDesignId;
-	}
+    public void setEmpLastName(String empLastName) {
+        this.empLastName = empLastName;
+    }
 
-	public String getOfficeRoomNo() {
-		return officeRoomNo;
-	}
+    public Integer getEmpDesignId() {
+        return empDesignId;
+    }
 
-	public void setOfficeRoomNo(String officeRoomNo) {
-		this.officeRoomNo = officeRoomNo;
-	}
+    public void setEmpDesignId(Integer empDesignId) {
+        this.empDesignId = empDesignId;
+    }
 
-	public Integer getLabId() {
-		return labId;
-	}
+    public String getOfficeRoomNo() {
+        return officeRoomNo;
+    }
 
-	public void setLabId(Integer labId) {
-		this.labId = labId;
-	}
+    public void setOfficeRoomNo(String officeRoomNo) {
+        this.officeRoomNo = officeRoomNo;
+    }
 
-	public Integer getEmpRoleId() {
-		return empRoleId;
-	}
+    public Integer getLabId() {
+        return labId;
+    }
 
-	public void setEmpRoleId(Integer empRoleId) {
-		this.empRoleId = empRoleId;
-	}
+    public void setLabId(Integer labId) {
+        this.labId = labId;
+    }
 
-	public LocalDateTime getLastUpdated() {
-		return lastUpdated;
-	}
+    public Integer getEmpRoleId() {
+        return empRoleId;
+    }
 
-	public void setLastUpdated(LocalDateTime lastUpdated) {
-		this.lastUpdated = lastUpdated;
-	}
+    public void setEmpRoleId(Integer empRoleId) {
+        this.empRoleId = empRoleId;
+    }
 
-	public String getViewingOrder() {
-		return viewingOrder;
-	}
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
 
-	public void setViewingOrder(String viewingOrder) {
-		this.viewingOrder = viewingOrder;
-	}
+    public void setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
 
-	public String getAddlDesign() {
-		return addlDesign;
-	}
+    public String getViewingOrder() {
+        return viewingOrder;
+    }
 
-	public void setAddlDesign(String addlDesign) {
-		this.addlDesign = addlDesign;
-	}
+    public void setViewingOrder(String viewingOrder) {
+        this.viewingOrder = viewingOrder;
+    }
 
-	public String getDeleted() {
-		return deleted;
-	}
+    public String getAddlDesign() {
+        return addlDesign;
+    }
 
-	public void setDeleted(String deleted) {
-		this.deleted = deleted;
-	}
-	
-	
-	
-    
-    
-    
+    public void setAddlDesign(String addlDesign) {
+        this.addlDesign = addlDesign;
+    }
+
+    public String getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(String deleted) {
+        this.deleted = deleted;
+    }
+
+
 }

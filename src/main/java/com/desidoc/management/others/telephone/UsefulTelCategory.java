@@ -1,60 +1,51 @@
 package com.desidoc.management.others.telephone;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "useful_tel_category")
 public class UsefulTelCategory {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "cat_id")
-	private Integer catId;
-	
-	@Column(name = "cat_name", length = 200)
-	private String catName;
-	
 
-	//constructors
-	public UsefulTelCategory() {}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cat_id")
+    private Integer catId;
+
+    @Column(name = "cat_name", length = 200)
+    private String catName;
 
 
-	public UsefulTelCategory(Integer catId, String catName) {
-		super();
-		this.catId = catId;
-		this.catName = catName;
-	}
-
-	//Getters and Setters
-
-	public Integer getCatId() {
-		return catId;
-	}
+    //constructors
+    public UsefulTelCategory() {
+    }
 
 
-	public void setCatId(Integer catId) {
-		this.catId = catId;
-	}
+    public UsefulTelCategory(Integer catId, String catName) {
+        super();
+        this.catId = catId;
+        this.catName = catName;
+    }
+
+    //Getters and Setters
+
+    public Integer getCatId() {
+        return catId;
+    }
 
 
-	public String getCatName() {
-		return catName;
-	}
+    public void setCatId(Integer catId) {
+        this.catId = catId;
+    }
 
 
-	public void setCatName(String catName) {
-		this.catName = catName;
-	}
-	
-	
-	
-	
-	
-	
+    public String getCatName() {
+        return catName;
+    }
+
+
+    public void setCatName(String catName) {
+        this.catName = catName;
+    }
+
 
 }

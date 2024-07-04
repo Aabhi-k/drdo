@@ -4,5 +4,5 @@ import com.desidoc.management.others.telephone.TelephoneCategory;
 
 public interface TelephoneCategoryService {
 
-	TelephoneCategory getTelephoneCategoryById(Integer id);
+    TelephoneCategory findTelephoneCategoryById(Integer id);
 }
