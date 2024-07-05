@@ -212,7 +212,7 @@ public class EmpMasterServiceImpl implements EmpMasterService {
         EmpMaster emp = this.findEmpMasterById(id);
         repository.save(this.convertToEntity(empMasterDTO, emp));
 
-        return "Employee updated";
+        return "Updated Successfully!";
     }
 
     @Override

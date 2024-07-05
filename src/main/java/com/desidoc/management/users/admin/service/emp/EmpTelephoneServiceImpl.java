@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmpTelephoneServiceImpl implements EmpTelephoneService{
@@ -46,6 +48,7 @@ public class EmpTelephoneServiceImpl implements EmpTelephoneService{
     }
     private EmpTelephoneMasterDTO convertToDTO(EmpTelephoneMaster entity) {
         EmpTelephoneMasterDTO dto = new EmpTelephoneMasterDTO();
+        dto.setId(entity.getId());
         dto.setTelephoneNumber(entity.getTelephoneNumber());
         dto.setEpabx(entity.getEpabx());
         dto.setEmpId(entity.getEmpId().getId());
@@ -56,14 +59,30 @@ public class EmpTelephoneServiceImpl implements EmpTelephoneService{
 
 
     @Override
-    public String createEmpTelephone(EmpTelephoneMasterDTO empTelephoneMasterDTO) {
-        EmpTelephoneMaster empTelephoneMaster = new EmpTelephoneMaster();
-        repository.save(convertToEntity(empTelephoneMasterDTO, empTelephoneMaster));
+    public String createEmpTelephone(List<EmpTelephoneMasterDTO> empTelephoneMasterDTOList) {
+        for (EmpTelephoneMasterDTO dto : empTelephoneMasterDTOList) {
+            EmpTelephoneMaster empTelephoneMaster = new EmpTelephoneMaster();
+            repository.save(convertToEntity(dto, empTelephoneMaster));
+        }
         return "Created Successfully!";
     }
 
     @Override
-    public EmpTelephoneMasterDTO findEmpTelephoneDTOById(Integer empId) {
-        return convertToDTO(repository.findByEmpId_Id(empId));
+    public List<EmpTelephoneMasterDTO> findEmpTelephoneDTOById(Integer empId) {
+        return repository.findByEmpId_Id(empId).stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public String updateEmpTelephone(Integer empId, List<EmpTelephoneMasterDTO> empTelephoneMasterDTOList) {
+        List<EmpTelephoneMaster> existingTelephones = repository.findByEmpId_Id(empId);
+        for (EmpTelephoneMasterDTO dto : empTelephoneMasterDTOList) {
+            EmpTelephoneMaster empTelephoneMaster = existingTelephones.stream()
+                    .filter(t -> t.getId().equals(dto.getId()))
+                    .findFirst()
+                    .orElse(new EmpTelephoneMaster());
+            repository.save(convertToEntity(dto, empTelephoneMaster));
+        }
+        // Optional: Handle deletion of telephones not included in the DTO list
+        return "Updated Successfully!";
     }
 }

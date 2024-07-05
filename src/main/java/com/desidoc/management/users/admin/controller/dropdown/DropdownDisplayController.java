@@ -17,18 +17,30 @@ public class DropdownDisplayController {
     DropdownService service;
 
     // -------- Displaying Values --------
-    // Get designation by id
+
     @GetMapping("/designation/{id}")
     ResponseEntity<DropdownProjection> getEmpDesignationById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getEmpDesignationById(id));
+    }
+    @GetMapping("/role/{id}")
+    ResponseEntity<DropdownProjection> getEmpRoleById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getEmpRoleById(id));
     }
     @GetMapping("/lab/{id}")
     ResponseEntity<DropdownProjection> getLabMasterById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.getLabMasterById(id));
     }
-    @GetMapping("/role/{id}")
-    ResponseEntity<DropdownProjection> getEmpRoleById(@PathVariable Integer id) {
-        return ResponseEntity.ok(service.getEmpRoleById(id));
+    @GetMapping("/lab/category/{id}")
+    ResponseEntity<DropdownProjection> getLabCategoryById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getLabCategoryById(id));
+    }
+    @GetMapping("/lab/cluster/{id}")
+    ResponseEntity<DropdownProjection> getLabClusterById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getLabClusterById(id));
+    }
+    @GetMapping("/emp/mail/category/{id}")
+    ResponseEntity<DropdownProjection> getMailCategoryById(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.getMailCategoryById(id));
     }
     @GetMapping("/telephone/category/{id}")
     ResponseEntity<DropdownProjection> getTelephoneCategoryById(@PathVariable Integer id) {

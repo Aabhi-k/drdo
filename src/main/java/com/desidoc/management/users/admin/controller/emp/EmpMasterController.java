@@ -63,8 +63,20 @@ public class EmpMasterController {
 
     // updating the employee
     @PutMapping("/edit/{empId}")
-    ResponseEntity<String> updateEmpMaster(@RequestBody EmpMasterDTO empMaster, @PathVariable Integer empId) throws Exception {
-        return ResponseEntity.ok(service.updateEmpMaster(empMaster, empId));
+    ResponseEntity<String> updateEmpMaster(@RequestBody EmpMasterDTO dto, @PathVariable Integer empId) throws Exception {
+        if(dto == null) {
+            return ResponseEntity.badRequest().body("Request body cannot be null");
+        }
+        try {
+            String result = service.updateEmpMaster(dto, empId);
+            if ("Updated Successfully!".equals(result)) {
+                return ResponseEntity.ok(result);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An error occurred: " + e.getMessage());
+        }
     }
 
     // updating the employee order number
@@ -86,9 +98,9 @@ public class EmpMasterController {
     // -------- DELTE MAPPINGS -------- FOR {ADMIN}
 
     // deleting the employee
-    @PutMapping("/{empid}/del")
-    ResponseEntity<String> deleteEmpMaster(@PathVariable Integer empid) throws Exception {
-        return ResponseEntity.ok(service.deleteEmpMaster(empid));
+    @PutMapping("/{empId}/del")
+    ResponseEntity<String> deleteEmpMaster(@PathVariable Integer empId) throws Exception {
+        return ResponseEntity.ok(service.deleteEmpMaster(empId));
     }
 
 

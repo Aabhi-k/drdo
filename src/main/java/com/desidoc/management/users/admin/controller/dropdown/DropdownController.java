@@ -39,7 +39,6 @@ public class DropdownController {
         return ResponseEntity.ok(service.searchEmpRole(query, pageable));
     }
 
-
     // ------------ LAB MASTER ---------------
     @GetMapping("/lab/list/search")
     ResponseEntity<Page<DropdownProjection>> searchLabMaster(@RequestParam String query,
@@ -62,6 +61,14 @@ public class DropdownController {
                                                               @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(service.searchLabCluster(query, pageable));
+    }
+
+    // ------------ MAIL CATEGORY --------------
+    @GetMapping("/emp/mail/category/search")
+    ResponseEntity<Page<DropdownProjection>> searchMailCategory(@RequestParam String query,
+                                                                @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.searchMailCategory(query, pageable));
     }
 
     // ------------ CITY MASTER --------------

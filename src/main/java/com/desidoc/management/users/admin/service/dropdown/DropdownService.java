@@ -22,17 +22,26 @@ public interface DropdownService {
 
     Page<DropdownProjection> searchTelephoneCategory(String query, Pageable pageable);
 
+    Page<DropdownProjection> searchMailCategory(String query, Pageable pageable);
 
     // Displaying Values
     DropdownProjection getEmpDesignationById(Integer id);
 
+    DropdownProjection getEmpRoleById(Integer id);
+
     DropdownProjection getLabMasterById(Integer id);
 
-    DropdownProjection getEmpRoleById(Integer id);
+    DropdownProjection getLabCategoryById(Integer id);
+
+    DropdownProjection getLabClusterById(Integer id);
+
+    DropdownProjection getMailCategoryById(Integer id);
 
     DropdownProjection getTelephoneCategoryById(Integer id);
 
     DropdownProjection getCityById(Integer id);
 
     DropdownProjection getZipcodeById(Integer id);
+
+
 }

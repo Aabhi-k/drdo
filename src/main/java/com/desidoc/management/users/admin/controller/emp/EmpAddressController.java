@@ -42,6 +42,22 @@ public class EmpAddressController {
     }
 
     // Put Mapping
+    @PutMapping("/edit/{empId}")
+    public ResponseEntity<?> updateEmpAddress(@PathVariable Integer empId, @RequestBody EmpResidentialAddressDTO empResDTO) {
+        if (empResDTO == null) {
+            return ResponseEntity.badRequest().body("Request body cannot be null");
+        }
+        try {
+            String result = service.updateEmpAddress(empId, empResDTO);
+            if ("Updated Successfully!".equals(result)) {
+                return ResponseEntity.ok(result);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An error occurred: " + e.getMessage());
+        }
+    }
 
 
 

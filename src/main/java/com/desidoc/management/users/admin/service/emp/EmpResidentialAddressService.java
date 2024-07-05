@@ -16,4 +16,6 @@ public interface EmpResidentialAddressService {
     EmpResidentialAddressDTO findEmpAddressDTOById(Integer empId);
 
     EmpResidentialAddressDTO getEmpResidentialAddressDTOById(Integer id);
+
+    String updateEmpAddress(Integer empId, EmpResidentialAddressDTO empResDTO);
 }

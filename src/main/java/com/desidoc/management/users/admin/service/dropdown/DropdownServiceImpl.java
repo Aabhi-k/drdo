@@ -12,8 +12,10 @@ import com.desidoc.management.lab.specifications.LabClusterSpecification;
 import com.desidoc.management.lab.specifications.LabMasterSpecification;
 import com.desidoc.management.others.city.CityMasterRepository;
 import com.desidoc.management.others.city.ZipcodeMasterRepository;
+import com.desidoc.management.others.mail.MailCategoryRepository;
 import com.desidoc.management.others.projection.DropdownProjection;
 import com.desidoc.management.others.specification.CityMasterSpecification;
+import com.desidoc.management.others.specification.MailCategorySpecification;
 import com.desidoc.management.others.specification.TelephoneCategorySpecification;
 import com.desidoc.management.others.specification.ZipcodeMasterSpecification;
 import com.desidoc.management.others.telephone.TelephoneCategoryRepository;
@@ -33,12 +35,13 @@ public class DropdownServiceImpl implements DropdownService {
     private final EmpRoleRepository empRoleRepository;
     private final ZipcodeMasterRepository zipcodeRepository;
     private final TelephoneCategoryRepository telephoneCategoryRepository;
+    private final MailCategoryRepository mailCategoryRepository;
 
     @Autowired
     public DropdownServiceImpl(LabMasterRepository labMasterRepository, LabCategoryRepository labCategoryRepository,
                                LabClusterRepository labClusterRepository, CityMasterRepository cityMasterRepository,
                                EmpDesignationRepository empDesignationRepository, EmpRoleRepository empRoleRepository, ZipcodeMasterRepository zipcodeRepository
-    , TelephoneCategoryRepository telephoneCategoryRepository) {
+    , TelephoneCategoryRepository telephoneCategoryRepository, MailCategoryRepository mailCategoryRepository) {
         super();
         this.labMasterRepository = labMasterRepository;
         this.labCategoryRepository = labCategoryRepository;
@@ -48,6 +51,7 @@ public class DropdownServiceImpl implements DropdownService {
         this.empRoleRepository = empRoleRepository;
         this.zipcodeRepository = zipcodeRepository;
         this.telephoneCategoryRepository = telephoneCategoryRepository;
+        this.mailCategoryRepository = mailCategoryRepository;
     }
 
     @Override
@@ -192,6 +196,22 @@ public class DropdownServiceImpl implements DropdownService {
                 });
     }
 
+    @Override
+    public Page<DropdownProjection> searchMailCategory(String query, Pageable pageable) {
+        return mailCategoryRepository.findAll(MailCategorySpecification.searchMailCategory(query), pageable)
+                .map(mailCategory -> new DropdownProjection() {
+                    @Override
+                    public Integer getId() {
+                        return mailCategory.getId();
+                    }
+
+                    @Override
+                    public String getName() {
+                        return mailCategory.getMailCatName();
+                    }
+                });
+    }
+
 
     // ----------------------- Displaying Values -----------------------
     @Override
@@ -220,6 +240,51 @@ public class DropdownServiceImpl implements DropdownService {
             @Override
             public String getName() {
                 return lab.getLabFullName();
+            }
+        }).orElse(null);
+    }
+
+    @Override
+    public DropdownProjection getLabCategoryById(Integer id) {
+        return labCategoryRepository.findById(id).map(category -> new DropdownProjection() {
+            @Override
+            public Integer getId() {
+                return category.getId();
+            }
+
+            @Override
+            public String getName() {
+                return category.getCatFullName();
+            }
+        }).orElse(null);
+    }
+
+    @Override
+    public DropdownProjection getLabClusterById(Integer id) {
+        return labClusterRepository.findById(id).map(cluster -> new DropdownProjection() {
+            @Override
+            public Integer getId() {
+                return cluster.getId();
+            }
+
+            @Override
+            public String getName() {
+                return cluster.getClusterFullName();
+            }
+        }).orElse(null);
+    }
+
+    @Override
+    public DropdownProjection getMailCategoryById(Integer id) {
+        return mailCategoryRepository.findById(id).map(mailCategory -> new DropdownProjection() {
+            @Override
+            public Integer getId() {
+                return mailCategory.getId();
+            }
+
+            @Override
+            public String getName() {
+                return mailCategory.getMailCatName();
             }
         }).orElse(null);
     }

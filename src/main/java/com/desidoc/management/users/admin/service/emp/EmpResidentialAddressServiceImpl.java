@@ -132,5 +132,16 @@ public class EmpResidentialAddressServiceImpl implements EmpResidentialAddressSe
         return convertToDTO(repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Employee address not found")));
     }
 
+    @Override
+    public String updateEmpAddress(Integer empId, EmpResidentialAddressDTO empResDTO) {
+        EmpResidentialAddress address = repository.findByEmpId_Id(empId);
+        if (address != null) {
+            repository.save(this.convertToEntity(empResDTO, address));
+            return "Updated Successfully!";
+        } else {
+            return "Employee Address not found!";
+        }
+    }
+
 
 }
