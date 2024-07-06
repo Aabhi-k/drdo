@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class EmpTelephoneServiceImpl implements EmpTelephoneService{
+public class EmpTelephoneServiceImpl implements EmpTelephoneService {
 
     @Autowired
     EmpTelephoneMasterRepository repository;
@@ -46,6 +46,7 @@ public class EmpTelephoneServiceImpl implements EmpTelephoneService{
 
         return entity;
     }
+
     private EmpTelephoneMasterDTO convertToDTO(EmpTelephoneMaster entity) {
         EmpTelephoneMasterDTO dto = new EmpTelephoneMasterDTO();
         dto.setId(entity.getId());

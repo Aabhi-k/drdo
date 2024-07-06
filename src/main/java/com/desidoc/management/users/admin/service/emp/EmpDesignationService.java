@@ -17,10 +17,6 @@ public interface EmpDesignationService {
 
     Page<EmpDesignProjection> findAllEmpDesignProjection(Pageable page);
 
-    // Finding individual columns
-
-    List<EmpDesignationDTO> findAllEmpDesignationShortName();
-
     // Search
     Page<EmpDesignProjection> searchEmpDesignation(String search, Pageable page);
 

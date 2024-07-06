@@ -2,7 +2,6 @@ package com.desidoc.management.employee.repository;
 
 import com.desidoc.management.employee.model.EmpDesignation;
 import com.desidoc.management.employee.projections.empdesignation.EmpDesignProjection;
-import com.desidoc.management.employee.projections.empdesignation.EmpDesignationShortNameProjection;
 import com.desidoc.management.others.projection.DropdownProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +25,6 @@ public interface EmpDesignationRepository
 
     List<EmpDesignation> findAllByOrderByOrderNoDesc();
 
-    List<EmpDesignationShortNameProjection> findByDesignShortNameIsNotNull();
 
     @Query("SELECT ed.id as id, "
             + "ed.designFullName as name "

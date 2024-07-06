@@ -41,7 +41,7 @@ public class DropdownServiceImpl implements DropdownService {
     public DropdownServiceImpl(LabMasterRepository labMasterRepository, LabCategoryRepository labCategoryRepository,
                                LabClusterRepository labClusterRepository, CityMasterRepository cityMasterRepository,
                                EmpDesignationRepository empDesignationRepository, EmpRoleRepository empRoleRepository, ZipcodeMasterRepository zipcodeRepository
-    , TelephoneCategoryRepository telephoneCategoryRepository, MailCategoryRepository mailCategoryRepository) {
+            , TelephoneCategoryRepository telephoneCategoryRepository, MailCategoryRepository mailCategoryRepository) {
         super();
         this.labMasterRepository = labMasterRepository;
         this.labCategoryRepository = labCategoryRepository;

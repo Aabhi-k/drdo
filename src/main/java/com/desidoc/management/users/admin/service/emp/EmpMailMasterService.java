@@ -12,4 +12,6 @@ public interface EmpMailMasterService {
     List<EmpMailMasterDTO> findEmpMailDTOById(Integer id);
 
     String createEmpMail(List<EmpMailMasterDTO> empMailMasterDTOList);
+
+    String updateEmpMail(Integer empId, List<EmpMailMasterDTO> empMailMasterDtoList);
 }

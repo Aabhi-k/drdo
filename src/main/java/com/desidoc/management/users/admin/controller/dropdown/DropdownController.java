@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,77 +22,199 @@ public class DropdownController {
     @Autowired
     DropdownService service;
 
-
-    // -------------------------------------------------------------------------------
     // ------------ EMP DESIGNATION ------------
     @GetMapping("/emp/designation/search")
-    ResponseEntity<Page<DropdownProjection>> searchEmpDesignation(@RequestParam String query,
-                                                                  @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchEmpDesignation(query, pageable));
+    ResponseEntity<?> searchEmpDesignation(@RequestParam String query, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        try {
+            if (query == null || query.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Query parameter cannot be null or empty");
+            }
+
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DropdownProjection> result = service.searchEmpDesignation(query, pageable);
+
+            if (result.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntity.ok(result);
+        } catch (IllegalArgumentException e) {
+            // IllegalArgumentException may be thrown by PageRequest.of() if page or size are negative
+            return ResponseEntity.badRequest().body("Invalid page or size parameters: " + e.getMessage());
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
 
     // ----------- EMP ROLE ----------------
     @GetMapping("/emp/role/search")
-    ResponseEntity<Page<DropdownProjection>> searchEmpRole(@RequestParam String query,
-                                                           @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchEmpRole(query, pageable));
+    public ResponseEntity<?> searchEmpRole(@RequestParam String query, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        try {
+            if (query == null || query.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Query parameter cannot be null or empty");
+            }
+
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DropdownProjection> result = service.searchEmpRole(query, pageable);
+
+            if (result.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
+
 
     // ------------ LAB MASTER ---------------
     @GetMapping("/lab/list/search")
-    ResponseEntity<Page<DropdownProjection>> searchLabMaster(@RequestParam String query,
-                                                             @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchLabMaster(query, pageable));
+    public ResponseEntity<?> searchLabMaster(@RequestParam String query, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        try {
+            if (query == null || query.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Query parameter cannot be null or empty");
+            }
+
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DropdownProjection> result = service.searchLabMaster(query, pageable);
+
+            if (result.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
+
 
     // ------------ LAB CATEGORY ---------------
     @GetMapping("/lab/category/search")
-    ResponseEntity<Page<DropdownProjection>> searchLabCategory(@RequestParam String query,
-                                                               @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchLabCategory(query, pageable));
+    public ResponseEntity<?> searchLabCategory(@RequestParam String query, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        try {
+            if (query == null || query.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Query parameter cannot be null or empty");
+            }
+
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DropdownProjection> result = service.searchLabCategory(query, pageable);
+
+            if (result.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
 
     // ------------ LAB CLUSTER --------------
     @GetMapping("/lab/cluster/search")
-    ResponseEntity<Page<DropdownProjection>> searchLabCluster(@RequestParam String query,
-                                                              @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchLabCluster(query, pageable));
+    public ResponseEntity<?> searchLabCluster(@RequestParam String query, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        try {
+            if (query == null || query.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Query parameter cannot be null or empty");
+            }
+
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DropdownProjection> result = service.searchLabCluster(query, pageable);
+
+            if (result.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
 
     // ------------ MAIL CATEGORY --------------
     @GetMapping("/emp/mail/category/search")
-    ResponseEntity<Page<DropdownProjection>> searchMailCategory(@RequestParam String query,
-                                                                @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchMailCategory(query, pageable));
+    public ResponseEntity<?> searchMailCategory(@RequestParam String query, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        try {
+            if (query == null || query.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Query parameter cannot be null or empty");
+            }
+
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DropdownProjection> result = service.searchMailCategory(query, pageable);
+
+            if (result.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
 
     // ------------ CITY MASTER --------------
     @GetMapping("/city/search")
-    ResponseEntity<Page<DropdownProjection>> searchCityMaster(@RequestParam String query,
-                                                              @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchCity(query, pageable));
+    public ResponseEntity<?> searchCityMaster(@RequestParam String query, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        try {
+            if (query == null || query.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Query parameter cannot be null or empty");
+            }
+
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DropdownProjection> result = service.searchCity(query, pageable);
+
+            if (result.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
 
     // ------------- ZIPCODE ----------
     @GetMapping("/zipcode/search")
-    ResponseEntity<Page<DropdownProjection>> searchZipcode(@RequestParam String query,
-                                                           @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchZipcode(query, pageable));
+    public ResponseEntity<?> searchZipcode(@RequestParam String query, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        try {
+            if (query == null || query.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Query parameter cannot be null or empty");
+            }
+
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DropdownProjection> result = service.searchZipcode(query, pageable);
+
+            if (result.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
 
     // ------------ TELEPHONE CATEGORY ------------
     @GetMapping("/telephone/category/search")
-    ResponseEntity<Page<DropdownProjection>> searchTelephoneCategory(@RequestParam String query,
-                                                                    @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(service.searchTelephoneCategory(query, pageable));
+    public ResponseEntity<?> searchTelephoneCategory(@RequestParam String query, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = PAGE_SIZE) int size) {
+        try {
+            if (query == null || query.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Query parameter cannot be null or empty");
+            }
+
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DropdownProjection> result = service.searchTelephoneCategory(query, pageable);
+
+            if (result.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
     }
+
 }

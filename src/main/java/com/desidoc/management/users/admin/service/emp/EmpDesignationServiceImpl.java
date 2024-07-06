@@ -102,17 +102,6 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
         return repository.findAllProjectedBy(page);
     }
 
-
-    @Override
-    public List<EmpDesignationDTO> findAllEmpDesignationShortName() {
-        return repository.findByDesignShortNameIsNotNull().stream().map(projection -> {
-            EmpDesignationDTO dto = new EmpDesignationDTO();
-            dto.setDesignShortName(projection.getDesignShortName());
-            return dto;
-        }).collect(Collectors.toList());
-
-    }
-
     // --------------- Search Methods ---------------
     @Override
     public Page<EmpDesignProjection> searchEmpDesignation(String search, Pageable page) {
