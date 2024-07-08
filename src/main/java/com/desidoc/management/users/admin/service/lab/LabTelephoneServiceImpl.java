@@ -6,9 +6,11 @@ import com.desidoc.management.lab.repository.LabTelephoneMasterRepository;
 import com.desidoc.management.users.admin.service.others.city.StdCodeMasterService;
 import com.desidoc.management.users.admin.service.others.telephone.TelephoneCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+@Service
 public class LabTelephoneServiceImpl implements LabTelephoneService{
 
     @Autowired

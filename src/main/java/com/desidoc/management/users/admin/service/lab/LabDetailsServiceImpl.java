@@ -97,7 +97,18 @@ public class LabDetailsServiceImpl implements LabDetailsService{
     @Override
     @Transactional
     public String createLabDetails(LabMasterDTO labMasterDTO, LabAddressDTO labAddressDTO, LabEpabxDTO labEpabxDTO, LabFaxMasterDTO labFaxMasterDTO, LabTelephoneMasterDTO labTelephoneMasterDTO) {
-        labMasterService.createLabMaster(labMasterDTO);
-        return "";
+        Integer id = labMasterService.createLabMaster(labMasterDTO);
+
+        labAddressDTO.setLabId(id);
+        labEpabxDTO.setLabId(id);
+        labFaxMasterDTO.setLabId(id);
+        labTelephoneMasterDTO.setLabId(id);
+
+        labAddressService.createLabAddress(labAddressDTO);
+        labEpabxService.createLabEpabx(labEpabxDTO);
+        labFaxService.createLabFax(labFaxMasterDTO);
+        labTelephoneService.createLabTelephone(labTelephoneMasterDTO);
+
+        return "Lab Details created successfully";
     }
 }

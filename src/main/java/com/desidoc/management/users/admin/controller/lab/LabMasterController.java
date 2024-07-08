@@ -1,6 +1,6 @@
 package com.desidoc.management.users.admin.controller.lab;
 
-import com.desidoc.management.lab.dto.LabMasterDTO;
+import com.desidoc.management.lab.dto.*;
 import com.desidoc.management.lab.projections.labDetails.LabDetailsProjection;
 import com.desidoc.management.lab.projections.labmaster.LabMasterProjection;
 import com.desidoc.management.users.admin.service.lab.LabDetailsService;
@@ -96,15 +96,20 @@ public class LabMasterController {
     // POST Mapping
 
     @PostMapping
-    public ResponseEntity<String> createLabMaster(@RequestBody LabMasterDTO labMasterDTO) {
+    public ResponseEntity<?> createLabMaster(@RequestBody LabDetailRequestDTO labDetailRequestDTO) {
         try {
             // Validate request body
-            if (labMasterDTO == null) {
+            if (labDetailRequestDTO == null) {
                 return ResponseEntity.badRequest().body("Request body cannot be null");
             }
+            LabMasterDTO labMasterDTO = labDetailRequestDTO.getLabMasterDTO();
+            LabAddressDTO labAddressDTO = labDetailRequestDTO.getLabAddressDTO();
+            LabTelephoneMasterDTO labTelephoneMasterDTO = labDetailRequestDTO.getLabTelephoneMasterDTO();
+            LabFaxMasterDTO labFaxMasterDTO = labDetailRequestDTO.getLabFaxMasterDTO();
+            LabEpabxDTO labEpabxDTO = labDetailRequestDTO.getLabEpabxDTO();
 
             // Invoke service method to create lab master
-            String result = service.createLabMaster(labMasterDTO);
+            String result = labDetailsService.createLabDetails(labMasterDTO,labAddressDTO, labEpabxDTO, labFaxMasterDTO, labTelephoneMasterDTO);
 
             // Return success message
             return ResponseEntity.ok(result);

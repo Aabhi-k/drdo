@@ -23,7 +23,7 @@ public class LabEpabxMaster {
     private LabMaster labId; // foreign key to labMaster
 
     @Column(name = "last_updated")
-    private LocalDateTime lastUpdted;
+    private LocalDateTime lastUpdated;
 
     //	Constructors
 
@@ -36,7 +36,7 @@ public class LabEpabxMaster {
         this.epabx = epabx;
         this.didNo = didNo;
         this.labId = labId;
-        this.lastUpdted = lastUpdted;
+        this.lastUpdated = lastUpdted;
     }
 
 
@@ -74,12 +74,12 @@ public class LabEpabxMaster {
         this.labId = labId;
     }
 
-    public LocalDateTime getLastUpdted() {
-        return lastUpdted;
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
     }
 
-    public void setLastUpdted(LocalDateTime lastUpdted) {
-        this.lastUpdted = lastUpdted;
+    public void setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 
 
