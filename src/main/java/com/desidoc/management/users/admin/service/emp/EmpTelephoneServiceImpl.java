@@ -2,6 +2,7 @@ package com.desidoc.management.users.admin.service.emp;
 
 import com.desidoc.management.employee.dto.EmpTelephoneMasterDTO;
 import com.desidoc.management.employee.model.EmpTelephoneMaster;
+import com.desidoc.management.employee.projections.empTelephone.EmpTelephoneProjection;
 import com.desidoc.management.employee.repository.EmpTelephoneMasterRepository;
 import com.desidoc.management.users.admin.service.others.telephone.TelephoneCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,19 @@ public class EmpTelephoneServiceImpl implements EmpTelephoneService {
         dto.setLastUpdated(entity.getLastUpdated());
         return dto;
     }
+    private EmpTelephoneProjection convertToProjection(EmpTelephoneMasterDTO dto) {
+        return new EmpTelephoneProjection() {
+            @Override
+            public String getTelephoneNumber() {
+                return dto.getTelephoneNumber();
+            }
+
+            @Override
+            public String getTelephoneCategory() {
+                return telephoneCategoryService.findTelephoneCategoryById(dto.getTeleCatId()).getTeleCatName();
+            }
+        };
+    }
 
 
     @Override
@@ -71,6 +85,11 @@ public class EmpTelephoneServiceImpl implements EmpTelephoneService {
     @Override
     public List<EmpTelephoneMasterDTO> findEmpTelephoneDTOById(Integer empId) {
         return repository.findByEmpId_Id(empId).stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EmpTelephoneProjection> findEmpTelephoneProjectionById(Integer empId) {
+        return this.findEmpTelephoneDTOById(empId).stream().map(this::convertToProjection).collect(Collectors.toList());
     }
 
     @Override

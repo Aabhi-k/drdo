@@ -30,6 +30,7 @@ public class EmpMasterServiceImpl implements EmpMasterService {
     LabMasterService labMasterService;
     @Autowired
     EmpMasterRepository repository;
+    
 
     // ---------- Helper Functions ----------
 
@@ -167,8 +168,10 @@ public class EmpMasterServiceImpl implements EmpMasterService {
 
     @Override
     public EmployeeDetailsProjection findEmpProjectionById(Integer id) {
-        return repository.findEmployeeDetailsByEmpId(id);
+//
+        return null;
     }
+
 
     @Override
     public List<EmpMasterDTO> findAllEmpMaster() {

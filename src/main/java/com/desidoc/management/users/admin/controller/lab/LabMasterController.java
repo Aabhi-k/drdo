@@ -1,7 +1,9 @@
 package com.desidoc.management.users.admin.controller.lab;
 
 import com.desidoc.management.lab.dto.LabMasterDTO;
+import com.desidoc.management.lab.projections.labDetails.LabDetailsProjection;
 import com.desidoc.management.lab.projections.labmaster.LabMasterProjection;
+import com.desidoc.management.users.admin.service.lab.LabDetailsService;
 import com.desidoc.management.users.admin.service.lab.LabMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,9 @@ public class LabMasterController {
 
     @Autowired
     LabMasterService service;
+
+    @Autowired
+    LabDetailsService labDetailsService;
 
     // GET Mapping
 
@@ -72,6 +77,21 @@ public class LabMasterController {
         }
     }
 
+    @GetMapping("/details/{id}")
+    ResponseEntity<?> getLabDetailsService(@PathVariable Integer id){
+        try {
+            // Invoke service method to fetch lab details by id
+            LabDetailsProjection labDetails = labDetailsService.findLabDetailsById(id);
+
+            // Return response
+            return ResponseEntity.ok(labDetails);
+
+        } catch (Exception e) {
+            // Handle any unexpected exceptions
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null); // Or provide an appropriate error message
+        }
+    }
 
     // POST Mapping
 

@@ -17,7 +17,7 @@ public interface EmpDesignationRepository
         extends JpaRepository<EmpDesignation, Integer>, JpaSpecificationExecutor<EmpDesignation> {
     @Query("SELECT ed.designShortName as designShortName, "
             + "ed.designFullName as designFullName, "
-            + "ec.cadreShortName as cadreShortName "
+            + "ec.cadreFullName as cadreFullName "
             + "FROM EmpDesignation ed "
             + "JOIN ed.cadreId ec "
             + "ORDER BY ed.orderNo DESC")

@@ -43,18 +43,18 @@ public class EmpDesignationServiceImpl implements EmpDesignationService {
         return new EmpDesignProjection() {
             @Override
             public String getDesignShortName() {
-                return dto.getDesignShortName(); // Assuming this field exists in the DTO
+                return dto.getDesignShortName();
             }
 
             @Override
             public String getDesignFullName() {
-                return dto.getDesignFullName(); // Assuming this field exists in the DTO
+                return dto.getDesignFullName();
             }
 
             @Override
-            public String getCadreShortName() {
-                return empCadreService.findEmpCadreById(dto.getCadreId()).getCadreShortName(); // Assuming this field
-                // exists in the DTO
+            public String getCadreFullName() {
+                return empCadreService.findEmpCadreById(dto.getCadreId()).getCadreFullName();
+
             }
         };
     }

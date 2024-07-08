@@ -5,6 +5,6 @@ public interface EmpDesignProjection {
 
     String getDesignFullName();
 
-    String getCadreShortName();
+    String getCadreFullName();
 
 }

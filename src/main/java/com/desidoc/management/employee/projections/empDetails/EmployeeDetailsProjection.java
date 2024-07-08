@@ -1,5 +1,10 @@
 package com.desidoc.management.employee.projections.empDetails;
 
+import com.desidoc.management.employee.projections.empMail.EmpMailProjection;
+import com.desidoc.management.employee.projections.empTelephone.EmpTelephoneProjection;
+
+import java.util.List;
+
 public interface EmployeeDetailsProjection {
     Integer getEmpId();
 
@@ -15,6 +20,8 @@ public interface EmployeeDetailsProjection {
 
     String getOfficeRoomNo();
 
+    String getAddlDesign();
+
     String getAddressLine1();
 
     String getAddressLine2();
@@ -27,9 +34,9 @@ public interface EmployeeDetailsProjection {
 
     String getLabFullName();
 
-    String getTelephoneCategory();
+    List<EmpTelephoneProjection> getTelephone();
 
-    String getTelephoneNumber();
+    List<EmpMailProjection> getMail();
 
 
 }

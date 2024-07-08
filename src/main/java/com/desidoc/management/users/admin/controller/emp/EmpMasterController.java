@@ -1,8 +1,9 @@
 package com.desidoc.management.users.admin.controller.emp;
 
-import com.desidoc.management.employee.dto.EmpMasterDTO;
+import com.desidoc.management.employee.dto.*;
 import com.desidoc.management.employee.projections.empDetails.EmployeeDetailsProjection;
 import com.desidoc.management.employee.projections.empmaster.EmpMasterProjection;
+import com.desidoc.management.users.admin.service.emp.EmpDetailsService;
 import com.desidoc.management.users.admin.service.emp.EmpMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -25,6 +27,8 @@ public class EmpMasterController {
 
     @Autowired
     EmpMasterService service;
+    @Autowired
+    EmpDetailsService empDetailsService;
 
     // -------- GET MAPPINGS --------
     // Getting Employee Master from id
@@ -58,8 +62,7 @@ public class EmpMasterController {
             if (empId == null) {
                 return ResponseEntity.badRequest().build();
             }
-
-            EmployeeDetailsProjection empDetails = service.findEmpProjectionById(empId);
+            EmployeeDetailsProjection empDetails = empDetailsService.findEmpDetailsById(empId);
 
             // Check if empDetails is null to handle case where empId doesn't exist
             if (empDetails == null) {
@@ -153,15 +156,19 @@ public class EmpMasterController {
 
     // updating the employee
     @PutMapping("/edit/{empId}")
-    public ResponseEntity<String> updateEmpMaster(@RequestBody EmpMasterDTO dto, @PathVariable Integer empId) {
+    public ResponseEntity<String> updateEmpMaster(@RequestBody CreateEmpRequest createEmpRequest, @PathVariable Integer empId) {
         try {
             // Validate request body
-            if (dto == null) {
+            if (createEmpRequest == null) {
                 return ResponseEntity.badRequest().body("Request body cannot be null");
             }
+            EmpMasterDTO empMasterDTO = createEmpRequest.getEmpMaster();
+            List<EmpTelephoneMasterDTO> empTelephoneMasterDTOs = createEmpRequest.getEmpTelephoneMasterDTOs();
+            List<EmpMailMasterDTO> empMailMasterDTOs = createEmpRequest.getEmpMailMasterDTOs();
+            EmpResidentialAddressDTO empResidentialAddressDTO = createEmpRequest.getEmpResidentialAddressDTO();
 
             // Perform update operation
-            String result = service.updateEmpMaster(dto, empId);
+            String result = empDetailsService.updateEmpDetails(empId, empMasterDTO, empTelephoneMasterDTOs, empMailMasterDTOs, empResidentialAddressDTO);
 
             // Check result and return appropriate response
             if ("Updated Successfully!".equals(result)) {
@@ -196,33 +203,39 @@ public class EmpMasterController {
     // -------- POST MAPPINGS --------
 
     // creating the employee
-    @PostMapping
-    public ResponseEntity<Integer> createEmpMaster(@RequestBody EmpMasterDTO empMaster) {
+   @PostMapping
+    public ResponseEntity<?> createEmpMaster(@RequestBody CreateEmpRequest createEmpRequest) {
         try {
             // Validate request body
-            if (empMaster == null) {
-                return ResponseEntity.badRequest().body(null);
+            if (createEmpRequest == null) {
+                return ResponseEntity.badRequest().body("Request body data cannot be null");
             }
 
-            // Perform creation operation
-            Integer createdEmpId = service.createEmpMaster(empMaster);
+            // Extract values from createEmpRequest
+            EmpMasterDTO empMasterDTO = createEmpRequest.getEmpMaster();
+            List<EmpTelephoneMasterDTO> empTelephoneMasterDTOs = createEmpRequest.getEmpTelephoneMasterDTOs();
+            List<EmpMailMasterDTO> empMailMasterDTOs = createEmpRequest.getEmpMailMasterDTOs();
+            EmpResidentialAddressDTO empResidentialAddressDTO = createEmpRequest.getEmpResidentialAddressDTO();
 
-            // Return the ID of the created employee
-            return ResponseEntity.ok(createdEmpId);
+            // Perform creation operation
+            String result = empDetailsService.createEmpDetails(empMasterDTO, empTelephoneMasterDTOs, empMailMasterDTOs, empResidentialAddressDTO);
+
+            // Return the result of the creation operation
+            return ResponseEntity.ok(result);
 
         } catch (IllegalArgumentException e) {
             // Handle specific exceptions or validation errors
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body("Invalid request parameters: " + e.getMessage());
 
         } catch (Exception e) {
             // Handle any other unexpected exceptions
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
+                    .body("An error occurred during employee creation: " + e.getMessage());
         }
     }
 
 
-    // -------- DELTE MAPPINGS -------- FOR {ADMIN}
+    // -------- DELETE MAPPINGS -------- FOR {ADMIN}
 
     // deleting the employee
     @PutMapping("/del/{empId}")

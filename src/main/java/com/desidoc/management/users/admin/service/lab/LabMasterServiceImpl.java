@@ -36,7 +36,7 @@ public class LabMasterServiceImpl implements LabMasterService {
     // ---------- Helper Functions ----------
 
     // Converting DTOs to Entities
-    private LabMaster convertToEntity(LabMasterDTO dto, LabMaster lab) throws Exception {
+    private LabMaster convertToEntity(LabMasterDTO dto, LabMaster lab)  {
         if (dto.getLabAuthName() != null && !dto.getLabAuthName().equals(lab.getLabAuthName())) {
             lab.setLabAuthName(dto.getLabAuthName());
         }
@@ -184,10 +184,10 @@ public class LabMasterServiceImpl implements LabMasterService {
 
     // -------- Create Methods --------------------
     @Override
-    public String createLabMaster(LabMasterDTO labMaster) throws Exception {
+    public Integer createLabMaster(LabMasterDTO labMaster) {
         LabMaster lab = new LabMaster();
         repository.save(this.convertToEntity(labMaster, lab));
-        return "Lab created";
+        return lab.getId();
     }
 
     // -------- Delete Method ---------------------------

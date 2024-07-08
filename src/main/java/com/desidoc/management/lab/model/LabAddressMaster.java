@@ -33,10 +33,10 @@ public class LabAddressMaster {
     private String addressLine2;
 
     @Column(name = "address_line3", length = 200)
-    private String addresssLine3;
+    private String addressLine3;
 
     @Column(name = "last_updated")
-    private LocalDateTime lastUpdted;
+    private LocalDateTime lastUpdated;
 
     //	Constructors
 
@@ -44,17 +44,17 @@ public class LabAddressMaster {
     }
 
 
-    public LabAddressMaster(Integer id, LabMaster labId, String addressLine1, String addressLine2, String addresssLine3,
-                            CityMaster cityId, ZipcodeMaster zipcodeId, LocalDateTime lastUpdted) {
+    public LabAddressMaster(Integer id, LabMaster labId, String addressLine1, String addressLine2, String addressLine3,
+                            CityMaster cityId, ZipcodeMaster zipcodeId, LocalDateTime lastUpdated) {
         super();
         this.id = id;
         this.labId = labId;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
-        this.addresssLine3 = addresssLine3;
+        this.addressLine3 = addressLine3;
         this.cityId = cityId;
         this.zipcodeId = zipcodeId;
-        this.lastUpdted = lastUpdted;
+        this.lastUpdated = lastUpdated;
     }
 
 
@@ -84,12 +84,12 @@ public class LabAddressMaster {
         this.addressLine2 = addressLine2;
     }
 
-    public String getAddresssLine3() {
-        return addresssLine3;
+    public String getAddressLine3() {
+        return addressLine3;
     }
 
-    public void setAddresssLine3(String addresssLine3) {
-        this.addresssLine3 = addresssLine3;
+    public void setAddressLine3(String addressLine3) {
+        this.addressLine3 = addressLine3;
     }
 
     public CityMaster getCityId() {
@@ -108,12 +108,12 @@ public class LabAddressMaster {
         this.zipcodeId = zipcodeId;
     }
 
-    public LocalDateTime getLastUpdted() {
-        return lastUpdted;
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
     }
 
-    public void setLastUpdted(LocalDateTime lastUpdted) {
-        this.lastUpdted = lastUpdted;
+    public void setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 
 

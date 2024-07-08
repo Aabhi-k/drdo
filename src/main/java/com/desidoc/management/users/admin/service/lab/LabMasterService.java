@@ -27,7 +27,7 @@ public interface LabMasterService {
     String updateViewingOrder(Integer id, Integer order) throws Exception;
 
     // -------- Create Methods --------------------
-    String createLabMaster(LabMasterDTO labMaster) throws Exception;
+    Integer createLabMaster(LabMasterDTO labMaster) ;
 
     // -------- Delete Method ---------------------------
     String deleteLabMaster(Integer id) throws Exception;

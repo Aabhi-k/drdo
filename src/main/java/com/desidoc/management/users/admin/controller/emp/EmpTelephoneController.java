@@ -44,46 +44,4 @@ public class EmpTelephoneController {
                     .body(null); // Or provide an appropriate error message
         }
     }
-
-
-    // Inserting a new employee telephone number
-    @PostMapping
-    public ResponseEntity<String> addEmpTelephone(@RequestBody List<EmpTelephoneMasterDTO> empTelephoneMasterDTO) {
-        try {
-            // Validate request body
-            if (empTelephoneMasterDTO == null || empTelephoneMasterDTO.isEmpty()) {
-                return ResponseEntity.badRequest().body("Request body cannot be null or empty");
-            }
-
-            // Invoke service method to create employee telephone numbers
-            String result = service.createEmpTelephone(empTelephoneMasterDTO);
-
-            // Return success message
-            return ResponseEntity.ok(result);
-
-        } catch (Exception e) {
-            // Handle any unexpected exceptions
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An error occurred: " + e.getMessage());
-        }
-    }
-
-    // Put Mapping
-
-    @PutMapping("/edit/{empId}")
-    public ResponseEntity<?> updateEmpTelephone(@PathVariable Integer empId, @RequestBody List<EmpTelephoneMasterDTO> empTelephoneMasterDTOList) {
-        if (empTelephoneMasterDTOList == null || empTelephoneMasterDTOList.isEmpty()) {
-            return ResponseEntity.badRequest().body("Request body cannot be null or empty");
-        }
-        try {
-            String result = service.updateEmpTelephone(empId, empTelephoneMasterDTOList);
-            if ("Updated Successfully!".equals(result)) {
-                return ResponseEntity.ok(result);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("An error occurred: " + e.getMessage());
-        }
-    }
 }

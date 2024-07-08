@@ -2,6 +2,7 @@ package com.desidoc.management.users.admin.service.emp;
 
 import com.desidoc.management.employee.dto.EmpMailMasterDTO;
 import com.desidoc.management.employee.model.EmpMailMaster;
+import com.desidoc.management.employee.projections.empMail.EmpMailProjection;
 import com.desidoc.management.employee.repository.EmpMailMasterRepository;
 import com.desidoc.management.exception.EntityNotFoundException;
 import com.desidoc.management.users.admin.service.others.mail.MailCategoryService;
@@ -50,6 +51,20 @@ public class EmpMailMasterServiceImpl implements EmpMailMasterService {
         return entity;
     }
 
+    private EmpMailProjection convertToProjection(EmpMailMasterDTO dto) {
+        return new EmpMailProjection() {
+            @Override
+            public String getMailCategory() {
+                return mailCategoryService.getMailById(dto.getMailCatId()).getMailCatName();
+            }
+
+            @Override
+            public String getEmail() {
+                return dto.getEmail();
+            }
+        };
+    }
+
     @Override
     public EmpMailMaster findEmpMailById(Integer id) {
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Employee Mail not found"));
@@ -58,6 +73,11 @@ public class EmpMailMasterServiceImpl implements EmpMailMasterService {
     @Override
     public List<EmpMailMasterDTO> findEmpMailDTOById(Integer id) {
         return repository.findByEmpId_Id(id).stream().map(this::convertToDTO).toList();
+    }
+
+    @Override
+    public List<EmpMailProjection> findEmpMailProjectionById(Integer id) {
+        return this.findEmpMailDTOById(id).stream().map(this::convertToProjection).toList();
     }
 
     @Override
