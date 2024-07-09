@@ -62,6 +62,20 @@ public class LabDetailsServiceImpl implements LabDetailsService{
             }
 
             @Override
+            public String getLabClusterShortName() {
+                return lab.getLabClusterId().getClusterShortName();
+            }
+
+            @Override
+            public String getLabClusterFullName() {
+                return lab.getLabClusterId().getClusterFullName();
+            }
+            @Override
+            public String getLabCityFullName() {
+                return lab.getLabCityId().getCityFullName();
+            }
+
+            @Override
             public String getOtherGroup() {
                 return lab.getOtherGroup();
             }
@@ -82,9 +96,10 @@ public class LabDetailsServiceImpl implements LabDetailsService{
             }
 
             @Override
-            public String getLabCityFullName() {
+            public String getCityFullName() {
                 return labAddress.getCityId().getCityFullName();
             }
+
 
             @Override
             public String getLabZipcode() {

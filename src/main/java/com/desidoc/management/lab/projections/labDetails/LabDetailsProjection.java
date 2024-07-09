@@ -8,11 +8,14 @@ public interface LabDetailsProjection {
     String getLabFullName();
     String getLabCategoryShortName();
     String getLabCategoryFullName();
+    String getLabClusterShortName();
+    String getLabClusterFullName();
+    String getLabCityFullName();
     String getOtherGroup();
     String getLabAddressLine1();
     String getLabAddressLine2();
     String getLabAddressLine3();
-    String getLabCityFullName();
+    String getCityFullName();
     String getLabZipcode();
 
 }

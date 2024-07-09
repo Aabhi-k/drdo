@@ -104,6 +104,11 @@ public class LabMasterServiceImpl implements LabMasterService {
         return new LabMasterProjection() {
 
             @Override
+            public Integer getId() {
+                return dto.getId();
+            }
+
+            @Override
             public String getLabAuthName() {
                 return dto.getLabAuthName();
             }
